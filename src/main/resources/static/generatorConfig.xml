@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry
+            location="D:/classlib/mysql-connector-java-5.1.45-bin.jar"/>
+    <context id="my" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/springbootdemo" userId="root"
+                        password="root"/>
+
+        <javaModelGenerator targetPackage="org.aousi.springboot.demo.Entities"
+                            targetProject="D:/SpringBootDemo/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="org.aousi.springboot.demo.Entities.xml"
+                         targetProject="D:/SpringBootDemo/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="org.aousi.springboot.demo.mapper"
+                             targetProject="D:/SpringBootDemo/src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="T_FEE_AGTBILL" domainObjectName="FeeAgentBill"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+        <table tableName="user" domainObjectName="user"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--<columnRenamingRule searchString="^D_"
+                                replaceString=""/>-->
+        </table>
+
+        <table tableName="role" domainObjectName="role"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--<columnRenamingRule searchString="^D_"
+                                replaceString=""/>-->
+        </table>
+        <table tableName="module" domainObjectName="module"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--<columnRenamingRule searchString="^D_"
+                                replaceString=""/>-->
+        </table>
+
+    </context>
+</generatorConfiguration>

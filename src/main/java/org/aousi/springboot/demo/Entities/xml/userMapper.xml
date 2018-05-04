@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.userMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.user">
+    <id column="UID" jdbcType="INTEGER" property="uid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="AREA" jdbcType="VARCHAR" property="area" />
+    <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
+    <result column="TEL" jdbcType="VARCHAR" property="tel" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="E-MAIL" jdbcType="VARCHAR" property="eMail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UID, USERNAME, PASSWORD, AREA, DEPARTMENT, TEL, PHONE, E-MAIL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where UID = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.user">
+    insert into user (UID, USERNAME, PASSWORD, 
+      AREA, DEPARTMENT, TEL, 
+      PHONE, E-MAIL)
+    values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.user">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="area != null">
+        AREA,
+      </if>
+      <if test="department != null">
+        DEPARTMENT,
+      </if>
+      <if test="tel != null">
+        TEL,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="eMail != null">
+        E-MAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.user">
+    update user
+    <set>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        E-MAIL = #{eMail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.user">
+    update user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      E-MAIL = #{eMail,jdbcType=VARCHAR}
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>

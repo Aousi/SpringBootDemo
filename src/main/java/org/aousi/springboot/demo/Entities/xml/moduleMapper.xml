@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.moduleMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.module">
+    <id column="MID" jdbcType="INTEGER" property="mid" />
+    <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MID, MODULENAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from module
+    where MID = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from module
+    where MID = #{mid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.module">
+    insert into module (MID, MODULENAME)
+    values (#{mid,jdbcType=INTEGER}, #{modulename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.module">
+    insert into module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        MID,
+      </if>
+      <if test="modulename != null">
+        MODULENAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="modulename != null">
+        #{modulename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.module">
+    update module
+    <set>
+      <if test="modulename != null">
+        MODULENAME = #{modulename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MID = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.module">
+    update module
+    set MODULENAME = #{modulename,jdbcType=VARCHAR}
+    where MID = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>
