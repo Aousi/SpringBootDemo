@@ -70,7 +70,7 @@
             </div>
             <div class="modal-body">
                 <div class="input-group">
-                    <span class="input-group-addon" id="Username">Username</span>
+                    <span class="input-group-addon" id="signup_username">Username</span>
                     <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
                 </div>
                 <br>
@@ -81,20 +81,47 @@
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon" id="signup_email">email</span>
-                    <input type="password" class="form-control" placeholder="xxxx@xx.com" aria-describedby="sizing-addon2">
+                    <input type="text" class="form-control" placeholder="xxxx@xx.com" aria-describedby="sizing-addon2">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-primary" id="submit" onclick="submit()">Submit</button>
             </div>
         </div>
     </div>
 </div>
-
-
-</div>
 </body>
 <script>
+
+    function submit() {
+        var username = $('#signup_username').html();
+        var password = $('#signup_pw').html();
+        var email = $('#signup_email').html();
+        console.log(username,password,email)
+
+        var data={
+            "username":username,
+            "password":password,
+            "email":email
+        }
+
+
+        $.ajax({
+            url:"/user/insert",
+            type:"POST",
+            dataType: "json",
+            data:data,
+            success:function (data) {
+                if(data.stateCode == 200){
+                    alert(data.msg);
+                }
+            }
+        })
+    }
+
+
+
+
 </script>
 </html>

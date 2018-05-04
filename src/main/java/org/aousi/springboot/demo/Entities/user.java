@@ -22,6 +22,16 @@ public class user {
 
     private Set<role> roles = new HashSet<>();
 
+    public user() {
+    }
+
+    public user(String username, String password, String eMail, Set<role> roles) {
+        this.username = username;
+        this.password = password;
+        this.eMail = eMail;
+        this.roles = roles;
+    }
+
     public Set<role> getRoles() {
         return roles;
     }

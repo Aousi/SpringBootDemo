@@ -1,7 +1,10 @@
 package org.aousi.springboot.demo.mapper;
 
 import org.aousi.springboot.demo.Entities.user;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+@Component(value = "userMapper")
 public interface userMapper {
     int deleteByPrimaryKey(Integer uid);
 
