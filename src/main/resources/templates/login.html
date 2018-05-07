@@ -54,7 +54,7 @@
             <input id="password" class="form-control" type="password" placeholder="password is neccesary">
         </div>
         <div id="btnGroup" style="margin: 10px 11%">
-            <button type="button" class="btn btn-primary login_btn" >login</button>
+            <button type="button" class="btn btn-primary login_btn" id="loginBtn" onclick="login()" >login</button>
             <button type="button" class="btn btn-default login_btn" data-toggle="modal" data-target="#myModal" id="signUp" >sign up</button>
         </div>
     </div>
@@ -94,26 +94,48 @@
 </body>
 <script>
 
-    function submit() {
-        var username = $('#signup_username').val();
-        var password = $('#signup_pw').val();
-        var email = $('#signup_email').val();
-        console.log(username,password,email)
+    function login() {
+        var username = $('#account').val();
+        var password = $('#password').val();
 
         var data={
             "username":username,
             "password":password,
-            "email":email
         }
 
-
         $.ajax({
-            url:"/user/insert",
+            url:"/user/login",
             type:"POST",
             dataType: "json",
             data:data,
             success:function (data) {
-                if(data.stateCode == 200){
+                if(data.stateCode > 0){
+                    alert(data.msg);
+                }
+            }
+        })
+    }
+
+    function submit() {
+        var username = $('#signup_username').val();
+        var password = $('#signup_pw').val();
+        var email = $('#signup_email').val();
+        console.log(username, password, email)
+
+        var data = {
+            "username": username,
+            "password": password,
+            "email": email
+        }
+
+
+        $.ajax({
+            url: "/user/insert",
+            type: "POST",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                if (data.stateCode == 200) {
                     $('#myModal').modal('toggle')
                     alert(data.msg);
                 }
