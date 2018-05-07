@@ -12,7 +12,7 @@
     <result column="E-MAIL" jdbcType="VARCHAR" property="eMail" />
   </resultMap>
   <sql id="Base_Column_List">
-    UID, USERNAME, PASSWORD, AREA, DEPARTMENT, TEL, PHONE, E-MAIL
+    UID, USERNAME, PASSWORD, AREA, DEPARTMENT, TEL, PHONE, EMAIL
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,15 +24,15 @@
     delete from user
     where UID = #{uid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.user">
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.user" useGeneratedKeys="true" keyProperty="uid" keyColumn="UID">
     insert into user (UID, USERNAME, PASSWORD, 
       AREA, DEPARTMENT, TEL, 
-      PHONE, E-MAIL)
+      PHONE, EMAIL)
     values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.user">
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.user" useGeneratedKeys="true" keyProperty="uid" keyColumn="UID">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
@@ -57,7 +57,7 @@
         PHONE,
       </if>
       <if test="eMail != null">
-        E-MAIL,
+        EMAIL,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -109,7 +109,7 @@
         PHONE = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="eMail != null">
-        E-MAIL = #{eMail,jdbcType=VARCHAR},
+        EMAIL = #{eMail,jdbcType=VARCHAR},
       </if>
     </set>
     where UID = #{uid,jdbcType=INTEGER}
@@ -122,7 +122,7 @@
       DEPARTMENT = #{department,jdbcType=VARCHAR},
       TEL = #{tel,jdbcType=VARCHAR},
       PHONE = #{phone,jdbcType=VARCHAR},
-      E-MAIL = #{eMail,jdbcType=VARCHAR}
+      EMAIL = #{eMail,jdbcType=VARCHAR}
     where UID = #{uid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -66,22 +66,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Sign up</h4>
+                <h4 class="modal-title" id="myModalLabel">Sign up </h4>
             </div>
             <div class="modal-body">
                 <div class="input-group">
-                    <span class="input-group-addon" id="signup_username">Username</span>
-                    <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
+                    <span class="input-group-addon" >Username</span>
+                    <input id="signup_username" type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon" id="signup_pw">Password</span>
-                    <input type="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon2">
+                    <span class="input-group-addon" >Password</span>
+                    <input id="signup_pw" type="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon2">
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon" id="signup_email">email</span>
-                    <input type="text" class="form-control" placeholder="xxxx@xx.com" aria-describedby="sizing-addon2">
+                    <span class="input-group-addon" >email</span>
+                    <input id="signup_email" type="text" class="form-control" placeholder="xxxx@xx.com" aria-describedby="sizing-addon2">
                 </div>
             </div>
             <div class="modal-footer">
@@ -95,9 +95,9 @@
 <script>
 
     function submit() {
-        var username = $('#signup_username').html();
-        var password = $('#signup_pw').html();
-        var email = $('#signup_email').html();
+        var username = $('#signup_username').val();
+        var password = $('#signup_pw').val();
+        var email = $('#signup_email').val();
         console.log(username,password,email)
 
         var data={
@@ -114,6 +114,7 @@
             data:data,
             success:function (data) {
                 if(data.stateCode == 200){
+                    $('#myModal').modal('toggle')
                     alert(data.msg);
                 }
             }

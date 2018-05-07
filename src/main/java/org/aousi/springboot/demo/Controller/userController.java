@@ -43,7 +43,7 @@ public class userController {
         roles.add(role);
         user saveUser = new user(username,pw_md5,email,roles);
 
-        if (userService.signUp(saveUser)){
+        if (userService.signUp(saveUser,roles)){
             model.addAttribute("username",username);
             getBack.put("stateCode","200");
             getBack.put("msg","success");
@@ -53,6 +53,12 @@ public class userController {
         }
 
 
+
+        return getBack;
+    }
+
+    public Map<String,Object> login(){
+        Map<String,Object> getBack = new HashMap<>();
 
         return getBack;
     }
