@@ -1,17 +1,17 @@
 package org.aousi.springboot.demo.mapper;
 
-import org.aousi.springboot.demo.Entities.module;
+import org.aousi.springboot.demo.Entities.Module;
 
 public interface moduleMapper {
     int deleteByPrimaryKey(Integer mid);
 
-    int insert(module record);
+    int insert(Module record);
 
-    int insertSelective(module record);
+    int insertSelective(Module record);
 
-    module selectByPrimaryKey(Integer mid);
+    Module selectByPrimaryKey(Integer mid);
 
-    int updateByPrimaryKeySelective(module record);
+    int updateByPrimaryKeySelective(Module record);
 
-    int updateByPrimaryKey(module record);
+    int updateByPrimaryKey(Module record);
 }

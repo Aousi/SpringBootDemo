@@ -2,26 +2,26 @@ package org.aousi.springboot.demo.Entities;
 
 import java.util.Set;
 
-public class role {
+public class Role {
     private Integer rid;
 
     private String rolename;
 
-    private Set<module> modules;
+    private Set<Module> Modules;
 
-    public role() {
+    public Role() {
     }
 
-    public role(Set<module> modules) {
-        this.modules = modules;
+    public Role(Set<Module> Modules) {
+        this.Modules = Modules;
     }
 
-    public Set<module> getModules() {
-        return modules;
+    public Set<Module> getModules() {
+        return Modules;
     }
 
-    public void setModules(Set<module> modules) {
-        this.modules = modules;
+    public void setModules(Set<Module> Modules) {
+        this.Modules = Modules;
     }
 
     public Integer getRid() {

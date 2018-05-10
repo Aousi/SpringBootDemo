@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.aousi.springboot.demo.mapper.userMapper">
-  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.user">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.User">
     <id column="UID" jdbcType="INTEGER" property="uid" />
     <result column="USERNAME" jdbcType="VARCHAR" property="username" />
     <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
@@ -9,7 +9,7 @@
     <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
     <result column="TEL" jdbcType="VARCHAR" property="tel" />
     <result column="PHONE" jdbcType="VARCHAR" property="phone" />
-    <result column="E-MAIL" jdbcType="VARCHAR" property="eMail" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="eMail" />
   </resultMap>
   <sql id="Base_Column_List">
     UID, USERNAME, PASSWORD, AREA, DEPARTMENT, TEL, PHONE, EMAIL
@@ -17,29 +17,29 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user
+    from User
     where UID = #{uid,jdbcType=INTEGER}
   </select>
   <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from user
+    from User
     where USERNAME = #{username,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user
+    delete from User
     where UID = #{uid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.user" useGeneratedKeys="true" keyProperty="uid" keyColumn="UID">
-    insert into user (UID, USERNAME, PASSWORD, 
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.User" useGeneratedKeys="true" keyProperty="uid" keyColumn="UID">
+    insert into User (UID, USERNAME, PASSWORD,
       AREA, DEPARTMENT, TEL, 
       PHONE, EMAIL)
     values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.user" useGeneratedKeys="true" keyProperty="uid" keyColumn="UID">
-    insert into user
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.User" useGeneratedKeys="true" keyProperty="uid" keyColumn="UID">
+    insert into User
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
         UID,
@@ -93,8 +93,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.user">
-    update user
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.User">
+    update User
     <set>
       <if test="username != null">
         USERNAME = #{username,jdbcType=VARCHAR},
@@ -120,8 +120,8 @@
     </set>
     where UID = #{uid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.user">
-    update user
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.User">
+    update User
     set USERNAME = #{username,jdbcType=VARCHAR},
       PASSWORD = #{password,jdbcType=VARCHAR},
       AREA = #{area,jdbcType=VARCHAR},

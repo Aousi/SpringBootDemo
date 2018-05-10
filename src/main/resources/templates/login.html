@@ -46,7 +46,7 @@
     <div class="panel-body">
         <label for="account"></label>
         <div class="input-group">
-            <span class="input-group-addon"> <span class="glyphicon-user"></span></span>
+            <span class="input-group-addon"> <span class="glyphicon-User"></span></span>
             <input ID="account" class="form-control" type="text" placeholder="your account">
         </div>
         <div class="input-group">
@@ -61,8 +61,8 @@
 </div>
 <!-- 模态框（Modal） -->
 <!-- Modal -->
-<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" Role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" Role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -104,7 +104,7 @@
         }
 
         $.ajax({
-            url:"/user/login",
+            url:"/User/login",
             type:"POST",
             dataType: "json",
             data:data,
@@ -130,7 +130,7 @@
 
 
         $.ajax({
-            url: "/user/insert",
+            url: "/User/insert",
             type: "POST",
             dataType: "json",
             data: data,

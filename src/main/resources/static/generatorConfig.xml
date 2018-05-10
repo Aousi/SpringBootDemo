@@ -33,30 +33,30 @@
         </javaClientGenerator>
 
 
-        <!--<table tableName="user" domainObjectName="User"-->
+        <!--<table tableName="User" domainObjectName="User"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
 
-        <!--<table tableName="role" domainObjectName="Role"-->
+        <!--<table tableName="Role" domainObjectName="Role"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <!--<table tableName="module" domainObjectName="Module"-->
+        <!--<table tableName="Module" domainObjectName="Module"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
 
-        <table tableName="user-role" domainObjectName="UserRole"
+        <table tableName="User-Role" domainObjectName="UserRole"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
 
-        <table tableName="role-module" domainObjectName="RoleModule"
+        <table tableName="Role-Module" domainObjectName="RoleModule"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" >

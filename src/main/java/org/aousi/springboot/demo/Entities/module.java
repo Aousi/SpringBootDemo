@@ -1,6 +1,6 @@
 package org.aousi.springboot.demo.Entities;
 
-public class module {
+public class Module {
     private Integer mid;
 
     private String modulename;

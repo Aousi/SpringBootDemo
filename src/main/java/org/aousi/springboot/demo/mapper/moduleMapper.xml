@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.aousi.springboot.demo.mapper.moduleMapper">
-  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.module">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.Module">
     <id column="MID" jdbcType="INTEGER" property="mid" />
     <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
   </resultMap>
@@ -11,19 +11,19 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from module
+    from Module
     where MID = #{mid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from module
+    delete from Module
     where MID = #{mid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.module">
-    insert into module (MID, MODULENAME)
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.Module">
+    insert into Module (MID, MODULENAME)
     values (#{mid,jdbcType=INTEGER}, #{modulename,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.module">
-    insert into module
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.Module">
+    insert into Module
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="mid != null">
         MID,
@@ -41,8 +41,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.module">
-    update module
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.Module">
+    update Module
     <set>
       <if test="modulename != null">
         MODULENAME = #{modulename,jdbcType=VARCHAR},
@@ -50,8 +50,8 @@
     </set>
     where MID = #{mid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.module">
-    update module
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.Module">
+    update Module
     set MODULENAME = #{modulename,jdbcType=VARCHAR}
     where MID = #{mid,jdbcType=INTEGER}
   </update>

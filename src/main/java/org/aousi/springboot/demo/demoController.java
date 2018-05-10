@@ -11,4 +11,19 @@ public class demoController {
     public String login(){
         return "login";
     }
+
+    @RequestMapping("/home")
+    public String home(){
+        return "home";
+    }
+
+    @RequestMapping("/articleList")
+    public String ArticleList(){
+        return "ArticleList";
+    }
+
+    @RequestMapping("/article")
+    public String Article(){
+        return "Article";
+    }
 }

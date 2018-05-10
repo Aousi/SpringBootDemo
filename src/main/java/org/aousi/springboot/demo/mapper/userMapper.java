@@ -1,22 +1,21 @@
 package org.aousi.springboot.demo.mapper;
 
-import org.aousi.springboot.demo.Entities.user;
+import org.aousi.springboot.demo.Entities.User;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 @Component(value = "userMapper")
 public interface userMapper {
     int deleteByPrimaryKey(Integer uid);
 
-    int insert(user record);
+    int insert(User record);
 
-    int insertSelective(user record);
+    int insertSelective(User record);
 
-    user selectByPrimaryKey(Integer uid);
+    User selectByPrimaryKey(Integer uid);
 
-    int updateByPrimaryKeySelective(user record);
+    int updateByPrimaryKeySelective(User record);
 
-    int updateByPrimaryKey(user record);
+    int updateByPrimaryKey(User record);
 
-    user selectByUserName(String username);
+    User selectByUserName(String username);
 }

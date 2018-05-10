@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 5.7.20-log : Database - springbootdemo
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -16,56 +17,56 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`springbootdemo` /*!40100 DEFAULT CHARAC
 
 USE `springbootdemo`;
 
-/*Table structure for table `module` */
+/*Table structure for table `Module` */
 
-DROP TABLE IF EXISTS `module`;
+DROP TABLE IF EXISTS `Module`;
 
-CREATE TABLE `module` (
+CREATE TABLE `Module` (
   `MID` int(11) NOT NULL AUTO_INCREMENT,
   `MODULENAME` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`MID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-/*Data for the table `module` */
+/*Data for the table `Module` */
 
-insert  into `module`(`MID`,`MODULENAME`) values (1,'add'),(2,'delete'),(3,'update'),(4,'query');
+insert  into `Module`(`MID`,`MODULENAME`) values (1,'add'),(2,'delete'),(3,'update'),(4,'query');
 
-/*Table structure for table `role` */
+/*Table structure for table `Role` */
 
-DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `Role`;
 
-CREATE TABLE `role` (
+CREATE TABLE `Role` (
   `RID` int(11) NOT NULL AUTO_INCREMENT,
   `ROLENAME` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`RID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-/*Data for the table `role` */
+/*Data for the table `Role` */
 
-insert  into `role`(`RID`,`ROLENAME`) values (1,'admin'),(2,'customer');
+insert  into `Role`(`RID`,`ROLENAME`) values (1,'admin'),(2,'customer');
 
-/*Table structure for table `role-module` */
+/*Table structure for table `Role-Module` */
 
-DROP TABLE IF EXISTS `role-module`;
+DROP TABLE IF EXISTS `Role-Module`;
 
-CREATE TABLE `role-module` (
+CREATE TABLE `Role-Module` (
   `RID` int(11) DEFAULT NULL,
   `MID` int(11) DEFAULT NULL,
   KEY `M_FK` (`MID`),
   KEY `FK_R` (`RID`),
-  CONSTRAINT `FK_R` FOREIGN KEY (`RID`) REFERENCES `role` (`RID`),
-  CONSTRAINT `M_FK` FOREIGN KEY (`MID`) REFERENCES `module` (`MID`)
+  CONSTRAINT `FK_R` FOREIGN KEY (`RID`) REFERENCES `Role` (`RID`),
+  CONSTRAINT `M_FK` FOREIGN KEY (`MID`) REFERENCES `Module` (`MID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `role-module` */
+/*Data for the table `Role-Module` */
 
-insert  into `role-module`(`RID`,`MID`) values (1,1),(1,2),(1,3),(1,4),(2,4);
+insert  into `Role-Module`(`RID`,`MID`) values (1,1),(1,2),(1,3),(1,4),(2,4);
 
-/*Table structure for table `user` */
+/*Table structure for table `User` */
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `User`;
 
-CREATE TABLE `user` (
+CREATE TABLE `User` (
   `UID` int(11) NOT NULL AUTO_INCREMENT,
   `USERNAME` varchar(20) DEFAULT NULL,
   `PASSWORD` varchar(64) DEFAULT NULL,
@@ -77,22 +78,22 @@ CREATE TABLE `user` (
   PRIMARY KEY (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `user` */
+/*Data for the table `User` */
 
-/*Table structure for table `user-role` */
+/*Table structure for table `User-Role` */
 
-DROP TABLE IF EXISTS `user-role`;
+DROP TABLE IF EXISTS `User-Role`;
 
-CREATE TABLE `user-role` (
+CREATE TABLE `User-Role` (
   `UID` int(11) DEFAULT NULL,
   `RID` int(11) DEFAULT NULL,
   KEY `R_FK` (`RID`),
   KEY `U_FK` (`UID`),
-  CONSTRAINT `R_FK` FOREIGN KEY (`RID`) REFERENCES `role` (`RID`),
-  CONSTRAINT `U_FK` FOREIGN KEY (`UID`) REFERENCES `user` (`UID`)
+  CONSTRAINT `R_FK` FOREIGN KEY (`RID`) REFERENCES `Role` (`RID`),
+  CONSTRAINT `U_FK` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `user-role` */
+/*Data for the table `User-Role` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

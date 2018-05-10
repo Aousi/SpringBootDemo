@@ -1,23 +1,15 @@
 package org.aousi.springboot.demo.Controller;
 
-import org.aousi.springboot.demo.Entities.role;
+import org.aousi.springboot.demo.Entities.User;
+import org.aousi.springboot.demo.Entities.Role;
 import org.aousi.springboot.demo.Service.userService;
-import org.aousi.springboot.demo.mapper.userMapper;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.aousi.springboot.demo.Entities.user;
-import org.aousi.springboot.demo.Entities.role;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -34,7 +26,7 @@ public class userController {
 
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> signUp(@RequestParam Map<String,String> user, Model model){
+    public Map<String,Object> signUp(@RequestParam Map<String,String> user){
         Map<String,Object> getBack = new HashMap<>();
 
         String username = user.get("username");
@@ -42,23 +34,18 @@ public class userController {
         String email = user.get("email");
 
         String pw_md5 = new SimpleHash("MD5",password,username,2).toHex();
-        role role =new role();
-        role.setRid(2);
-        Set<role> roles = new HashSet<>();
-        roles.add(role);
-        user saveUser = new user(username,pw_md5,email,roles);
+        Role Role =new Role();
+        Role.setRid(2);
+        Set<Role> Roles = new HashSet<>();
+        Roles.add(Role);
+        User saveUser = new User(username,pw_md5,email, Roles);
 
-        if (userService.signUp(saveUser,roles)){
-            model.addAttribute("username",username);
-            getBack.put("stateCode","200");
-            getBack.put("msg","success");
+        if (username.equals("") || password.equals("")){
+            getBack.put("stateCode",400);
+            getBack.put("msg","用户名和密码不能为空");
         }else {
-            getBack.put("stateCode","201");
-            getBack.put("msg","fail");
+            getBack = userService.signUp(saveUser, Roles);
         }
-
-
-
         return getBack;
     }
 

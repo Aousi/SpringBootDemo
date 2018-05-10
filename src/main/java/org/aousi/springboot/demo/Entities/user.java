@@ -3,7 +3,7 @@ package org.aousi.springboot.demo.Entities;
 import java.util.HashSet;
 import java.util.Set;
 
-public class user {
+public class User {
     private Integer uid;
 
     private String username;
@@ -20,26 +20,26 @@ public class user {
 
     private String eMail;
 
-    private Set<role> roles = new HashSet<>();
+    private Set<Role> Roles = new HashSet<>();
 
-    public user() {
+    public User() {
     }
 
 
 
-    public user(String username, String password, String eMail, Set<role> roles) {
+    public User(String username, String password, String eMail, Set<Role> Roles) {
         this.username = username;
         this.password = password;
         this.eMail = eMail;
-        this.roles = roles;
+        this.Roles = Roles;
     }
 
-    public Set<role> getRoles() {
-        return roles;
+    public Set<Role> getRoles() {
+        return Roles;
     }
 
-    public void setRoles(Set<role> roles) {
-        this.roles = roles;
+    public void setRoles(Set<Role> Roles) {
+        this.Roles = Roles;
     }
 
     public Integer getUid() {

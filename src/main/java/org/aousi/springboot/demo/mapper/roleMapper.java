@@ -1,17 +1,17 @@
 package org.aousi.springboot.demo.mapper;
 
-import org.aousi.springboot.demo.Entities.role;
+import org.aousi.springboot.demo.Entities.Role;
 
 public interface roleMapper {
     int deleteByPrimaryKey(Integer rid);
 
-    int insert(role record);
+    int insert(Role record);
 
-    int insertSelective(role record);
+    int insertSelective(Role record);
 
-    role selectByPrimaryKey(Integer rid);
+    Role selectByPrimaryKey(Integer rid);
 
-    int updateByPrimaryKeySelective(role record);
+    int updateByPrimaryKeySelective(Role record);
 
-    int updateByPrimaryKey(role record);
+    int updateByPrimaryKey(Role record);
 }
