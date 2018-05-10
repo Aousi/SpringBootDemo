@@ -26,4 +26,9 @@ public class demoController {
     public String Article(){
         return "Article";
     }
+
+    @RequestMapping("/newArticle")
+    public String newArticle(){
+        return "newArticle";
+    }
 }
