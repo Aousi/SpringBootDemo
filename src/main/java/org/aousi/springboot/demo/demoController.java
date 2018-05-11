@@ -3,6 +3,7 @@ package org.aousi.springboot.demo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class demoController {
@@ -13,8 +14,8 @@ public class demoController {
     }
 
     @RequestMapping("/home")
-    public String home(){
-        return "home";
+    public ModelAndView home(){
+        return new ModelAndView("home");
     }
 
     @RequestMapping("/articleList")
@@ -23,8 +24,8 @@ public class demoController {
     }
 
     @RequestMapping("/article")
-    public String Article(){
-        return "Article";
+    public ModelAndView Article(){
+        return new ModelAndView("Article");
     }
 
     @RequestMapping("/newArticle")

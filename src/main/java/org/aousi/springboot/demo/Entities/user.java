@@ -22,6 +22,10 @@ public class User {
 
     private Set<Role> Roles = new HashSet<>();
 
+    private Set<Role> publishArticle = new HashSet<>();
+
+    private Set<Role> receiveArticle = new HashSet<>();
+
     public User() {
     }
 
@@ -32,6 +36,22 @@ public class User {
         this.password = password;
         this.eMail = eMail;
         this.Roles = Roles;
+    }
+
+    public Set<Role> getPublishArticle() {
+        return publishArticle;
+    }
+
+    public void setPublishArticle(Set<Role> publishArticle) {
+        this.publishArticle = publishArticle;
+    }
+
+    public Set<Role> getReceiveArticle() {
+        return receiveArticle;
+    }
+
+    public void setReceiveArticle(Set<Role> receiveArticle) {
+        this.receiveArticle = receiveArticle;
     }
 
     public Set<Role> getRoles() {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.ArticleRecordsMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.ArticleRecords">
+    <id column="ARID" jdbcType="INTEGER" property="arid" />
+    <result column="AID" jdbcType="INTEGER" property="aid" />
+    <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ARID, AID, TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from article_records
+    where ARID = #{arid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article_records
+    where ARID = #{arid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.ArticleRecords">
+    insert into article_records (ARID, AID, TIME
+      )
+    values (#{arid,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.ArticleRecords">
+    insert into article_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="arid != null">
+        ARID,
+      </if>
+      <if test="aid != null">
+        AID,
+      </if>
+      <if test="time != null">
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="arid != null">
+        #{arid,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.ArticleRecords">
+    update article_records
+    <set>
+      <if test="aid != null">
+        AID = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        TIME = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ARID = #{arid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.ArticleRecords">
+    update article_records
+    set AID = #{aid,jdbcType=INTEGER},
+      TIME = #{time,jdbcType=TIMESTAMP}
+    where ARID = #{arid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -6,10 +6,13 @@ import org.aousi.springboot.demo.Service.userService;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -28,6 +31,7 @@ public class userController {
     @ResponseBody
     public Map<String,Object> signUp(@RequestParam Map<String,String> user){
         Map<String,Object> getBack = new HashMap<>();
+        ModelAndView mav = new ModelAndView();
 
         String username = user.get("username");
         String password = user.get("password");
@@ -46,6 +50,7 @@ public class userController {
         }else {
             getBack = userService.signUp(saveUser, Roles);
         }
+
         return getBack;
     }
 
@@ -53,6 +58,7 @@ public class userController {
     @ResponseBody
     public Map<String,Object> login(@RequestParam Map<String,String> user, HttpSession httpSession){
         Map<String,Object> getBack = new HashMap<>();
+
 
         String username = user.get("username");
         String password = user.get("password");
@@ -63,9 +69,14 @@ public class userController {
         }else {
             getBack = userService.loginConfrim(user);
             if ((Integer) getBack.get("stateCode") == 200){
-                httpSession.setAttribute("username",username);
+                getBack.put("myUrl","/home");
+                getBack.put("name",username);
+                httpSession.setAttribute("name",username);
             }
         }
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("home");
+        mav.addObject(getBack);
         return getBack;
     }
 }

@@ -9,6 +9,7 @@
         .login_btn {
             margin: 0px;
             width: 70px;
+
         }
     </style>
 </head>
@@ -18,7 +19,7 @@
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
         <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <!--<body style="overflow: hidden">-->
-<div class="jumbotron" style="height: 1000px;z-index: 50">
+<div class="jumbotron" th:style="'background:url(' + @{/img/loginBackground.jpg} + ');'">
     <div class="container">
         <h1>XXXXXXXXX</h1>
         <p>
@@ -28,7 +29,9 @@
 </div>
 <style>
     .jumbotron {
-        background:url("http://dl.bizhi.sogou.com/images/2013/07/10/345378.jpg");
+        /*background:url("/static/img/loginBackground.jpg");*/
+        height: 1000px;
+        z-index: 50;
 
     }
     .jumbotron h1,p{
@@ -46,11 +49,11 @@
     <div class="panel-body">
         <label for="account"></label>
         <div class="input-group">
-            <span class="input-group-addon"> <span class="glyphicon-User"></span></span>
+            <span class="input-group-addon">  account</span>
             <input ID="account" class="form-control" type="text" placeholder="your account">
         </div>
         <div class="input-group">
-            <span class="input-group-addon"> <span class="glyphicon-lock"></span></span>
+            <span class="input-group-addon"> password</span>
             <input id="password" class="form-control" type="password" placeholder="password is neccesary">
         </div>
         <div id="btnGroup" style="margin: 10px 11%">
@@ -104,13 +107,15 @@
         }
 
         $.ajax({
-            url:"/User/login",
+            url:"/user/login",
             type:"POST",
             dataType: "json",
             data:data,
             success:function (data) {
                 if(data.stateCode > 0){
                     alert(data.msg);
+                    window.sessionStorage.setItem('name',data.name);
+                    window.location.href=data.myUrl;
                 }
             }
         })
@@ -130,7 +135,7 @@
 
 
         $.ajax({
-            url: "/User/insert",
+            url: "/user/insert",
             type: "POST",
             dataType: "json",
             data: data,

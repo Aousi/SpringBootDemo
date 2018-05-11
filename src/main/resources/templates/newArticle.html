@@ -26,6 +26,9 @@
             margin-left: 10px;
             margin-right: 5px;
         }
+        .btnDiv{
+            margin: 5px 20px;
+        }
     </style>
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -111,9 +114,14 @@
             </div>
         </div>
 
-        <div class="form-group col-md-12 col-sm-12 col-xs-12" style=" margin-top: 20px;min-height: 700px">
+        <div class="form-group col-md-12 col-sm-12 col-xs-12" style=" margin-top: 20px;height: auto">
             <label for="ueditor">Context Editor</label>
             <script id="ueditor" type="text/plain" name="content"></script>
+        </div>
+
+        <div style="text-align: center">
+            <button class="btn btn-primary btnDiv">submit</button>
+            <button class="btn btn-default btnDiv">save as draft</button>
         </div>
     </div>
 </main>
@@ -137,5 +145,9 @@
 <!--<script type="text/javascript" src="/static/js/UEditor/ueditor.all.js"></script>-->
 <script type="text/javascript">
     var ue = UE.getEditor('ueditor');
+
+    function submit() {
+        var name =
+    }
 </script>
 </html>

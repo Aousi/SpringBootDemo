@@ -50,13 +50,34 @@
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
 
-        <table tableName="User-Role" domainObjectName="UserRole"
+        <!--<table tableName="User-Role" domainObjectName="UserRole"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="Role-Module" domainObjectName="RoleModule"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+
+        <table tableName="article" domainObjectName="Article"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
+               selectByExampleQueryId="false" >
         </table>
-
-        <table tableName="Role-Module" domainObjectName="RoleModule"
+        <table tableName="article_author" domainObjectName="ArticleAuthor"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+        </table>
+        <table tableName="article_receiver" domainObjectName="ArticleReceiver"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+        </table>
+        <table tableName="article_records" domainObjectName="ArticleRecords"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" >

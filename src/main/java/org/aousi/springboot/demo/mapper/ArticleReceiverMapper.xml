@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.ArticleReceiverMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.ArticleReceiver">
+    <result column="AID" jdbcType="INTEGER" property="aid" />
+    <result column="UID" jdbcType="INTEGER" property="uid" />
+  </resultMap>
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.ArticleReceiver">
+    insert into article_receiver (AID, UID)
+    values (#{aid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.ArticleReceiver">
+    insert into article_receiver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        AID,
+      </if>
+      <if test="uid != null">
+        UID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

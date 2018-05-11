@@ -66,8 +66,8 @@
                     </ul>
                 </li>
             </ul>
-
-            <ul class="nav navbar-nav navbar-right">
+            <input id="nameNav" type="hidden" th:value="${name}" >
+            <ul class="nav navbar-nav navbar-right" id="userNav">
                 <li><a href="#">LOGIN or SIGN UP</a></li>
             </ul>
         </div>
@@ -79,6 +79,7 @@
     </div>
 </div>
 <div class="container">
+    <input type="hidden" id="username" >
     <div class="context">
         <h1>正文标题</h1>
         <p>正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容</p>
@@ -107,6 +108,23 @@
     </div>
 
 </footer>
-
 </body>
+<script>
+    $(function () {
+        var data = window.sessionStorage.getItem('name');
+        console.log(data)
+        if (data !=""){
+            $('#userNav').html('<li class="dropdown">\n' +
+                ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
+                ' aria-expanded="false" >'+data+'<span class="caret"></span></a>\n' +
+                ' <ul class="dropdown-menu">\n' +
+                ' <li><a href="#">PART 1</a></li>\n' +
+                ' <li><a href="#">PART 2</a></li>\n' +
+                ' <li><a href="#">PART 3</a></li>\n' +
+                ' </ul>\n' +
+                ' </li>')
+        }
+    })
+
+</script>
 </html>
