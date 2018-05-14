@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.ArticleMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.Article">
+    <id column="AID" jdbcType="INTEGER" property="aid" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="AUTHOR" jdbcType="VARCHAR" property="author" />
+    <result column="CONTEXT" jdbcType="VARCHAR" property="context" />
+    <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="LAST_EDIT_TIME" jdbcType="TIMESTAMP" property="lastEditTime" />
+    <result column="OVERDUE_TIME" jdbcType="TIMESTAMP" property="overdueTime" />
+    <result column="A_LEVEL" jdbcType="INTEGER" property="aLevel" />
+    <result column="A_CODE" jdbcType="VARCHAR" property="aCode" />
+    <result column="A_TYPE" jdbcType="INTEGER" property="aType" />
+    <result column="A_STATUS" jdbcType="INTEGER" property="aStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    AID, TITLE, AUTHOR, CONTEXT, PUBLISH_TIME, LAST_EDIT_TIME, OVERDUE_TIME, A_LEVEL, 
+    A_CODE, A_TYPE, A_STATUS
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    where AID = #{aid,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article
+    where AID = #{aid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.Article" useGeneratedKeys="true" keyProperty="aid" keyColumn="AID">
+    insert into article (AID, TITLE, AUTHOR, 
+      CONTEXT, PUBLISH_TIME, LAST_EDIT_TIME, 
+      OVERDUE_TIME, A_LEVEL, A_CODE, 
+      A_TYPE, A_STATUS)
+    values (#{aid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{context,jdbcType=VARCHAR}, #{publishTime,jdbcType=TIMESTAMP}, #{lastEditTime,jdbcType=TIMESTAMP}, 
+      #{overdueTime,jdbcType=TIMESTAMP}, #{aLevel,jdbcType=INTEGER}, #{aCode,jdbcType=VARCHAR}, 
+      #{aType,jdbcType=INTEGER}, #{aStatus,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.Article" useGeneratedKeys="true" keyProperty="aid" keyColumn="AID">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        AID,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="author != null">
+        AUTHOR,
+      </if>
+      <if test="context != null">
+        CONTEXT,
+      </if>
+      <if test="publishTime != null">
+        PUBLISH_TIME,
+      </if>
+      <if test="lastEditTime != null">
+        LAST_EDIT_TIME,
+      </if>
+      <if test="overdueTime != null">
+        OVERDUE_TIME,
+      </if>
+      <if test="aLevel != null">
+        A_LEVEL,
+      </if>
+      <if test="aCode != null">
+        A_CODE,
+      </if>
+      <if test="aType != null">
+        A_TYPE,
+      </if>
+      <if test="aStatus != null">
+        A_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastEditTime != null">
+        #{lastEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overdueTime != null">
+        #{overdueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aLevel != null">
+        #{aLevel,jdbcType=INTEGER},
+      </if>
+      <if test="aCode != null">
+        #{aCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aType != null">
+        #{aType,jdbcType=INTEGER},
+      </if>
+      <if test="aStatus != null">
+        #{aStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.Article">
+    update article
+    <set>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        CONTEXT = #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        PUBLISH_TIME = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastEditTime != null">
+        LAST_EDIT_TIME = #{lastEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overdueTime != null">
+        OVERDUE_TIME = #{overdueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aLevel != null">
+        A_LEVEL = #{aLevel,jdbcType=INTEGER},
+      </if>
+      <if test="aCode != null">
+        A_CODE = #{aCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aType != null">
+        A_TYPE = #{aType,jdbcType=INTEGER},
+      </if>
+      <if test="aStatus != null">
+        A_STATUS = #{aStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where AID = #{aid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.Article">
+    update article
+    set TITLE = #{title,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      CONTEXT = #{context,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{publishTime,jdbcType=TIMESTAMP},
+      LAST_EDIT_TIME = #{lastEditTime,jdbcType=TIMESTAMP},
+      OVERDUE_TIME = #{overdueTime,jdbcType=TIMESTAMP},
+      A_LEVEL = #{aLevel,jdbcType=INTEGER},
+      A_CODE = #{aCode,jdbcType=VARCHAR},
+      A_TYPE = #{aType,jdbcType=INTEGER},
+      A_STATUS = #{aStatus,jdbcType=INTEGER}
+    where AID = #{aid,jdbcType=INTEGER}
+  </update>
+
+
+
+</mapper>

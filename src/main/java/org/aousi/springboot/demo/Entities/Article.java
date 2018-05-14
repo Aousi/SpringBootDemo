@@ -1,6 +1,7 @@
 package org.aousi.springboot.demo.Entities;
 
 import java.util.Date;
+import java.util.Set;
 
 public class Article {
     private Integer aid;
@@ -25,6 +26,8 @@ public class Article {
 
     private Integer aStatus;
 
+    private Set<User> receiver;
+
     public Article() {
     }
 
@@ -35,6 +38,14 @@ public class Article {
         this.aLevel = aLevel;
         this.aCode = aCode;
         this.aType = aType;
+    }
+
+    public Set<User> getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Set<User> receiver) {
+        this.receiver = receiver;
     }
 
     public Integer getAid() {

@@ -1,0 +1,47 @@
+package org.aousi.springboot.demo.Controller;
+
+import org.aousi.springboot.demo.Entities.Article;
+import org.aousi.springboot.demo.Service.ArticleService;
+import org.aousi.springboot.demo.mapper.ArticleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/Article")
+public class ArticleController {
+
+    @Autowired
+    private ArticleService articleService;
+
+    @RequestMapping("/submit.do")
+    @ResponseBody
+    public Map<String,Object> insertArticle(@RequestParam Map<String,String> article){
+        Map<String,Object> back =new HashMap<>();
+        String title = article.get("title");
+        String author =article.get("author");
+        String context = article.get("context");
+        String code =article.get("code");
+        Integer level =Integer.parseInt(article.get("level"));
+        Integer type =Integer.parseInt(article.get("type"));
+        Integer flag = Integer.parseInt(article.get("flag"));
+
+        Article a = new Article(title,author,context,level,code,type);
+        a.setPublishTime(new Date());
+
+
+        if (flag == 1){
+            a.setaStatus(2); // 2 == 提交审核
+        }else {
+            a.setaStatus(0); // 0 == 保存草稿
+        }
+
+        return articleService.insertArticle(a);
+    }
+}

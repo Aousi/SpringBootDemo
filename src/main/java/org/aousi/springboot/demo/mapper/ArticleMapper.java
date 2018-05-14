@@ -1,7 +1,9 @@
 package org.aousi.springboot.demo.mapper;
 
 import org.aousi.springboot.demo.Entities.Article;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer aid);
 

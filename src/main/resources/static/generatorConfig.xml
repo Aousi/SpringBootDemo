@@ -67,21 +67,21 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" >
         </table>
-        <table tableName="article_author" domainObjectName="ArticleAuthor"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="article_receiver" domainObjectName="ArticleReceiver"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="article_records" domainObjectName="ArticleRecords"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
+        <!--<table tableName="article_author" domainObjectName="ArticleAuthor"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <!--<table tableName="article_receiver" domainObjectName="ArticleReceiver"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <!--<table tableName="article_records" domainObjectName="ArticleRecords"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>
