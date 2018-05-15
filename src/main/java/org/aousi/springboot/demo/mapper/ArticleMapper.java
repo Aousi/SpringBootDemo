@@ -1,7 +1,10 @@
 package org.aousi.springboot.demo.mapper;
 
 import org.aousi.springboot.demo.Entities.Article;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public interface ArticleMapper {
@@ -16,4 +19,6 @@ public interface ArticleMapper {
     int updateByPrimaryKeySelective(Article record);
 
     int updateByPrimaryKey(Article record);
+
+    List<Article> selectByTypeAndStatus(@Param("type") Integer type,@Param("status") Integer status);
 }

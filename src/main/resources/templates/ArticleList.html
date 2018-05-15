@@ -6,6 +6,7 @@
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
     <link type="text/css" rel="stylesheet" href="/static/js/bootstrap.min.js">
     <style>
         .myfooter {
@@ -24,10 +25,21 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
 <script  src="/static/js/bootstrap.min.js"></script>
+
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script  th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
+<script  src="/static/js/bootstrap-table.min.js"></script>
+<script  src="/static/js/bootstrap-table-zh-CN.min.js"></script>
+
+
+<link type="text/css" href="/static/css/bootstrap-table.css">
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <body>
+
+<script>
+</script>
 
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
@@ -86,20 +98,7 @@
             </ol>
         </div>
         <div class="part1" style="min-height: 700px">
-            <table id="articleList" class="table">
-                <thead>
-                <tr>
-                    <th>日期</th>
-                    <th>标题</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td width="100">2018-5-8</td>
-                    <td><a href="#" onclick="toArticle()">xxxxxxxx</a></td>
-                </tr>
-                </tbody>
-            </table>
+            <table id="articleList" class="table"></table>
         </div>
     </div>
 </main>
@@ -117,6 +116,45 @@
 </footer>
 </body>
 <script>
+
+    var StartPage =1;
+    var Rows = 20;
+
+    $(function () {
+        var parms ={
+            'page':StartPage,
+            'rows':1
+        }
+
+        $.ajax({
+            url:'/Article/ArticleListP.do',
+            type:'POST',
+            dataType:'JSON',
+            data:parms,
+            seccuss:function (data) {
+                if (data.statusCode == 200){
+                    console.log(data)
+                    var ro =data.totals;
+                    var a = data.article;
+                    var temp = '';
+                    for (var i = 0;i<ro;i++){
+
+                        var one = '<tr>' +
+                            '<td width="100">'+a[i].publishTime+'</td>\n' +
+                            '<td width="100">'+a[i].aLevel+'</td>\n' +
+                            '<td><a href="#" onclick="toArticle()">'+a[i].title+'</a></td>\n' +
+                            '<td width="100">'+a[i].author+'</td>'+
+                            '</tr>';
+
+                        temp += one;
+                    }
+                }
+            }
+        })
+    })
+
+
+
     function toArticle() {
         $.get("/Article")
     }

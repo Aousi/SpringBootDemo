@@ -14,10 +14,27 @@
     <result column="A_TYPE" jdbcType="INTEGER" property="aType" />
     <result column="A_STATUS" jdbcType="INTEGER" property="aStatus" />
   </resultMap>
+
+  <resultMap id="SimpleInfoList" type="org.aousi.springboot.demo.Entities.Article">
+    <id column="AID" jdbcType="INTEGER" property="aid" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="AUTHOR" jdbcType="VARCHAR" property="author" />
+    <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="LAST_EDIT_TIME" jdbcType="TIMESTAMP" property="lastEditTime" />
+    <result column="A_LEVEL" jdbcType="INTEGER" property="aLevel" />
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     AID, TITLE, AUTHOR, CONTEXT, PUBLISH_TIME, LAST_EDIT_TIME, OVERDUE_TIME, A_LEVEL, 
     A_CODE, A_TYPE, A_STATUS
   </sql>
+
+  <select id="selectByTypeAndStatus" resultMap="SimpleInfoList">
+    select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL
+    from article
+    where A_TYPE = #{type} and A_STATUS = #{status}
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

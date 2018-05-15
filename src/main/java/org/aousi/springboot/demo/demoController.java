@@ -19,8 +19,8 @@ public class demoController {
     }
 
     @RequestMapping("/articleList")
-    public String ArticleList(){
-        return "ArticleList";
+    public ModelAndView ArticleList(){
+        return new ModelAndView("ArticleList");
     }
 
     @RequestMapping("/article")

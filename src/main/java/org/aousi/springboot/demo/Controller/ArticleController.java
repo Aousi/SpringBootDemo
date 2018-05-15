@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/Article")
@@ -35,13 +33,21 @@ public class ArticleController {
         Article a = new Article(title,author,context,level,code,type);
         a.setPublishTime(new Date());
 
-
         if (flag == 1){
             a.setaStatus(2); // 2 == 提交审核
         }else {
             a.setaStatus(0); // 0 == 保存草稿
         }
-
         return articleService.insertArticle(a);
+    }
+
+    @RequestMapping("/ArticleListP.do")
+    @ResponseBody
+    public Map<String,Object> queryArticleListP(@RequestParam Map<String,String> parms){
+        Map<String,Object> back =new HashMap<>();
+        Integer page = !parms.get("page").equals("") ?Integer.parseInt(parms.get("page")):1 ;
+        Integer rows = !parms.get("rows").equals("") ?Integer.parseInt(parms.get("rows")):10 ;
+
+        return articleService.queryArticleP(1,2,1,1);
     }
 }
