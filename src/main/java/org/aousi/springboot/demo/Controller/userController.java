@@ -74,9 +74,6 @@ public class userController {
                 httpSession.setAttribute("name",username);
             }
         }
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("home");
-        mav.addObject(getBack);
         return getBack;
     }
 }

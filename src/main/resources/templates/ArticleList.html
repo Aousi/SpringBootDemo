@@ -98,7 +98,19 @@
             </ol>
         </div>
         <div class="part1" style="min-height: 700px">
-            <table id="articleList" class="table"></table>
+            <table id="articleList" class="table">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>等级</th>
+                    <th>标题</th>
+                    <th>发布人</th>
+                </tr>
+                </thead>
+                <tbody id="listBody">
+
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
@@ -119,40 +131,50 @@
 
     var StartPage =1;
     var Rows = 20;
+    var pageTotal = 0;
+    var temp = '';
 
-    $(function () {
-        var parms ={
-            'page':StartPage,
-            'rows':1
+    function getListData() {
+        var parms = {
+            'page': StartPage,
+            'rows': 1
         }
+        var ListData ={} ;
+        var list='';
+
+
 
         $.ajax({
-            url:'/Article/ArticleListP.do',
-            type:'POST',
-            dataType:'JSON',
-            data:parms,
-            seccuss:function (data) {
-                if (data.statusCode == 200){
-                    console.log(data)
-                    var ro =data.totals;
-                    var a = data.article;
-                    var temp = '';
-                    for (var i = 0;i<ro;i++){
-
-                        var one = '<tr>' +
-                            '<td width="100">'+a[i].publishTime+'</td>\n' +
-                            '<td width="100">'+a[i].aLevel+'</td>\n' +
-                            '<td><a href="#" onclick="toArticle()">'+a[i].title+'</a></td>\n' +
-                            '<td width="100">'+a[i].author+'</td>'+
-                            '</tr>';
-
-                        temp += one;
-                    }
+            url: '/Article/ArticleListP.do',
+            type: 'POST',
+            dataType: 'JSON',
+            data: parms,
+            success: function (data) {
+                if (data != null) {
+                    ListData =data;
                 }
             }
         })
-    })
 
+
+        console.log(ListData);
+        var a = ListData.article;
+        console.log(a);
+        var ro = ListData.pageSizes;
+        console.log(ro);
+        pageTotal = ListData.totals;
+        console.log(pageTotal);
+        for (var i = 0; i < ro; i++) {
+            var one = '<tr>' +
+                '<td width="100">' + a[i].publishTime + '</td>\n' +
+                '<td width="100">' + a[i].aLevel + '</td>\n' +
+                '<td><a href="#" onclick="toArticle()">' + a[i].title + '</a></td>\n' +
+                '<td width="100">' + a[i].author + '</td>' +
+                '</tr>';
+            list = list + one;
+        }
+        return list;
+    }
 
 
     function toArticle() {
@@ -173,6 +195,11 @@
                 ' </li>' +
                 '<li><a href="#">log out</a></li>')
         }
+
+        temp = getListData();
+        console.log(1);
+        console.log(temp);
+        $('#listBody').innerHTML=temp;
     })
 
 </script>

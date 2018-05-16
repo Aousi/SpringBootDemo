@@ -114,8 +114,12 @@
             success:function (data) {
                 if(data.stateCode > 0){
                     alert(data.msg);
-                    window.sessionStorage.setItem('name',data.name);
-                    window.location.href=data.myUrl;
+                    if (data.name != ''){
+                        window.sessionStorage.setItem('name',data.name);
+                    }
+                    if (data.myUrl != ''){
+                        window.location.href=data.myUrl;
+                    }
                 }
             }
         })

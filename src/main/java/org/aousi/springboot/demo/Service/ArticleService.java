@@ -47,7 +47,9 @@ public class ArticleService {
 
         if (articles.size() > 0 ){
             back.put("stateCode",200);
+            long total =p.getTotal();
             back.put("totals",p.getTotal());
+            back.put("pageSizes",p.getPageSize());
             back.put("nowPage",page);
             back.put("articles", articles);
             back.put("msg","查询成功");
