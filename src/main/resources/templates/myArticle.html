@@ -6,6 +6,8 @@
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
+    <link type="text/css" rel="stylesheet" href="/static/js/bootstrap.min.js">
     <style>
         .myfooter {
             background-color: #5f5f5f;
@@ -18,19 +20,26 @@
         .myfooter div{
             margin-top: 30px;
         }
-
-        .postInfoSpan {
-            margin-left: 10px;
-            margin-right: 5px;
-        }
     </style>
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
+<script  src="/static/js/bootstrap.min.js"></script>
+
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script  th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
+<script  src="/static/js/bootstrap-table.min.js"></script>
+<script  src="/static/js/bootstrap-table-zh-CN.min.js"></script>
+
+
+<link type="text/css" href="/static/css/bootstrap-table.css">
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <body>
+
+<script>
+</script>
 
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
@@ -76,32 +85,33 @@
     </div>
 </div>
 
-
+<div>
+</div>
 <main style="width: 960px;margin: 0 auto">
     <div class="container" style="width: inherit">
         <div>
             <ol class="breadcrumb">
                 <li><a href="/home">首页</a></li>
-                <li><a href="/articleList">文章列表</a></li>
-                <li class="active">文章名字</li>
+                <li class="active">文章列表</li>
             </ol>
         </div>
-        <div class="part1" style="text-align: center">
-            <h3 th:text="${article.title}"></h3><br>
-            <span class="postInfoSpan">作者：</span><span class="postInfoSpan" id="author"
-                                                       th:text="${article.author}"></span>
-            <span class="postInfoSpan">发布日期：</span><span class="postInfoSpan" id="publishDate"
-                                                         th:text="${article.publishTime}" ></span>
-            <input type="hidden" th:value="${article.publishTime}" id="hiddenDate">
-            <hr>
+        <div class="part1" style="min-height: 700px">
+            <table id="articleList" class="table">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>等级</th>
+                    <th>标题</th>
+                    <th>发布人</th>
+                </tr>
+                </thead>
+                <tbody id="listBody">
+
+                </tbody>
+            </table>
         </div>
-        <div class="part2">
-            <div id="context"  style="min-height: 700px" th:utext="${article.context}">
-                <p></p>
-            </div>
-            <div style="text-align: right">
-                <button class="btn btn-link" onclick="history.back(-1)"> 返回</button>
-            </div>
+        <div class="part2" style="text-align: center">
+            <span id="pageTotal"></span>
         </div>
     </div>
 </main>
@@ -117,7 +127,6 @@
     </div>
 
 </footer>
-
 </body>
 <script>
 
@@ -130,22 +139,72 @@
         return yy+'-'+MM+'-'+dd;
     }
 
-    function dateFmt_yyMMdd_hhmmss(str) {
-        var org = new Date(str);
-        console.log(str);
-        console.log(org);
-        var yy = org.getUTCFullYear();
-        var MM = org.getUTCMonth()+1;
-        var dd = org.getUTCDate();
+    function aLevelDisplay(level) {
+        switch (level){
+            case 1:return '普通';break;
+            case 2:return '紧急';break;
+            default:return '不明';break;
 
-        var hh = org.getUTCHours()-6;
-        var mm = org.getUTCMinutes();
-        var ss = org.getUTCSeconds();
+        }
+    }
 
-        return yy+'-'+MM+'-'+dd+' '+hh+':'+mm+':'+ss;
+    var StartPage =1;
+    var Rows = 20;
+    var pageTotal = 0;
+    var temp = '';
+    var nowUser = window.sessionStorage.getItem('name');
+
+    function getListData() {
+        var parms = {
+            'page': StartPage,
+            'rows': Rows,
+            'user':nowUser
+        }
+        var ListData ={"null":null} ;
+        var list='';
+
+        $.ajax({
+            url: '/Article/ArticleListP.do',
+            type: 'POST',
+            dataType: 'JSON',
+            data: parms,
+            success: function (data) {
+                if (data != null) {
+                    ListData =data;
+                    var a = ListData.articles;
+                    var len = a.length;
+                    var ro = ListData.pageSizes;
+                    pageTotal = ListData.pages;
+
+                    for (var i = 0; i < (ro == len ?ro:len); i++) {
+                        var one = '<tr>' +
+                            '<td width="100">' + dateFmt_yyMMdd(a[i].publishTime) + '</td>\n' +
+                            '<td width="100">' + aLevelDisplay(a[i].aLevel) + '</td>\n' +
+                            '<td><a href="/Article/showArticle.do?aid='+a[i].aid +'" >' + a[i].title + '</a></td>\n' +
+                            '<td width="100">' + a[i].author + '</td>' +
+                            '</tr>';
+
+                        console.log(one);
+                        list = list + one;
+                        console.log(list);
+                        $('#listBody').html(list);
+                        $('#pageTotal').html('共 '+pageTotal+' 页');
+                    }
+                }
+            }
+        })
+
+        return list;
+    }
+
+
+    function toArticle() {
+        $.get("/Article")
     }
 
     $(function () {
+        getListData();
+
         var data = window.sessionStorage.getItem('name');
         if (data !=""){
             $('#userNav').html('<li class="dropdown">\n' +
@@ -160,8 +219,11 @@
                 '<li><a href="#">log out</a></li>')
         }
 
-        var dateStr = $('#hiddenDate').val();
-        $('#publishDate').html(dateFmt_yyMMdd_hhmmss(dateStr));
+        // temp = getListData();
+        // console.log(1);
+        // console.log(temp);
+        // $('#listBody').innerHTML=temp;
     })
+
 </script>
 </html>

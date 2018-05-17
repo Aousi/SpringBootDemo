@@ -129,6 +129,14 @@
                 </select>
             </div>
         </div>
+        <!--<div class="form-group col-md-12 col-sm-12 col-xs-12">-->
+            <!--<p><label for="uploadBtn">upload</label></p>-->
+            <!--<form id="fileUpload" method="post" enctype="multipart/form-data">-->
+                <!--<p>-->
+                    <!--选择上传文件：<input type="file" name="fileName"><button id="uploadBtn" class="btn btn-primary" onclick="fileUpload()">submit</button>-->
+                <!--</p>-->
+            <!--</form>-->
+        <!--</div>-->
 
         <div class="form-group col-md-12 col-sm-12 col-xs-12" style=" margin-top: 20px;min-height: 500px">
             <label for="ueditor">Context Editor</label>
@@ -178,6 +186,39 @@
     })
 
     var ue = UE.getEditor('ueditor');
+
+    function fileUpload() {
+
+        var form = $('#fileUpload')[0];
+        var data = new FormData(form);
+
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/upload/fileUpload",
+            data: data,
+            processData: false, //prevent jQuery from automatically transforming the data into a query string
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+                $("#result").text(data);
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+            }
+        })
+
+    }
 
     function saveAsDraft() {
         tools(0);

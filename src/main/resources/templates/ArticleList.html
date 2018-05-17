@@ -89,8 +89,6 @@
 </div>
 <main style="width: 960px;margin: 0 auto">
     <div class="container" style="width: inherit">
-        <div class="headImg" style="background-color:#e0e0e0;height: 150px">
-        </div>
         <div>
             <ol class="breadcrumb">
                 <li><a href="/home">首页</a></li>
@@ -112,6 +110,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="part2" style="text-align: center">
+            <span id="pageTotal"></span>
+        </div>
     </div>
 </main>
 <footer class="myfooter" style="height: 150px">
@@ -129,6 +130,24 @@
 </body>
 <script>
 
+    function dateFmt_yyMMdd(str) {
+        var org = new Date(str);
+        var yy = org.getUTCFullYear();
+        var MM = org.getUTCMonth()+1;
+        var dd = org.getUTCDate();
+
+        return yy+'-'+MM+'-'+dd;
+    }
+
+    function aLevelDisplay(level) {
+        switch (level){
+            case 1:return '普通';break;
+            case 2:return '紧急';break;
+            default:return '不明';break;
+
+        }
+    }
+
     var StartPage =1;
     var Rows = 20;
     var pageTotal = 0;
@@ -137,12 +156,10 @@
     function getListData() {
         var parms = {
             'page': StartPage,
-            'rows': 1
+            'rows': Rows
         }
-        var ListData ={} ;
+        var ListData ={"null":null} ;
         var list='';
-
-
 
         $.ajax({
             url: '/Article/ArticleListP.do',
@@ -152,27 +169,29 @@
             success: function (data) {
                 if (data != null) {
                     ListData =data;
+                    var a = ListData.articles;
+                    var len = a.length;
+                    var ro = ListData.pageSizes;
+                    pageTotal = ListData.pages;
+
+                    for (var i = 0; i < (ro == len ?ro:len) ; i++) {
+                        var one = '<tr>' +
+                            '<td width="100">' + dateFmt_yyMMdd(a[i].publishTime) + '</td>\n' +
+                            '<td width="100">' + aLevelDisplay(a[i].aLevel) + '</td>\n' +
+                            '<td><a href="/Article/showArticle.do?aid='+a[i].aid +'" >' + a[i].title + '</a></td>\n' +
+                            '<td width="100">' + a[i].author + '</td>' +
+                            '</tr>';
+
+                        console.log(one);
+                        list = list + one;
+                        console.log(list);
+                        $('#listBody').html(list);
+                        $('#pageTotal').html('共 '+pageTotal+' 页');
+                    }
                 }
             }
         })
 
-
-        console.log(ListData);
-        var a = ListData.article;
-        console.log(a);
-        var ro = ListData.pageSizes;
-        console.log(ro);
-        pageTotal = ListData.totals;
-        console.log(pageTotal);
-        for (var i = 0; i < ro; i++) {
-            var one = '<tr>' +
-                '<td width="100">' + a[i].publishTime + '</td>\n' +
-                '<td width="100">' + a[i].aLevel + '</td>\n' +
-                '<td><a href="#" onclick="toArticle()">' + a[i].title + '</a></td>\n' +
-                '<td width="100">' + a[i].author + '</td>' +
-                '</tr>';
-            list = list + one;
-        }
         return list;
     }
 
@@ -182,6 +201,8 @@
     }
 
     $(function () {
+        getListData();
+
         var data = window.sessionStorage.getItem('name');
         if (data !=""){
             $('#userNav').html('<li class="dropdown">\n' +
@@ -196,10 +217,10 @@
                 '<li><a href="#">log out</a></li>')
         }
 
-        temp = getListData();
-        console.log(1);
-        console.log(temp);
-        $('#listBody').innerHTML=temp;
+        // temp = getListData();
+        // console.log(1);
+        // console.log(temp);
+        // $('#listBody').innerHTML=temp;
     })
 
 </script>

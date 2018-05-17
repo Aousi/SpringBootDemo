@@ -112,16 +112,14 @@
             dataType: "json",
             data:data,
             success:function (data) {
-                if(data.stateCode > 0){
+                if(data.stateCode == 200){
+                    window.sessionStorage.setItem('name',data.name);
+                    window.location.href=data.myUrl;
+                }else {
                     alert(data.msg);
-                    if (data.name != ''){
-                        window.sessionStorage.setItem('name',data.name);
-                    }
-                    if (data.myUrl != ''){
-                        window.location.href=data.myUrl;
-                    }
                 }
             }
+
         })
     }
 

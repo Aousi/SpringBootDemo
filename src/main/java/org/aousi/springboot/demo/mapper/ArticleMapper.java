@@ -21,4 +21,6 @@ public interface ArticleMapper {
     int updateByPrimaryKey(Article record);
 
     List<Article> selectByTypeAndStatus(@Param("type") Integer type,@Param("status") Integer status);
+
+    List<Article> selectUserArticle(@Param("name") String name);
 }

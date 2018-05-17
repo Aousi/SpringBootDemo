@@ -1,5 +1,6 @@
 package org.aousi.springboot.demo.Controller;
 
+import javafx.scene.input.DataFormat;
 import org.aousi.springboot.demo.Entities.Article;
 import org.aousi.springboot.demo.Service.ArticleService;
 import org.aousi.springboot.demo.mapper.ArticleMapper;
@@ -8,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -31,6 +35,7 @@ public class ArticleController {
         Integer flag = Integer.parseInt(article.get("flag"));
 
         Article a = new Article(title,author,context,level,code,type);
+
         a.setPublishTime(new Date());
 
         if (flag == 1){
@@ -48,6 +53,26 @@ public class ArticleController {
         Integer page = !parms.get("page").equals("") ?Integer.parseInt(parms.get("page")):1 ;
         Integer rows = !parms.get("rows").equals("") ?Integer.parseInt(parms.get("rows")):10 ;
 
-        return articleService.queryArticleP(1,2,1,1);
+        return articleService.queryArticleP(1,2,page,rows);
+    }
+
+    @RequestMapping("/myArticle.do")
+    @ResponseBody
+    public Map<String,Object> queryUserArticleList(@RequestParam Map<String,String> parms){
+        Map<String,Object> back =new HashMap<>();
+        Integer page = !parms.get("page").equals("") ?Integer.parseInt(parms.get("page")):1 ;
+        Integer rows = !parms.get("rows").equals("") ?Integer.parseInt(parms.get("rows")):10 ;
+
+        return articleService.queryArticleP(1,2,page,rows);
+    }
+
+    @RequestMapping("/showArticle.do")
+    @ResponseBody
+    public ModelAndView showArticle(@RequestParam("aid") Integer aid){
+
+        Map<String,Object> back = articleService.queryArticleById(aid);
+
+
+        return new ModelAndView("Article",back);
     }
 }

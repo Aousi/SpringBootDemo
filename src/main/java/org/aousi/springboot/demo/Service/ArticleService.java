@@ -8,10 +8,9 @@ import org.aousi.springboot.demo.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ArticleService {
@@ -47,8 +46,7 @@ public class ArticleService {
 
         if (articles.size() > 0 ){
             back.put("stateCode",200);
-            long total =p.getTotal();
-            back.put("totals",p.getTotal());
+            back.put("pages",p.getPages());
             back.put("pageSizes",p.getPageSize());
             back.put("nowPage",page);
             back.put("articles", articles);
@@ -59,7 +57,38 @@ public class ArticleService {
             back.put("articles",null);
         }
 
+        return back;
+    }
+    public Map<String,Object> queryArticleP(Integer type,Integer status,Integer page,Integer rows,String name){
+        Map<String,Object> back =new HashMap<>();
+        Page p = PageHelper.startPage(page,rows,"PUBLISH_TIME desc");
+        List<Article> articles = ArticleMapper.selectByTypeAndStatus(type,status);
 
+        if (articles.size() > 0 ){
+            back.put("stateCode",200);
+            back.put("pages",p.getPages());
+            back.put("pageSizes",p.getPageSize());
+            back.put("nowPage",page);
+            back.put("articles", articles);
+            back.put("msg","查询成功");
+        }else {
+            back.put("stateCode",400);
+            back.put("msg","查询失败。");
+            back.put("articles",null);
+        }
+
+        return back;
+    }
+
+    public Map<String,Object> queryArticleById(Integer aid){
+        Map<String,Object> back =new HashMap<>();
+
+        Article a = ArticleMapper.selectByPrimaryKey(aid);
+        if (a !=null ){
+            DateFormat df = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+            back.put("article",a);
+        }
         return back;
     }
 }

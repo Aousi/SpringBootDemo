@@ -22,6 +22,7 @@
     <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="LAST_EDIT_TIME" jdbcType="TIMESTAMP" property="lastEditTime" />
     <result column="A_LEVEL" jdbcType="INTEGER" property="aLevel" />
+    <result column="A_STATUS" jdbcType="INTEGER" property="aStatus" />
   </resultMap>
 
 
@@ -34,6 +35,12 @@
     select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL
     from article
     where A_TYPE = #{type} and A_STATUS = #{status}
+  </select>
+
+  <select id="selectUserArticle" resultMap="SimpleInfoList">
+    select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL
+    from article
+    where AUTHOR = #{name}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
