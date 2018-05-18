@@ -92,17 +92,20 @@
         <div>
             <ol class="breadcrumb">
                 <li><a href="/home">首页</a></li>
-                <li class="active">文章列表</li>
+                <li class="active">我的文章</li>
             </ol>
         </div>
         <div class="part1" style="min-height: 700px">
             <table id="articleList" class="table">
                 <thead>
                 <tr>
-                    <th>日期</th>
-                    <th>等级</th>
+                    <th width="100">日期</th>
+                    <th width="70">等级</th>
+                    <th width="70">类型</th>
                     <th>标题</th>
-                    <th>发布人</th>
+                    <th width="150">修改时间</th>
+                    <th width="100">文章状态</th>
+                    <th width="120">操作</th>
                 </tr>
                 </thead>
                 <tbody id="listBody">
@@ -115,6 +118,7 @@
         </div>
     </div>
 </main>
+
 <footer class="myfooter" style="height: 150px">
     <div class="container" style="text-align: left">
         <div>
@@ -127,8 +131,23 @@
     </div>
 
 </footer>
+
 </body>
 <script>
+    function dateFmt_yyMMdd_hhmmss(str) {
+        var org = new Date(str);
+        console.log(str);
+        console.log(org);
+        var yy = org.getFullYear();
+        var MM = org.getMonth()+1;
+        var dd = org.getDate();
+
+        var hh = org.getHours();
+        var mm = org.getMinutes();
+        var ss = org.getSeconds();
+
+        return yy+'-'+MM+'-'+dd+' '+hh+':'+mm+':'+ss;
+    }
 
     function dateFmt_yyMMdd(str) {
         var org = new Date(str);
@@ -148,6 +167,25 @@
         }
     }
 
+    function aStatusDisplay(i) {
+        switch (i){
+            case 0:return '草稿';break;
+            case 1:return '已发布';break;
+            case 2:return '待审核';break;
+            case 3:return '文章过期';break;
+            default:return '不明';break;
+
+        }
+    }
+
+    function aTypeDisplay(i) {
+        switch (i){
+            case 1:return '普通';break;
+            case 2:return '公文';break;
+            default:return '不明';break;
+        }
+    }
+
     var StartPage =1;
     var Rows = 20;
     var pageTotal = 0;
@@ -164,7 +202,7 @@
         var list='';
 
         $.ajax({
-            url: '/Article/ArticleListP.do',
+            url: '/Article/userArticle.do',
             type: 'POST',
             dataType: 'JSON',
             data: parms,
@@ -178,10 +216,14 @@
 
                     for (var i = 0; i < (ro == len ?ro:len); i++) {
                         var one = '<tr>' +
-                            '<td width="100">' + dateFmt_yyMMdd(a[i].publishTime) + '</td>\n' +
-                            '<td width="100">' + aLevelDisplay(a[i].aLevel) + '</td>\n' +
+                            '<td>' + dateFmt_yyMMdd(a[i].publishTime) + '</td>\n' +
+                            '<td>' + aLevelDisplay(a[i].aLevel) + '</td>\n' +
+                            '<td>' + aTypeDisplay(a[i].aType) + '</td>\n' +
                             '<td><a href="/Article/showArticle.do?aid='+a[i].aid +'" >' + a[i].title + '</a></td>\n' +
-                            '<td width="100">' + a[i].author + '</td>' +
+                            '<td>' + dateFmt_yyMMdd_hhmmss(a[i].lastEditTime)+ '</td>' +
+                            '<td>' + aStatusDisplay(a[i].aStatus) + '</td>' +
+                            '<td><a href="/Article/editArticle.do?aid='+ a[i].aid +'"><button class="btn btn-primary btn-sm">修改</button></a> ' +
+                            ' <button class="btn btn-danger btn-sm">删除</button></td>' +
                             '</tr>';
 
                         console.log(one);
@@ -195,11 +237,6 @@
         })
 
         return list;
-    }
-
-
-    function toArticle() {
-        $.get("/Article")
     }
 
     $(function () {

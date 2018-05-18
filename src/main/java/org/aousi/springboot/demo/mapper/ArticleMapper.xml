@@ -22,6 +22,7 @@
     <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="LAST_EDIT_TIME" jdbcType="TIMESTAMP" property="lastEditTime" />
     <result column="A_LEVEL" jdbcType="INTEGER" property="aLevel" />
+    <result column="A_TYPE" jdbcType="INTEGER" property="aType" />
     <result column="A_STATUS" jdbcType="INTEGER" property="aStatus" />
   </resultMap>
 
@@ -31,14 +32,18 @@
     A_CODE, A_TYPE, A_STATUS
   </sql>
 
+  <sql id="SimpInfo">
+    AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL,A_STATUS
+  </sql>
+
   <select id="selectByTypeAndStatus" resultMap="SimpleInfoList">
-    select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL
+    select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL,A_STATUS
     from article
     where A_TYPE = #{type} and A_STATUS = #{status}
   </select>
 
   <select id="selectUserArticle" resultMap="SimpleInfoList">
-    select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL
+    select AID,TITLE,AUTHOR,PUBLISH_TIME,LAST_EDIT_TIME,A_LEVEL,A_TYPE,A_STATUS
     from article
     where AUTHOR = #{name}
   </select>

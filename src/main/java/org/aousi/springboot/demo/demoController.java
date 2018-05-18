@@ -32,4 +32,9 @@ public class demoController {
     public String newArticle(){
         return "newArticle";
     }
+
+    @RequestMapping("/myArticle")
+    public String myArticle(){
+        return "myArticle";
+    }
 }
