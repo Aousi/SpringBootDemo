@@ -114,7 +114,7 @@
             success:function (data) {
                 if(data.stateCode == 200){
                     window.sessionStorage.setItem('name',data.name);
-                    window.location.href=data.myUrl;
+                    window.location.href=data.toUrl;
                 }else {
                     alert(data.msg);
                 }

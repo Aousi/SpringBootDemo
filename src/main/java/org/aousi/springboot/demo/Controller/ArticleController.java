@@ -67,6 +67,19 @@ public class ArticleController {
         return articleService.queryUserArticle(page,rows,name);
     }
 
+    @RequestMapping("/RecycleArticles.do")
+    @ResponseBody
+    public Map<String,Object> queryRecycleArticles(@RequestParam Map<String,String> parms){
+        Map<String,Object> back =new HashMap<>();
+        Integer page = !parms.get("page").equals("") ?Integer.parseInt(parms.get("page")):1 ;
+        Integer rows = !parms.get("rows").equals("") ?Integer.parseInt(parms.get("rows")):10 ;
+
+        String name = parms.get("user");
+
+
+        return articleService.queryRecycleArticles(page,rows,name,4);// 4 == 删除保存到回收站
+    }
+
     @RequestMapping("/showArticle.do")
     @ResponseBody
     public ModelAndView showArticle(@RequestParam("aid") Integer aid){
@@ -118,4 +131,34 @@ public class ArticleController {
         }
         return articleService.updataArticle(a);
     }
+
+    @RequestMapping("/recycle.do")
+    @ResponseBody
+    public ModelAndView recycleArticle(@RequestParam("aid") Integer aid){
+        Article a = new Article();
+
+        a.setAid(aid);
+        a.setaStatus(4); // 移动到回收站;
+
+        return new ModelAndView("transition",articleService.updataArticle(a));
+    }
+
+    @RequestMapping("/delete.do")
+    @ResponseBody
+    public Map<String,Object> deleteArticle(@RequestParam("aid") Integer aid){
+
+        return articleService.deleteByAid(aid);
+    }
+
+    @RequestMapping("/restore.do")
+    @ResponseBody
+    public ModelAndView restoreArticle(@RequestParam("aid") Integer aid){
+        Article a = new Article();
+        a.setAid(aid);
+        a.setaStatus(2); // 变为草稿状态;
+
+        return new ModelAndView("transition",articleService.updataArticle(a));
+    }
+
+
 }

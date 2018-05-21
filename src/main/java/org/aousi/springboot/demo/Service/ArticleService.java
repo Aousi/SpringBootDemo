@@ -50,7 +50,11 @@ public class ArticleService {
             if(article.getaStatus() == 0){
                 back.put("msg","文章草稿修改成功！文章编号："+aid+"。");
             }else if (article.getaStatus() == 2){
-                back.put("msg","文章已修改，等待管理员审核后重新发布！文章编号："+aid+"。");
+                back.put("msg","文章已修改(或恢复)，等待管理员审核后重新发布！文章编号："+aid+"。");
+                back.put("toUrl","/myArticle");
+            }else if (article.getaStatus() == 4){
+                back.put("msg","文章编号："+aid+",已删除，若要恢复请到回收站查看。");
+                back.put("toUrl","/myArticle");
             }
         }else {
             back.put("stateCode",400);
@@ -67,6 +71,7 @@ public class ArticleService {
 
         return ArticleListResponse(page, back, p, articles);
     }
+
     public Map<String,Object> queryUserArticle(Integer page,Integer rows,String name){
         Map<String,Object> back =new HashMap<>();
         Page p = PageHelper.startPage(page,rows,"PUBLISH_TIME desc");
@@ -74,6 +79,16 @@ public class ArticleService {
 
         return ArticleListResponse(page, back, p, articles);
     }
+
+    public Map<String,Object> queryRecycleArticles(Integer page,Integer rows,String name,Integer status){
+        Map<String,Object> back =new HashMap<>();
+        Page p = PageHelper.startPage(page,rows,"PUBLISH_TIME desc");
+        List<Article> articles = ArticleMapper.selectByUserAndStatus(name,status);
+
+        return ArticleListResponse(page, back, p, articles);
+    }
+
+
 
     private Map<String, Object> ArticleListResponse(Integer page, Map<String, Object> back, Page p, List<Article> articles) {
         if (articles.size() > 0 ){
@@ -85,6 +100,7 @@ public class ArticleService {
             back.put("msg","查询成功");
         }else {
             back.put("stateCode",400);
+            back.put("nowPage",page);
             back.put("msg","查询失败。");
             back.put("articles",null);
         }
@@ -100,6 +116,22 @@ public class ArticleService {
             df.setTimeZone(TimeZone.getTimeZone("GMT"));
             back.put("article",a);
         }
+        return back;
+    }
+
+    public Map<String,Object> deleteByAid(Integer aid){
+        Map<String,Object> back =new HashMap<>();
+
+        Integer result = ArticleMapper.deleteByPrimaryKey(aid);
+
+        if (result > 0){
+            back.put("stateCode",200);
+            back.put("msg","文章已被彻底删除。");
+        }else {
+            back.put("stateCode",400);
+            back.put("msg","文章已删除失败。");
+        }
+
         return back;
     }
 }

@@ -37,4 +37,9 @@ public class demoController {
     public String myArticle(){
         return "myArticle";
     }
+
+    @RequestMapping("/recycledArticle")
+    public String recycleArticle(){
+        return "recycleArticle";
+    }
 }

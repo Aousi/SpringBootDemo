@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Transition</title>
+</head>
+<script th:src="@{/js/jquery.min.js}"></script>
+<body>
+<div style="margin: 20% auto;width:960px">
+    <img th:src="@{/img/run.gif}" >
+    <h3>跳转中....</h3>
+    <h3 th:text="${msg}"></h3>
+    <input id="url" type="hidden" th:value="${toUrl}">
+</div>
+</body>
+<script>
+    $(function () {
+        setTimeout(function () {
+            window.location.href = $('#url').val();
+        },1000)
+    })
+</script>
+</html>

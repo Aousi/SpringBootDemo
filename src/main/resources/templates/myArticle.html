@@ -20,6 +20,10 @@
         .myfooter div{
             margin-top: 30px;
         }
+
+        .part2 *{
+            margin: 3px 3px;
+        }
     </style>
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -63,7 +67,8 @@
                         <li><a href="/articleList">文章列表</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/newArticle">发文</a></li>
-                        <li><a href="#">我的文章</a></li>
+                        <li><a href="/myArticle">我的文章</a></li>
+                        <li><a href="/recycledArticle">回收站</a></li>
                     </ul>
                 </li>
                 <li><a href="#">PART 3</a></li>
@@ -114,7 +119,10 @@
             </table>
         </div>
         <div class="part2" style="text-align: center">
-            <span id="pageTotal"></span>
+            <span id="pageTotal"></span><span id="nowPage"></span>
+            <button class="btn btn-link btn-sm" onclick="previousPage()">上一页</button>
+            <button class="btn btn-link btn-sm" onclick="nextPage()">下一页</button>
+            前往第<input id="pageNum" type="text" style="width: 30px">页  <button class="btn btn-primary btn-sm" onclick="jumpTo()">前往</button>
         </div>
     </div>
 </main>
@@ -189,12 +197,12 @@
     var StartPage =1;
     var Rows = 20;
     var pageTotal = 0;
-    var temp = '';
+    var nowPage = 1;
     var nowUser = window.sessionStorage.getItem('name');
 
-    function getListData() {
+    function getListData(page) {
         var parms = {
-            'page': StartPage,
+            'page': page,
             'rows': Rows,
             'user':nowUser
         }
@@ -210,12 +218,20 @@
                 if (data != null) {
                     ListData =data;
                     var a = ListData.articles;
-                    var len = a.length;
-                    var ro = ListData.pageSizes;
-                    pageTotal = ListData.pages;
+                    var one = '';
+                    if (a != null){
+                        var len = a.length;
+                        var ro = ListData.pageSizes;
+                        pageTotal = ListData.pages;
+                        nowPage = ListData.nowPage;
+                    }else {
+                        len = 0
+                        pageTotal = 1;
+                    }
+
 
                     for (var i = 0; i < (ro == len ?ro:len); i++) {
-                        var one = '<tr>' +
+                        one = '<tr>' +
                             '<td>' + dateFmt_yyMMdd(a[i].publishTime) + '</td>\n' +
                             '<td>' + aLevelDisplay(a[i].aLevel) + '</td>\n' +
                             '<td>' + aTypeDisplay(a[i].aType) + '</td>\n' +
@@ -223,15 +239,14 @@
                             '<td>' + dateFmt_yyMMdd_hhmmss(a[i].lastEditTime)+ '</td>' +
                             '<td>' + aStatusDisplay(a[i].aStatus) + '</td>' +
                             '<td><a href="/Article/editArticle.do?aid='+ a[i].aid +'"><button class="btn btn-primary btn-sm">修改</button></a> ' +
-                            ' <button class="btn btn-danger btn-sm">删除</button></td>' +
+                            ' <a href="/Article/recycle.do?aid='+ a[i].aid +'"><button class="btn btn-danger btn-sm">删除</button></a></td>' +
                             '</tr>';
 
-                        console.log(one);
                         list = list + one;
-                        console.log(list);
-                        $('#listBody').html(list);
-                        $('#pageTotal').html('共 '+pageTotal+' 页');
                     }
+                    $('#listBody').html(list);
+                    $('#pageTotal').html('共 '+pageTotal+' 页   ');
+                    $('#nowPage').html('第'+nowPage+'页');
                 }
             }
         })
@@ -239,8 +254,37 @@
         return list;
     }
 
+    function nextPage() {
+        if (nowPage == pageTotal){
+            alert("当前已是最后一页！")
+        }else {
+            getListData(nowPage+1);
+        }
+    }
+
+    function jumpTo() {
+        var page = $('#pageNum').val();
+
+        if (page > pageTotal){
+            alert("已超过最大页数！")
+        }else if (page <= 0){
+            alert("输入页数不能小于等于零！")
+        }else{
+            getListData(page);
+        }
+    }
+
+    function previousPage() {
+        if (nowPage-1 ==0){
+            alert("当前已是第一页！")
+        }else {
+            getListData(nowPage-1);
+        }
+    }
+
+
     $(function () {
-        getListData();
+        getListData(StartPage);
 
         var data = window.sessionStorage.getItem('name');
         if (data !=""){

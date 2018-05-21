@@ -23,4 +23,6 @@ public interface ArticleMapper {
     List<Article> selectByTypeAndStatus(@Param("type") Integer type,@Param("status") Integer status);
 
     List<Article> selectUserArticle(@Param("name") String name);
+
+    List<Article> selectByUserAndStatus(@Param("name") String name,@Param("status") Integer status);
 }
