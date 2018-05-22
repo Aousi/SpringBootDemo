@@ -6,16 +6,19 @@
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-select.css}">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.css">
     <style>
         .myfooter {
             background-color: #5f5f5f;
         }
 
-        .myfooter a,p{
+        .myfooter a, p {
             margin-left: 10px;
         }
 
-        .myfooter div{
+        .myfooter div {
             margin-top: 30px;
         }
 
@@ -26,7 +29,14 @@
     </style>
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
-<script  th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/defaults-zh_CN.min.js}"></script>
+<script type="text/javascript" src="/static/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/js/defaults-zh_CN.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -48,7 +58,7 @@
         <div id="LinkPart" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
                        aria-expanded="false">文章<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/articleList">文章列表</a></li>
@@ -60,7 +70,7 @@
                 </li>
                 <li><a href="#">PART 3</a></li>
                 <li class="dropdown">
-                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
                        aria-expanded="false">SELECT<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">PART 1</a></li>
@@ -69,7 +79,7 @@
                     </ul>
                 </li>
             </ul>
-            <input id="nameNav" type="hidden" th:value="${name}" >
+            <input id="nameNav" type="hidden" th:value="${name}">
             <ul class="nav navbar-nav navbar-right" id="userNav">
                 <li><a href="#">LOGIN or SIGN UP</a></li>
             </ul>
@@ -79,8 +89,71 @@
 
 
 <main style="width: 960px;margin: 0 auto">
-    <div class="container" style="width: inherit">
+    <div class="container" style="box-shadow:width: inherit">
 
+        <form class="form-horizontal">
+
+            <div class="form-group disabled ">
+                <label class="col-md-2">uid</label>
+                <div class="col-md-10">
+                    <p id="uid" th:text="${user.uid}"></p>
+                </div>
+            </div>
+            <div class="form-group disabled col-md-12">
+                <label class="col-md-2">username</label>
+                <div class="col-md-10">
+                    <p id="username" th:text="${user.username}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12 ">
+                <label class="col-md-2">nickname</label>
+                <div class="col-md-10">
+                    <p id="nickname"  th:text="${user.nickname}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">area</label>
+                <div class="col-md-10">
+                    <p id="area" th:text="${user.area}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">department</label>
+                <div class="col-md-10">
+                    <p id="department" th:text="${user.department}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">position</label>
+                <div class="col-md-10">
+                    <p id="position" th:text="${user.position}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">tel</label>
+                <div class="col-md-10">
+                    <p id="tel" th:text="${user.tel}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">phone</label>
+                <div class="col-md-10">
+                    <p id="phone" th:text="${user.phone}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">email</label>
+                <div class="col-md-10">
+                    <p id="emil" th:text="${user.email}"></p>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-md-2">registerTime</label>
+                <div class="col-md-10">
+                    <p id="registerTime" th:text="${user.registerTime}"></p>
+                </div>
+            </div>
+        </form>
     </div>
 </main>
 
@@ -99,6 +172,7 @@
 </footer>
 
 </body>
+
 <script>
     $(function () {
         var data = window.sessionStorage.getItem('name');
@@ -112,13 +186,8 @@
                 ' <li><a href="#">PART 3</a></li>\n' +
                 ' </ul>\n' +
                 ' </li>' +
-                '<li><a href="#" onclick="logout()">log out</a></li>')
+                '<li><a href="#">log out</a></li>')
         }
     })
-
-    function logout() {
-        window.sessionStorage.removeItem('name');
-        window.location.href='/login'
-    }
 </script>
 </html>

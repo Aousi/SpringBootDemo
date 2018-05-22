@@ -28,15 +28,15 @@
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
-<script  src="/static/js/bootstrap.min.js"></script>
+<!--<script  src="/static/js/bootstrap.min.js"></script>-->
 
 <script th:src="@{/js/bootstrap-table.min.js}"></script>
 <script  th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
-<script  src="/static/js/bootstrap-table.min.js"></script>
-<script  src="/static/js/bootstrap-table-zh-CN.min.js"></script>
+<!--<script  src="/static/js/bootstrap-table.min.js"></script>-->
+<!--<script  src="/static/js/bootstrap-table-zh-CN.min.js"></script>-->
 
 
-<link type="text/css" href="/static/css/bootstrap-table.css">
+<!--<link type="text/css" href="/static/css/bootstrap-table.css">-->
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -292,7 +292,7 @@
                 ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
                 ' aria-expanded="false" >'+data+'<span class="caret"></span></a>\n' +
                 ' <ul class="dropdown-menu">\n' +
-                ' <li><a href="#">PART 1</a></li>\n' +
+                ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
                 ' <li><a href="#">PART 2</a></li>\n' +
                 ' <li><a href="#">PART 3</a></li>\n' +
                 ' </ul>\n' +

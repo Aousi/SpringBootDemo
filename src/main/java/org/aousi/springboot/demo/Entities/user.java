@@ -1,6 +1,6 @@
 package org.aousi.springboot.demo.Entities;
 
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
 public class User {
@@ -10,6 +10,10 @@ public class User {
 
     private String password;
 
+    private String nickname;
+
+    private String position;
+
     private String area;
 
     private String department;
@@ -18,48 +22,28 @@ public class User {
 
     private String phone;
 
-    private String eMail;
+    private String email;
 
-    private Set<Role> Roles = new HashSet<>();
+    private Date registerTime;
 
-    private Set<Role> publishArticle = new HashSet<>();
-
-    private Set<Role> receiveArticle = new HashSet<>();
+    private Set<Role> roles;
 
     public User() {
     }
 
-
-
-    public User(String username, String password, String eMail, Set<Role> Roles) {
+    public User(String username, String password, String email, Set<Role> roles) {
         this.username = username;
         this.password = password;
-        this.eMail = eMail;
-        this.Roles = Roles;
-    }
-
-    public Set<Role> getPublishArticle() {
-        return publishArticle;
-    }
-
-    public void setPublishArticle(Set<Role> publishArticle) {
-        this.publishArticle = publishArticle;
-    }
-
-    public Set<Role> getReceiveArticle() {
-        return receiveArticle;
-    }
-
-    public void setReceiveArticle(Set<Role> receiveArticle) {
-        this.receiveArticle = receiveArticle;
+        this.email = email;
+        this.roles = roles;
     }
 
     public Set<Role> getRoles() {
-        return Roles;
+        return roles;
     }
 
-    public void setRoles(Set<Role> Roles) {
-        this.Roles = Roles;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Integer getUid() {
@@ -84,6 +68,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position == null ? null : position.trim();
     }
 
     public String getArea() {
@@ -118,11 +118,19 @@ public class User {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail == null ? null : eMail.trim();
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }

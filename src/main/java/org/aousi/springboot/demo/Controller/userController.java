@@ -75,4 +75,11 @@ public class userController {
         }
         return getBack;
     }
+
+    @RequestMapping("/getPerson.do")
+    @ResponseBody
+    public ModelAndView getPerson(@RequestParam("name") String name){
+
+        return new ModelAndView("personalPage",userService.queryUserByUName(name));
+    }
 }

@@ -33,11 +33,11 @@
         </javaClientGenerator>
 
 
-        <!--<table tableName="User" domainObjectName="User"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-        <!--</table>-->
+        <table tableName="User" domainObjectName="User"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
 
         <!--<table tableName="Role" domainObjectName="Role"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
@@ -62,11 +62,11 @@
                <!--selectByExampleQueryId="false" >-->
         <!--</table>-->
 
-        <table tableName="article" domainObjectName="Article"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
+        <!--<table tableName="article" domainObjectName="Article"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
         <!--<table tableName="article_author" domainObjectName="ArticleAuthor"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->

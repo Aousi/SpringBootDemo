@@ -1,10 +1,11 @@
 package org.aousi.springboot.demo.mapper;
 
 import org.aousi.springboot.demo.Entities.User;
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "userMapper")
-public interface userMapper {
+@Repository
+public interface UserMapper {
     int deleteByPrimaryKey(Integer uid);
 
     int insert(User record);
@@ -17,5 +18,7 @@ public interface userMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectByUserName(String username);
+    User selectByUserName(@Param("name") String name);
+
+    User loginSelect(@Param("name") String name);
 }

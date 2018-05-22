@@ -3,8 +3,8 @@ package org.aousi.springboot.demo.Service;
 import org.aousi.springboot.demo.Entities.Role;
 import org.aousi.springboot.demo.Entities.User;
 import org.aousi.springboot.demo.Entities.UserRole;
+import org.aousi.springboot.demo.mapper.UserMapper;
 import org.aousi.springboot.demo.mapper.UserRoleMapper;
-import org.aousi.springboot.demo.mapper.userMapper;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Set;
 public class userService {
 
     @Autowired
-    private userMapper userMapper;
+    private UserMapper userMapper;
     @Autowired
     private UserRoleMapper userRoleMapper;
 
@@ -60,7 +60,7 @@ public class userService {
         String password = user.get("password");
 
         String pw_md5 = new SimpleHash("MD5",password,username,2).toHex();
-        User u = this.queryUserByName(username);
+        User u = userMapper.loginSelect(username);
         if (u == null){
             getBack.put("stateCode",404);
             getBack.put("msg","用户不存在");
@@ -78,7 +78,19 @@ public class userService {
 
     public User queryUserByName(String name){
         User u = userMapper.selectByUserName(name);
-
         return u;
+    }
+
+    public Map<String,Object> queryUserByUName(String name){
+        Map<String,Object> getBack = new HashMap<>();
+        User u = userMapper.selectByUserName(name);
+        if (u != null){
+            getBack.put("statusCode",200);
+            getBack.put("user",u);
+        }else {
+            getBack.put("statusCode",400);
+            getBack.put("user",null);
+        }
+        return getBack;
     }
 }
