@@ -82,4 +82,20 @@ public class userController {
 
         return new ModelAndView("personalPage",userService.queryUserByUName(name));
     }
+
+    @RequestMapping("/editPerson.do")
+    @ResponseBody
+    public ModelAndView editPerson(@RequestParam("name") String name){
+
+        return new ModelAndView("editPersonal",userService.queryUserByUName(name));
+    }
+
+
+
+    @RequestMapping("/editPassword.do")
+    @ResponseBody
+    public ModelAndView editPassword(@RequestParam("name") String name){
+
+        return new ModelAndView("personalPage",userService.queryUserByUName(name));
+    }
 }

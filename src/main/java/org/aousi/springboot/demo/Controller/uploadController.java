@@ -38,12 +38,11 @@ public class uploadController {
             back.put("statusCode",200);
             return back;
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             back.put("statusCode",400);
             return back;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
             back.put("statusCode",400);
             return back;

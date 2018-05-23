@@ -100,66 +100,58 @@
                     <!--<p id="xxxxxx">                                       </p>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class="form-group disabled  col-md-12">
+            <div class="form-group disabled col-md-12">
                 <label class="col-md-2">uid</label>
                 <div class="col-md-10">
-                    <p id="uid" th:text="${user.uid}"></p>
+                    <input id="uid" class="form-control" th:value="${user.uid}" disabled></input>
                 </div>
             </div>
 
             <div class="form-group disabled col-md-12">
                 <label class="col-md-2">username</label>
                 <div class="col-md-10">
-                    <p id="username" th:text="${user.username}"></p>
+                    <input id="username" class="form-control" th:value="${user.username}" disabled></input>
                 </div>
             </div>
 
             <div class="form-group col-md-12 ">
                 <label class="col-md-2">nickname</label>
                 <div class="col-md-10">
-                    <p id="nickname"  th:text="${user.nickname}"></p>
+                    <input type="text" class="form-control" id="nickname"  th:value="${user.nickname}"></input>
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">area</label>
-                <div class="col-md-10">
-                    <p id="area" th:text="${user.area}"></p>
+                <div class="col-md-4">
+                    <select class="selectpicker" id="area"></select>
                 </div>
-            </div>
-            <div class="form-group col-md-12">
                 <label class="col-md-2">department</label>
-                <div class="col-md-10">
-                    <p id="department" th:text="${user.department}"></p>
+                <div class="col-md-4">
+                    <select class="selectpicker" id="department" th:value="${user.department}"></select>
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">position</label>
                 <div class="col-md-10">
-                    <p id="position" th:text="${user.position}"></p>
+                    <input id="position" class="form-control" th:value="${user.position}"></input>
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">tel</label>
                 <div class="col-md-10">
-                    <p id="tel" th:text="${user.tel}"></p>
+                    <input type="text" class="form-control" id="tel" th:value="${user.tel}"></input>
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">phone</label>
                 <div class="col-md-10">
-                    <p id="phone" th:text="${user.phone}"></p>
+                    <input type="text" class="form-control" id="phone" th:value="${user.phone}"></input>
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">email</label>
                 <div class="col-md-10">
-                    <p id="emil" th:text="${user.email}"></p>
-                </div>
-            </div>
-            <div class="form-group col-md-12">
-                <label class="col-md-2">registerTime</label>
-                <div class="col-md-10">
-                    <p id="registerTime" th:text="${user.registerTime}"></p>
+                    <input type="text" class="form-control" id="emil" th:value="${user.email}"></input>
                 </div>
             </div>
         </form>
@@ -183,6 +175,9 @@
 </body>
 
 <script>
+
+
+
     $(function () {
         var data = window.sessionStorage.getItem('name');
         if (data !=""){
@@ -197,7 +192,60 @@
                 ' </li>' +
                 '<li><a href="#" onclick="logout()">log out</a></li>')
         }
+
+        getSelectData();
     })
+
+
+    
+    function getSelectData() {
+
+        var Areas = {"null":null};
+        var Departments = {"null":null};
+
+        var al ='';
+        var dl ='';
+
+        $.ajax({
+            url: '/data/getArea.do',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.statusCode = 200){
+                    Areas = data.areas;
+                    for (var i =0;i<Areas.length;i++){
+
+                        var one = '<option>'+Areas[i].areaName+'</option>';
+                        al = al + one;
+                    }
+                    $('#area').append(al);
+                    $('#area').selectpicker('refresh');
+                }else {
+                    alert("未取到地区数据！")
+                }
+            }
+        })
+
+        $.ajax({
+            url: '/data/getDepartment.do',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.statusCode = 200){
+                    Departments = data.departments; //departments
+                    for (var i =0;i<Departments.length;i++){
+
+                        var one = '<option>'+Departments[i].dName+'</option>';
+                        dl = dl + one;
+                    }
+                    $('#department').append(dl);
+                    $('#department').selectpicker('refresh');
+                }else {
+                    alert("未取到部门数据！")
+                }
+            }
+        })
+    }
 
     function logout() {
         window.sessionStorage.removeItem('name');

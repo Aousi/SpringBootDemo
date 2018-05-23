@@ -9,10 +9,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service("userService")
 public class userService {
@@ -24,6 +21,9 @@ public class userService {
 
     public Map<String,Object> signUp(User User, Set<Role> Roles){
         Map<String,Object> getBack = new HashMap<>();
+
+        Date d = new Date();
+        User.setRegisterTime(d);
 
         int result = userMapper.insertSelective(User);
         int result2 = 0;

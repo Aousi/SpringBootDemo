@@ -154,15 +154,20 @@
                 ' aria-expanded="false" >'+data+'<span class="caret"></span></a>\n' +
                 ' <ul class="dropdown-menu">\n' +
                 ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
-                ' <li><a href="#">PART 2</a></li>\n' +
-                ' <li><a href="#">PART 3</a></li>\n' +
+                ' <li><a href="/user/editPerson.do?name='+data+'">修改个人信息</a></li>\n' +
+                ' <li><a href="/user/editPassword.do?name='+data+'">修改密码</a></li>\n' +
                 ' </ul>\n' +
                 ' </li>' +
-                '<li><a href="#">log out</a></li>')
+                '<li><a href="#" onclick="logout()">log out</a></li>')
         }
 
         var dateStr = $('#hiddenDate').val();
         $('#publishDate').html(dateFmt_yyMMdd_hhmmss(dateStr));
     })
+
+    function logout() {
+        window.sessionStorage.removeItem('name');
+        window.location.href='/login'
+    }
 </script>
 </html>
