@@ -7,10 +7,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -90,7 +87,24 @@ public class userController {
         return new ModelAndView("editPersonal",userService.queryUserByUName(name));
     }
 
+    @RequestMapping("/updatePerson.do")
+    @ResponseBody
+    public Map<String,Object> editPerson(@RequestBody Map<String,String> user){
+//        Map<String,String> user = new HashMap<>();
+        Integer uid =Integer.parseInt(user.get("uid"));
+        String name =user.get("name");
+        String nickname =user.get("nickname");
+        String area =user.get("area");
+        String department =user.get("department");
+        String position =user.get("position");
+        String tel =user.get("tel");
+        String phone =user.get("phone");
+        String email =user.get("email");
 
+        User u =new User(uid,name,nickname,position,area,department,tel,phone,email);
+
+        return userService.updataUser(u);
+    }
 
     @RequestMapping("/editPassword.do")
     @ResponseBody

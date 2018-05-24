@@ -93,70 +93,95 @@
         <div class="page-header col-md-12 col-sm-12 col-xs-12">
             <h1>帐号信息 <small>personal information</small></h1>
         </div>
-        <form class="form-horizontal">
-            <!--<div class="form-group disabled ">-->
-                <!--<label class="col-md-2">      </label>-->
-                <!--<div class="col-md-10">-->
-                    <!--<p id="xxxxxx">                                       </p>-->
-                <!--</div>-->
-            <!--</div>-->
+        <div id="msgDiv"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+        <form class="form-horizontal" id="userForm">
+
             <div class="form-group disabled col-md-12">
                 <label class="col-md-2">uid</label>
                 <div class="col-md-10">
-                    <input id="uid" class="form-control" th:value="${user.uid}" disabled></input>
+                    <input id="uid" name="uid" class="form-control" th:value="${user.uid}" disabled></input>
                 </div>
             </div>
 
             <div class="form-group disabled col-md-12">
                 <label class="col-md-2">username</label>
                 <div class="col-md-10">
-                    <input id="username" class="form-control" th:value="${user.username}" disabled></input>
+                    <input id="username" name="username" class="form-control" th:value="${user.username}" disabled></input>
                 </div>
             </div>
 
             <div class="form-group col-md-12 ">
                 <label class="col-md-2">nickname</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="nickname"  th:value="${user.nickname}"></input>
+                    <input type="text" name="nickname" class="form-control updateData" id="nickname"  th:value="${user.nickname}"></input>
+                    <input type="hidden" id="getNick" th:value="${user.nickname}">
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">area</label>
                 <div class="col-md-4">
-                    <select class="selectpicker" id="area"></select>
+                    <select class="selectpicker  updateData" name="area" id="area" th:value="${user.area}"></select>
+                    <input type="hidden" id="getArea" th:value="${user.area}">
                 </div>
                 <label class="col-md-2">department</label>
                 <div class="col-md-4">
-                    <select class="selectpicker" id="department" th:value="${user.department}"></select>
+                    <select class="selectpicker  saveData" id="department" name="department"></select>
+                    <input type="hidden" id="getDept" th:value="${user.department}">
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">position</label>
                 <div class="col-md-10">
-                    <input id="position" class="form-control" th:value="${user.position}"></input>
+                    <input id="position" class="form-control  updateData" name="position" th:value="${user.position}"></input>
+                    <input type="hidden" id="getPosi" th:value="${user.position}">
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">tel</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="tel" th:value="${user.tel}"></input>
+                    <input type="text" class="form-control  updateData" id="tel" name="tel" th:value="${user.tel}"></input>
+                    <input type="hidden" id="getTel" th:value="${user.tel}">
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">phone</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="phone" th:value="${user.phone}"></input>
+                    <input type="text" class="form-control updateData" id="phone" name="phone" th:value="${user.phone}"></input>
+                    <input type="hidden" id="getPhone" th:value="${user.phone}">
                 </div>
             </div>
             <div class="form-group col-md-12">
                 <label class="col-md-2">email</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="emil" th:value="${user.email}"></input>
+                    <input type="text" class="form-control updateData" id="emil" name="email" th:value="${user.email}"></input>
+                    <input type="hidden" id="getEmail" th:value="${user.email}">
                 </div>
             </div>
         </form>
+
+        <div style="text-align: center">
+            <button class="btn btn-primary btnDiv" data-toggle="modal" data-target="#confirm">submit</button>
+        </div>
     </div>
 </main>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="confirm">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认要保存修改吗？&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveChange()">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <footer class="myfooter" style="height: 150px">
@@ -176,6 +201,75 @@
 
 <script>
 
+    var changeFlag = false;
+
+    function confirmChange() {
+        var i = '';
+        $('.updateData').change(function () {
+            i = $(this).val();
+            console.log('i=>   '+i);
+        })
+
+        if (i = ''){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    
+    function saveChange() {
+        var user = $('#userForm').serializeArray();
+        var data = convertToJson(user);
+        var jsons = JSON.stringify(data);
+
+        if (changeFlag){
+            $.ajax({
+                url: '/user/updatePerson.do',
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: "application/json;charset=utf-8",
+                data:jsons,
+                success:function (data) {
+                    if (data.statusCode = 200){
+                        $('#confirm').modal('hide')
+                        $('#confirm').on('hidden.bs.modal', function (e) {
+                            var info = '<div class="alert alert-success" role="alert">' +
+                                ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                                ''+data.msg+'</div>'
+
+                            $('#msgDiv').html(info);
+                            changeFlag = false;
+                        })
+                    }else {
+                        $('#confirm').modal('hide')
+                        var info = '<div class="alert alert-danger" role="alert">' +
+                            ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                            ''+data.msg+'</div>'
+
+                        $('#msgDiv').html(info);
+                        changeFlag = false;
+                    }
+                }
+            })
+        }else {
+            $('#confirm').modal('hide')
+            var info = '<div class="alert alert-warning" role="alert">' +
+                ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                '当前数据无更改！请修改至少一项</div>'
+
+            $('#msgDiv').html(info);
+            changeFlag = false;
+        }
+    }
+
+    function convertToJson(str) {
+        var obj ={"uid":$('#uid').val(),"name":$('#username').val()};
+        for (var i in str){
+            obj[str[i].name]=str[i]['value'];
+        }
+        return obj;
+    }
+
 
 
     $(function () {
@@ -194,6 +288,15 @@
         }
 
         getSelectData();
+
+        $('#department').on('refreshed.bs.select',function (e) {
+            $('#department').selectpicker('val',$('#getDept').val());
+        })
+        $('#area').on('refreshed.bs.select',function (e) {
+            $('#area').selectpicker('val',$('#getArea').val());
+        });
+
+        changeFlag = confirmChange();
     })
 
 
@@ -220,6 +323,7 @@
                     }
                     $('#area').append(al);
                     $('#area').selectpicker('refresh');
+
                 }else {
                     alert("未取到地区数据！")
                 }
@@ -240,11 +344,15 @@
                     }
                     $('#department').append(dl);
                     $('#department').selectpicker('refresh');
+
                 }else {
                     alert("未取到部门数据！")
                 }
             }
         })
+
+
+
     }
 
     function logout() {

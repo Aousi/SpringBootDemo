@@ -87,10 +87,27 @@ public class userService {
         if (u != null){
             getBack.put("statusCode",200);
             getBack.put("user",u);
+
         }else {
             getBack.put("statusCode",400);
             getBack.put("user",null);
         }
+        return getBack;
+    }
+
+    public Map<String,Object> updataUser(User user){
+        Map<String,Object> getBack = new HashMap<>();
+        int result = userMapper.updateByPrimaryKeySelective(user);
+        if (result > 0){
+            getBack.put("statusCode",200);
+            getBack.put("msg","资料保存成功");
+            getBack.put("toUrl","/user/getPerson.do?name="+user.getUsername());
+        }else {
+            getBack.put("statusCode",400);
+            getBack.put("msg","资料保存失败");
+            getBack.put("toUrl","/user/editPerson.do?name="+user.getUsername());
+        }
+
         return getBack;
     }
 }
