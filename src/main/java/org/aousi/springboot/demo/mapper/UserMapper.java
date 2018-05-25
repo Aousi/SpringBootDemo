@@ -21,4 +21,6 @@ public interface UserMapper {
     User selectByUserName(@Param("name") String name);
 
     User loginSelect(@Param("name") String name);
+
+    int userIsExist(@Param("name") String name);
 }

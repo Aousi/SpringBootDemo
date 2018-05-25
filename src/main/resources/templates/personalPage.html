@@ -160,6 +160,7 @@
                 <label class="col-md-2">registerTime</label>
                 <div class="col-md-10">
                     <p id="registerTime" th:text="${user.registerTime}"></p>
+                    <input id="regis" type="hidden" th:value="${user.registerTime}">
                 </div>
             </div>
         </form>
@@ -183,6 +184,22 @@
 </body>
 
 <script>
+
+    function dateFmt_yyMMdd_hhmmss(str) {
+        var org = new Date(str);
+        console.log(str);
+        console.log(org);
+        var yy = org.getFullYear();
+        var MM = org.getMonth()+1;
+        var dd = org.getDate();
+
+        var hh = org.getHours();
+        var mm = org.getMinutes();
+        var ss = org.getSeconds();
+
+        return yy+'-'+MM+'-'+dd+' '+hh+':'+mm+':'+ss;
+    }
+
     $(function () {
         var data = window.sessionStorage.getItem('name');
         if (data !=""){
@@ -197,11 +214,15 @@
                 ' </li>' +
                 '<li><a href="#" onclick="logout()">log out</a></li>')
         }
+
+
+        var strDate = dateFmt_yyMMdd_hhmmss($('#regis').val());
+        $('#registerTime').html(strDate);
     })
 
     function logout() {
         window.sessionStorage.removeItem('name');
-        window.location.href='/login'
+        window.location.href='/'
     }
 </script>
 </html>

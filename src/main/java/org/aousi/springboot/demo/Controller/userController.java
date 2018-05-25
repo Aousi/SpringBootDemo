@@ -110,6 +110,21 @@ public class userController {
     @ResponseBody
     public ModelAndView editPassword(@RequestParam("name") String name){
 
-        return new ModelAndView("personalPage",userService.queryUserByUName(name));
+        return new ModelAndView("editPassword",userService.queryUserByUName(name));
     }
+
+    @RequestMapping("/updatePassword.do")
+    @ResponseBody
+    public Map<String,Object> editPassword(@RequestBody Map<String,String> user){
+
+        Integer uid = Integer.parseInt(user.get("uid"));
+        String name = user.get("name");
+        String oldPw = user.get("oldPw");
+        String neoPw = user.get("neoPw");
+
+        User u = new User(uid,name);
+
+        return userService.updataPassword(u,oldPw,neoPw);
+    }
+
 }

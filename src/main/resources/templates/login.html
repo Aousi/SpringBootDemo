@@ -72,6 +72,7 @@
                 <h4 class="modal-title" id="myModalLabel">Sign up </h4>
             </div>
             <div class="modal-body">
+                <div id="msgDiv" style="height: auto;width: inherit"></div>
                 <div class="input-group">
                     <span class="input-group-addon" >Username</span>
                     <input id="signup_username" type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
@@ -127,7 +128,6 @@
         var username = $('#signup_username').val();
         var password = $('#signup_pw').val();
         var email = $('#signup_email').val();
-        console.log(username, password, email)
 
         var data = {
             "username": username,
@@ -145,6 +145,11 @@
                 if (data.stateCode == 200) {
                     $('#myModal').modal('toggle')
                     alert(data.msg);
+                }else {
+                    var info = '<div class="alert alert-danger " role="alert">' +
+                        ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        ''+data.msg+'</div>';
+                    $('#msgDiv').append(info);
                 }
             }
         })

@@ -25,32 +25,39 @@ public class userService {
         Date d = new Date();
         User.setRegisterTime(d);
 
-        int result = userMapper.insertSelective(User);
-        int result2 = 0;
-        if (result > 0 ){
-            int id = User.getUid();
-            Iterator it = Roles.iterator();
-
-            if (it.hasNext()){
-                UserRole ur =new UserRole(id);
-                Role r = (Role) it.next();
-                ur.setRid(r.getRid());
-                result2 = userRoleMapper.insert(ur);
-            }
-        }
-
-        if (result2 > 0){
-            getBack.put("stateCode",200);
-            getBack.put("msg","注册成功");
+        if (userMapper.userIsExist(User.getUsername()) > 0){
+            getBack.put("stateCode",400);
+            getBack.put("msg","该用户名已被使用！");
         }else {
-            if(result > 0){
-                getBack.put("stateCode",400);
-                getBack.put("msg","用户角色设定失败");
+            int result = userMapper.insertSelective(User);
+            int result2 = 0;
+            if (result > 0 ){
+                int id = User.getUid();
+                Iterator it = Roles.iterator();
+
+                if (it.hasNext()){
+                    UserRole ur =new UserRole(id);
+                    Role r = (Role) it.next();
+                    ur.setRid(r.getRid());
+                    result2 = userRoleMapper.insert(ur);
+                }
+            }
+
+            if (result2 > 0){
+                getBack.put("stateCode",200);
+                getBack.put("msg","注册成功");
             }else {
-                getBack.put("stateCode",400);
-                getBack.put("msg","注册失败");
+                if(result > 0){
+                    getBack.put("stateCode",400);
+                    getBack.put("msg","用户角色设定失败");
+                }else {
+                    getBack.put("stateCode",400);
+                    getBack.put("msg","注册失败");
+                }
             }
         }
+
+
         return getBack;
     }
 
@@ -110,4 +117,30 @@ public class userService {
 
         return getBack;
     }
+
+    public Map<String,Object> updataPassword(User user,String oldPw,String newPw){
+        Map<String,Object> getBack = new HashMap<>();
+        User u =userMapper.loginSelect(user.getUsername());
+        String oldpw_md5 = new SimpleHash("MD5",oldPw,user.getUsername(),2).toHex();
+        if (u.getPassword().equals(oldpw_md5)){
+            String neopw_md5 = new SimpleHash("MD5",newPw,user.getUsername(),2).toHex();
+            user.setPassword(neopw_md5);
+            int result = userMapper.updateByPrimaryKeySelective(user);
+            if (result > 0){
+                getBack.put("statusCode",200);
+                getBack.put("msg","密码修改成功");
+                return getBack;
+            }else {
+                getBack.put("statusCode",400);
+                getBack.put("msg","密码修改失败");
+                return getBack;
+            }
+        }else {
+            getBack.put("statusCode",400);
+            getBack.put("msg","原始密码错误，请重新输入");
+            return getBack;
+        }
+
+
+    };
 }

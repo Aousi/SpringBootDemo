@@ -91,7 +91,7 @@
 <main style="width: 960px;margin: 0 auto">
     <div class="container" style="width: inherit">
         <div class="page-header col-md-12 col-sm-12 col-xs-12">
-            <h1>帐号信息 <small>personal information</small></h1>
+            <h1>个人信息修改 <small>personal information edit</small></h1>
         </div>
         <div id="msgDiv"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
         <form class="form-horizontal" id="userForm">
@@ -125,7 +125,7 @@
                 </div>
                 <label class="col-md-2">department</label>
                 <div class="col-md-4">
-                    <select class="selectpicker  saveData" id="department" name="department"></select>
+                    <select class="selectpicker  updateData" id="department" name="department"></select>
                     <input type="hidden" id="getDept" th:value="${user.department}">
                 </div>
             </div>
@@ -202,26 +202,30 @@
 <script>
 
     var changeFlag = false;
+    var flag = '';
 
-    function confirmChange() {
-        var i = '';
+    function confirmChange(flag) {
+        var i = flag;
         $('.updateData').change(function () {
             i = $(this).val();
             console.log('i=>   '+i);
+
+            if (i == ''){
+                changeFlag = false;
+                i = '';
+            }else {
+                changeFlag =  true;
+                i = '';
+            }
         })
 
-        if (i = ''){
-            return false;
-        }else {
-            return true;
-        }
+        return changeFlag;
     }
     
     function saveChange() {
         var user = $('#userForm').serializeArray();
         var data = convertToJson(user);
         var jsons = JSON.stringify(data);
-
         if (changeFlag){
             $.ajax({
                 url: '/user/updatePerson.do',
@@ -230,34 +234,29 @@
                 contentType: "application/json;charset=utf-8",
                 data:jsons,
                 success:function (data) {
-                    if (data.statusCode = 200){
-                        $('#confirm').modal('hide')
-                        $('#confirm').on('hidden.bs.modal', function (e) {
-                            var info = '<div class="alert alert-success" role="alert">' +
-                                ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                                ''+data.msg+'</div>'
-
-                            $('#msgDiv').html(info);
-                            changeFlag = false;
-                        })
-                    }else {
-                        $('#confirm').modal('hide')
-                        var info = '<div class="alert alert-danger" role="alert">' +
+                    if (data.statusCode == 200){
+                        $('#confirm').modal('hide');
+                        var info = '<div class="alert alert-success " role="alert">' +
                             ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                            ''+data.msg+'</div>'
-
-                        $('#msgDiv').html(info);
-                        changeFlag = false;
+                            ''+data.msg+'</div>';
+                        $('#msgDiv').append(info);
+                    }else {
+                        $('#confirm').modal('hide');
+                        var info = '<div class="alert alert-danger " role="alert">' +
+                            ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                            ''+data.msg+'</div>';
+                        $('#msgDiv').append(info);
                     }
+                    changeFlag = false;
                 }
             })
         }else {
-            $('#confirm').modal('hide')
-            var info = '<div class="alert alert-warning" role="alert">' +
+            $('#confirm').modal('hide');
+            var info = '<div class="alert alert-warning " role="alert">' +
                 ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                '当前数据无更改！请修改至少一项</div>'
+                '当前数据无更改！请修改至少一项</div>';
 
-            $('#msgDiv').html(info);
+            $('#msgDiv').append(info);
             changeFlag = false;
         }
     }
@@ -296,7 +295,7 @@
             $('#area').selectpicker('val',$('#getArea').val());
         });
 
-        changeFlag = confirmChange();
+        changeFlag = confirmChange(flag);
     })
 
 

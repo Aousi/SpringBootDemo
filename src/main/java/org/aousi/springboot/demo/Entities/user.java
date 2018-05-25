@@ -31,11 +31,28 @@ public class User {
     public User() {
     }
 
+    public User(Integer uid, String username) {
+        this.uid = uid;
+        this.username = username;
+    }
+
     public User(String username, String password, String email, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.roles = roles;
+    }
+
+    public User(Integer uid, String username, String nickname, String position, String area, String department, String tel, String phone, String email) {
+        this.uid = uid;
+        this.username = username;
+        this.nickname = nickname;
+        this.position = position;
+        this.area = area;
+        this.department = department;
+        this.tel = tel;
+        this.phone = phone;
+        this.email = email;
     }
 
     public Set<Role> getRoles() {

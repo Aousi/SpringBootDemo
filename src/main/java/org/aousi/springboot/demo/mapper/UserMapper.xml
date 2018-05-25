@@ -28,7 +28,7 @@
     delete from user
     where UID = #{uid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.User">
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.User"  useGeneratedKeys="true">
     insert into user (UID, USERNAME, PASSWORD, 
       NICKNAME, POSITION, AREA, 
       DEPARTMENT, TEL, PHONE, 
@@ -45,13 +45,19 @@
     where USERNAME = #{name}
   </select>
 
+  <select id="userIsExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from user
+    where USERNAME = #{name}
+  </select>
+
   <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select  UID, USERNAME, NICKNAME, POSITION, AREA, DEPARTMENT, TEL, PHONE, EMAIL, REGISTER_TIME
     from user
     where USERNAME = #{name}
   </select>
 
-  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.User">
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.User" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
