@@ -23,4 +23,6 @@ public interface UserMapper {
     User loginSelect(@Param("name") String name);
 
     int userIsExist(@Param("name") String name);
+
+    User selectUid_Name(Integer uid);
 }

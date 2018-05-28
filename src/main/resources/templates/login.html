@@ -116,6 +116,7 @@
             success:function (data) {
                 if(data.stateCode == 200){
                     window.sessionStorage.setItem('name',data.name);
+                    window.sessionStorage.setItem('uid',data.uid);
                     window.location.href=data.toUrl;
                 }else {
                     alert(data.msg);

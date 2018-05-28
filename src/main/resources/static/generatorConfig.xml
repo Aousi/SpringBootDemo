@@ -84,16 +84,31 @@
                <!--selectByExampleQueryId="false" >-->
         <!--</table>-->
 
-        <table tableName="area" domainObjectName="Area"
+        <!--<table tableName="area" domainObjectName="Area"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <!--<table tableName="department" domainObjectName="Department"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <table tableName="canteen_order" domainObjectName="cOrder"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" >
         </table>
-        <table tableName="department" domainObjectName="Department"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
+        <!--<table tableName="canteen_completed" domainObjectName="cCompleted"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <!--<table tableName="canteen_records" domainObjectName="cRecords"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
 
 
     </context>

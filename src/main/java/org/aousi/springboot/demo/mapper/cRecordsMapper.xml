@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.cRecordsMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.cRecords">
+    <id column="CRID" jdbcType="INTEGER" property="crid" />
+    <result column="COID" jdbcType="INTEGER" property="coid" />
+    <result column="CCID" jdbcType="INTEGER" property="ccid" />
+    <result column="UID" jdbcType="INTEGER" property="uid" />
+    <result column="CR_TIME" jdbcType="TIMESTAMP" property="crTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CRID, COID, CCID, UID, CR_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from canteen_records
+    where CRID = #{crid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from canteen_records
+    where CRID = #{crid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.cRecords" useGeneratedKeys="true">
+    insert into canteen_records (CRID, COID, CCID, 
+      UID, CR_TIME)
+    values (#{crid,jdbcType=INTEGER}, #{coid,jdbcType=INTEGER}, #{ccid,jdbcType=INTEGER}, 
+      #{uid,jdbcType=INTEGER}, #{crTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.cRecords" useGeneratedKeys="true">
+    insert into canteen_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="crid != null">
+        CRID,
+      </if>
+      <if test="coid != null">
+        COID,
+      </if>
+      <if test="ccid != null">
+        CCID,
+      </if>
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="crTime != null">
+        CR_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="crid != null">
+        #{crid,jdbcType=INTEGER},
+      </if>
+      <if test="coid != null">
+        #{coid,jdbcType=INTEGER},
+      </if>
+      <if test="ccid != null">
+        #{ccid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="crTime != null">
+        #{crTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.cRecords">
+    update canteen_records
+    <set>
+      <if test="coid != null">
+        COID = #{coid,jdbcType=INTEGER},
+      </if>
+      <if test="ccid != null">
+        CCID = #{ccid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        UID = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="crTime != null">
+        CR_TIME = #{crTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CRID = #{crid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.cRecords">
+    update canteen_records
+    set COID = #{coid,jdbcType=INTEGER},
+      CCID = #{ccid,jdbcType=INTEGER},
+      UID = #{uid,jdbcType=INTEGER},
+      CR_TIME = #{crTime,jdbcType=TIMESTAMP}
+    where CRID = #{crid,jdbcType=INTEGER}
+  </update>
+</mapper>

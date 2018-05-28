@@ -18,9 +18,18 @@
     UID, USERNAME, PASSWORD, NICKNAME, POSITION, AREA, DEPARTMENT, TEL, PHONE, EMAIL, 
     REGISTER_TIME
   </sql>
+  <sql id="uuInfo">
+    UID, USERNAME
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
+    from user
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="selectUid_Name" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="uuInfo" />
     from user
     where UID = #{uid,jdbcType=INTEGER}
   </select>
@@ -40,7 +49,7 @@
   </insert>
 
   <select id="loginSelect" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select USERNAME, PASSWORD
+    select USERNAME, PASSWORD ,UID
     from user
     where USERNAME = #{name}
   </select>

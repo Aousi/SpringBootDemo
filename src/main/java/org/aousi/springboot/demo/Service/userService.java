@@ -75,6 +75,7 @@ public class userService {
             if (u.getPassword().equals(pw_md5)){
                 getBack.put("stateCode",200);
                 getBack.put("msg","登陆成功");
+                getBack.put("uid",u.getUid());
             }else {
                 getBack.put("stateCode",400);
                 getBack.put("msg","密码错误");
