@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.aousi.springboot.demo.mapper.cOrderMapper">
-  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.cOrder">
+<mapper namespace="org.aousi.springboot.demo.mapper.COrderMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.COrder">
     <id column="COID" jdbcType="INTEGER" property="coid" />
     <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
     <result column="BF_MANY" jdbcType="INTEGER" property="bfMany" />
@@ -9,11 +9,12 @@
     <result column="L_MANY" jdbcType="INTEGER" property="lMany" />
     <result column="DINNER" jdbcType="INTEGER" property="dinner" />
     <result column="D_MANY" jdbcType="INTEGER" property="dMany" />
-    <result column="O_TIME" jdbcType="TIMESTAMP" property="oTime" />
+    <result column="O_TIME" jdbcType="DATE" property="oTime" />
+    <result column="O_CRT_TIME" jdbcType="TIMESTAMP" property="oCrtTime" />
     <result column="UID" jdbcType="INTEGER" property="uid" />
   </resultMap>
   <sql id="Base_Column_List">
-    COID, BREAKFAST, BF_MANY, LUNCH, L_MANY, DINNER, D_MANY, O_TIME, UID
+    COID, BREAKFAST, BF_MANY, LUNCH, L_MANY, DINNER, D_MANY, O_TIME, O_CRT_TIME, UID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,21 +22,30 @@
     from canteen_order
     where COID = #{coid,jdbcType=INTEGER}
   </select>
+
+  <select id="orderIsExistByDate" parameterType="java.util.Date" resultType="java.lang.Integer">
+    select count(*)
+    from canteen_order
+    where  O_TIME = #{oTime}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from canteen_order
     where COID = #{coid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.cOrder" useGeneratedKeys="true">
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.COrder" useGeneratedKeys="true">
     insert into canteen_order (COID, BREAKFAST, BF_MANY, 
       LUNCH, L_MANY, DINNER, 
-      D_MANY, O_TIME, UID
-      )
+      D_MANY, O_TIME, O_CRT_TIME, 
+      UID)
     values (#{coid,jdbcType=INTEGER}, #{breakfast,jdbcType=INTEGER}, #{bfMany,jdbcType=INTEGER}, 
       #{lunch,jdbcType=INTEGER}, #{lMany,jdbcType=INTEGER}, #{dinner,jdbcType=INTEGER}, 
-      #{dMany,jdbcType=INTEGER}, #{oTime,jdbcType=TIMESTAMP}, #{uid,jdbcType=INTEGER}
-      )
+      #{dMany,jdbcType=INTEGER}, #{oTime,jdbcType=DATE}, #{oCrtTime,jdbcType=TIMESTAMP},
+      #{uid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.cOrder" useGeneratedKeys="true">
+
+
+  <insert id="ListInsert" parameterType="java.util.List" useGeneratedKeys="true">
     insert into canteen_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="coid != null">
@@ -61,6 +71,81 @@
       </if>
       <if test="oTime != null">
         O_TIME,
+      </if>
+      <if test="oCrtTime != null">
+        O_CRT_TIME,
+      </if>
+      <if test="uid != null">
+        UID,
+      </if>
+    </trim>
+    values
+    <foreach collection="list" item="COrder" index="index" separator="," >
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="coid != null">
+          #{COrder.coid,jdbcType=INTEGER},
+        </if>
+        <if test="breakfast != null">
+          #{COrder.breakfast,jdbcType=INTEGER},
+        </if>
+        <if test="bfMany != null">
+          #{COrder.bfMany,jdbcType=INTEGER},
+        </if>
+        <if test="lunch != null">
+          #{COrder.lunch,jdbcType=INTEGER},
+        </if>
+        <if test="lMany != null">
+          #{COrder.lMany,jdbcType=INTEGER},
+        </if>
+        <if test="dinner != null">
+          #{COrder.dinner,jdbcType=INTEGER},
+        </if>
+        <if test="dMany != null">
+          #{COrder.dMany,jdbcType=INTEGER},
+        </if>
+        <if test="oTime != null">
+          #{COrder.oTime,jdbcType=DATE},
+        </if>
+        <if test="oCrtTime != null">
+          #{COrder.oCrtTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="uid != null">
+          #{COrder.uid,jdbcType=INTEGER},
+        </if>
+      </trim>
+    </foreach>
+
+  </insert>
+
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.COrder" useGeneratedKeys="true">
+    insert into canteen_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="coid != null">
+        COID,
+      </if>
+      <if test="breakfast != null">
+        BREAKFAST,
+      </if>
+      <if test="bfMany != null">
+        BF_MANY,
+      </if>
+      <if test="lunch != null">
+        LUNCH,
+      </if>
+      <if test="lMany != null">
+        L_MANY,
+      </if>
+      <if test="dinner != null">
+        DINNER,
+      </if>
+      <if test="dMany != null">
+        D_MANY,
+      </if>
+      <if test="oTime != null">
+        O_TIME,
+      </if>
+      <if test="oCrtTime != null">
+        O_CRT_TIME,
       </if>
       <if test="uid != null">
         UID,
@@ -91,12 +176,16 @@
       <if test="oTime != null">
         #{oTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="oCrtTime != null">
+        #{oCrtTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="uid != null">
         #{uid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.cOrder">
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.COrder">
     update canteen_order
     <set>
       <if test="breakfast != null">
@@ -118,7 +207,10 @@
         D_MANY = #{dMany,jdbcType=INTEGER},
       </if>
       <if test="oTime != null">
-        O_TIME = #{oTime,jdbcType=TIMESTAMP},
+        O_TIME = #{oTime,jdbcType=DATE},
+      </if>
+      <if test="oCrtTime != null">
+        O_CRT_TIME = #{oCrtTime,jdbcType=TIMESTAMP},
       </if>
       <if test="uid != null">
         UID = #{uid,jdbcType=INTEGER},
@@ -126,7 +218,7 @@
     </set>
     where COID = #{coid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.cOrder">
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.COrder">
     update canteen_order
     set BREAKFAST = #{breakfast,jdbcType=INTEGER},
       BF_MANY = #{bfMany,jdbcType=INTEGER},
@@ -134,7 +226,8 @@
       L_MANY = #{lMany,jdbcType=INTEGER},
       DINNER = #{dinner,jdbcType=INTEGER},
       D_MANY = #{dMany,jdbcType=INTEGER},
-      O_TIME = #{oTime,jdbcType=TIMESTAMP},
+      O_TIME = #{oTime,jdbcType=DATE},
+      O_CRT_TIME = #{oCrtTime,jdbcType=TIMESTAMP},
       UID = #{uid,jdbcType=INTEGER}
     where COID = #{coid,jdbcType=INTEGER}
   </update>

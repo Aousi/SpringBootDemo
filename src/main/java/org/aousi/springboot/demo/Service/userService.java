@@ -141,7 +141,19 @@ public class userService {
             getBack.put("msg","原始密码错误，请重新输入");
             return getBack;
         }
+    }
 
+    public Map<String,Object> selectBasicInfo(Integer uid){
+        Map<String,Object> getBack = new HashMap<>();
+        User u = userMapper.selectUid_Name(uid);
+        if (u != null){
+            getBack.put("statusCode",200);
+            getBack.put("user",u);
 
-    };
+        }else {
+            getBack.put("statusCode",400);
+            getBack.put("user",null);
+        }
+        return getBack;
+    }
 }

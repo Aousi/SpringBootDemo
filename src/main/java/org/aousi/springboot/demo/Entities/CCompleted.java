@@ -2,7 +2,7 @@ package org.aousi.springboot.demo.Entities;
 
 import java.util.Date;
 
-public class cCompleted {
+public class CCompleted {
     private Integer ccid;
 
     private Integer coid;
@@ -15,12 +15,7 @@ public class cCompleted {
 
     private Date inputTime;
 
-    public cCompleted() {
-    }
-
-    public cCompleted(Integer coid) {
-        this.coid = coid;
-    }
+    private Date finishTime;
 
     public Integer getCcid() {
         return ccid;
@@ -68,5 +63,13 @@ public class cCompleted {
 
     public void setInputTime(Date inputTime) {
         this.inputTime = inputTime;
+    }
+
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
     }
 }

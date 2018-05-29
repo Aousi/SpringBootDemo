@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.aousi.springboot.demo.mapper.cCompletedMapper">
-  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.cCompleted">
+<mapper namespace="org.aousi.springboot.demo.mapper.CCompletedMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.CCompleted">
     <id column="CCID" jdbcType="INTEGER" property="ccid" />
     <result column="COID" jdbcType="INTEGER" property="coid" />
     <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
     <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
     <result column="DINNER" jdbcType="INTEGER" property="dinner" />
     <result column="INPUT_TIME" jdbcType="TIMESTAMP" property="inputTime" />
+    <result column="FINISH_TIME" jdbcType="TIMESTAMP" property="finishTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    CCID, COID, BREAKFAST, LUNCH, DINNER, INPUT_TIME
+    CCID, COID, BREAKFAST, LUNCH, DINNER, INPUT_TIME, FINISH_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,15 +23,15 @@
     delete from canteen_completed
     where CCID = #{ccid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.cCompleted" useGeneratedKeys="true">
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.CCompleted">
     insert into canteen_completed (CCID, COID, BREAKFAST, 
-      LUNCH, DINNER, INPUT_TIME
-      )
+      LUNCH, DINNER, INPUT_TIME, 
+      FINISH_TIME)
     values (#{ccid,jdbcType=INTEGER}, #{coid,jdbcType=INTEGER}, #{breakfast,jdbcType=INTEGER}, 
-      #{lunch,jdbcType=INTEGER}, #{dinner,jdbcType=INTEGER}, #{inputTime,jdbcType=TIMESTAMP}
-      )
+      #{lunch,jdbcType=INTEGER}, #{dinner,jdbcType=INTEGER}, #{inputTime,jdbcType=TIMESTAMP}, 
+      #{finishTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.cCompleted" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.CCompleted">
     insert into canteen_completed
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="ccid != null">
@@ -50,6 +51,9 @@
       </if>
       <if test="inputTime != null">
         INPUT_TIME,
+      </if>
+      <if test="finishTime != null">
+        FINISH_TIME,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -71,9 +75,12 @@
       <if test="inputTime != null">
         #{inputTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="finishTime != null">
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.cCompleted">
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.CCompleted">
     update canteen_completed
     <set>
       <if test="coid != null">
@@ -91,16 +98,20 @@
       <if test="inputTime != null">
         INPUT_TIME = #{inputTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="finishTime != null">
+        FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where CCID = #{ccid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.cCompleted">
+  <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.CCompleted">
     update canteen_completed
     set COID = #{coid,jdbcType=INTEGER},
       BREAKFAST = #{breakfast,jdbcType=INTEGER},
       LUNCH = #{lunch,jdbcType=INTEGER},
       DINNER = #{dinner,jdbcType=INTEGER},
-      INPUT_TIME = #{inputTime,jdbcType=TIMESTAMP}
+      INPUT_TIME = #{inputTime,jdbcType=TIMESTAMP},
+      FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP}
     where CCID = #{ccid,jdbcType=INTEGER}
   </update>
 </mapper>

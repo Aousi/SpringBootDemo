@@ -2,7 +2,7 @@ package org.aousi.springboot.demo.Entities;
 
 import java.util.Date;
 
-public class cRecords {
+public class CRecords {
     private Integer crid;
 
     private Integer coid;
@@ -11,17 +11,9 @@ public class cRecords {
 
     private Integer uid;
 
-    private Date crTime;
+    private Date crEdtTime;
 
-    public cRecords() {
-    }
-
-    public cRecords(Integer coid, Integer ccid, Integer uid, Date crTime) {
-        this.coid = coid;
-        this.ccid = ccid;
-        this.uid = uid;
-        this.crTime = crTime;
-    }
+    private Date crCrtTime;
 
     public Integer getCrid() {
         return crid;
@@ -55,11 +47,19 @@ public class cRecords {
         this.uid = uid;
     }
 
-    public Date getCrTime() {
-        return crTime;
+    public Date getCrEdtTime() {
+        return crEdtTime;
     }
 
-    public void setCrTime(Date crTime) {
-        this.crTime = crTime;
+    public void setCrEdtTime(Date crEdtTime) {
+        this.crEdtTime = crEdtTime;
+    }
+
+    public Date getCrCrtTime() {
+        return crCrtTime;
+    }
+
+    public void setCrCrtTime(Date crCrtTime) {
+        this.crCrtTime = crCrtTime;
     }
 }

@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>食堂==>订餐</title>
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-switch.min.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-datepicker3.standalone.css">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-switch.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.standalone.css}">
     <style>
         .myfooter {
             background-color: #5f5f5f;
@@ -29,8 +29,11 @@
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
-<script src="/static/js/bootstrap-switch.min.js"></script>
-<script src="/static/js/bootstrap-datepicker.js"></script>
+<script  th:src="@{/js/bootstrap-switch.min.js}"></script>
+<script  th:src="@{/js/bootstrap-datepicker.js}"></script>
+
+<!--<script src="/static/js/bootstrap-switch.min.js"></script>-->
+<!--<script src="/static/js/bootstrap-datepicker.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -83,7 +86,7 @@
 
 
 <main style="width: 960px;margin: 0 auto">
-    <div class="container" style="width: inherit">
+    <div class="container" style="width: inherit;height: 700px">
         <div class="page-header col-md-12 col-sm-12 col-xs-12">
             <h1>用餐预定 <small>take order</small></h1>
         </div>
@@ -91,19 +94,21 @@
 
         <form class="form-horizontal" id="orderForm">
             <div class="form-group disabled col-md-12">
-                <label class="col-md-1">UID</label>
-                <div class="col-md-5">
+                <label class="col-md-2">UID</label>
+                <div class="col-md-10">
                     <input id="uid" name="uid" class="form-control" th:value="${user.uid}" disabled></input>
                 </div>
-                <label class="col-md-1">用户</label>
-                <div class="col-md-5">
+            </div>
+            <div class="form-group disabled col-md-12">
+                <label class="col-md-2">用户</label>
+                <div class="col-md-10">
                     <input id="username" name="username" class="form-control" th:value="${user.username}" disabled></input>
                 </div>
             </div>
             <div class="form-group disabled col-md-12">
                 <label class="col-md-2">日期范围</label>
                 <div class="col-md-10">
-                    <div class="input-daterange input-group" id="datepicker">
+                    <div class="input-daterange input-group" id="sandbox-container">
                         <input type="text" class="input-sm form-control" name="start" />
                         <span class="input-group-addon">到</span>
                         <input type="text" class="input-sm form-control" name="end" />
@@ -111,44 +116,59 @@
                 </div>
             </div>
             <div class="form-group disabled col-md-12">
-                <label class="col-md-1">早餐</label>
-                <div class="col-md-5">
-                    <div class="switch" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
-                        <input id="breakfast" name="breakfast" type="checkbox"  value="1" />
-                    </div>
+                <label class="col-md-2">早餐</label>
+                <div class="col-md-4">
+                    <input id="breakfast" name="breakfast" class="orderSwitch switch-small" type="checkbox"  value="1" />
                 </div>
                 <label class="col-md-1">份数</label>
                 <div class="col-md-5">
-                    <input name="bfMany" id="bfMany" type="text" class="form-control">
+                    <input name="bfMany" id="bfMany" type="text" class="form-control"  th:value="${1}">
                 </div>
             </div>
             <div class="form-group disabled col-md-12">
-                <label class="col-md-1">午餐</label>
-                <div class="col-md-5">
-                    <div class="switch" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
-                        <input id="lunch" name="lunch"  type="checkbox" value="1"/>
-                    </div>
+                <label class="col-md-2">午餐</label>
+                <div class="col-md-4">
+                    <input id="lunch" name="lunch" class="orderSwitch switch-small" type="checkbox" value="1"/>
                 </div>
                 <label class="col-md-1">份数</label>
                 <div class="col-md-5">
-                    <input name="lMany" id="lMany" type="text" class="form-control">
+                    <input name="lMany" id="lMany" type="text" class="form-control"  th:value="${1}">
                 </div>
             </div>
             <div class="form-group disabled col-md-12">
-                <label class="col-md-1">晚餐</label>
-                <div class="col-md-5">
-                    <div class="switch" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
-                        <input id="dinner" name="dinner" type="checkbox" value="1"/>
-                    </div>
+                <label class="col-md-2">晚餐</label>
+                <div class="col-md-4">
+                    <input id="dinner" name="dinner" class="orderSwitch" type="checkbox" value="1"/>
                 </div>
                 <label class="col-md-1">份数</label>
                 <div class="col-md-5">
-                    <input name="dMany" id="dMany" type="text" class="form-control">
+                    <input name="dMany" id="dMany" type="text" class="form-control" th:value="${1}">
                 </div>
             </div>
         </form>
+        <div class="part2 row" style="text-align: center">
+            <button id="submit" class="btn btn-primary" data-toggle="modal" data-target="#confirm">提交订餐信息</button>
+        </div>
     </div>
 </main>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="confirm">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认要提交订餐信息吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submit()">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <footer class="myfooter" style="height: 150px">
@@ -167,10 +187,46 @@
 </body>
 <script>
 
-    $('#sandbox-container .input-daterange').datepicker({
-        format: "yyyy-mm-dd",
-        daysOfWeekHighlighted: "0,6"
-    });
+    function submit() {
+
+        var orders = $('#orderForm').serializeArray();
+        var data = convertToJson(orders);
+        var jsons = JSON.stringify(data);
+
+        $.ajax({
+            url: '/canteen/takeOrder.do',
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: "application/json;charset=utf-8",
+            data:jsons,
+            success:function (data) {
+                if (data.statusCode == 200){
+                    $('#confirm').modal('hide');
+                    var failDate = data.failDate;
+                    var info = '';
+                    if (failDate.length === 0){
+                        info = '<div class="alert alert-success " role="alert">' +
+                            ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                            ''+data.msg+'</div>';
+                    }else {
+                        info = '<div class="alert alert-success " role="alert">' +
+                            ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                            ''+data.msg+'以下日期的订餐信息已存在，如需修改请到订餐记录中修改。'+failDate+'</div>';
+                    }
+
+                    $('#msgDiv').append(info);
+                }else {
+                    $('#confirm').modal('hide');
+                    var info = '<div class="alert alert-danger " role="alert">' +
+                        ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        ''+data.msg+'</div>';
+                    $('#msgDiv').append(info);
+                }
+            }
+        })
+    }
+
+
 
     $(function () {
         var data = window.sessionStorage.getItem('name');
@@ -186,7 +242,26 @@
                 ' </li>' +
                 '<li><a href="#" onclick="logout()">log out</a></li>')
         }
-    })
+
+        $('.input-daterange').datepicker({
+            format: "yyyy-mm-dd",
+            daysOfWeekHighlighted: "0,6"
+        });
+
+        $('.orderSwitch').bootstrapSwitch({
+            size:'small',
+            onText: '订餐',
+            offText: '不订'
+        });
+    });
+
+    function convertToJson(str) {
+        var obj ={"uid":$('#uid').val(),"name":$('#username').val()};
+        for (var i in str){
+            obj[str[i].name]=str[i]['value'];
+        }
+        return obj;
+    }
 
     function logout() {
         window.sessionStorage.removeItem('name');

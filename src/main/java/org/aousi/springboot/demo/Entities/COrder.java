@@ -2,7 +2,7 @@ package org.aousi.springboot.demo.Entities;
 
 import java.util.Date;
 
-public class cOrder {
+public class COrder {
     private Integer coid;
 
     private Integer breakfast;
@@ -19,19 +19,21 @@ public class cOrder {
 
     private Date oTime;
 
+    private Date oCrtTime;
+
     private Integer uid;
 
-    public cOrder() {
-
+    public COrder() {
     }
 
-    public cOrder(Integer breakfast, Integer bfMany, Integer lunch, Integer lMany, Integer dinner, Integer dMany, Integer uid) {
+    public COrder(Integer breakfast, Integer bfMany, Integer lunch, Integer lMany, Integer dinner, Integer dMany, Date oCrtTime, Integer uid) {
         this.breakfast = breakfast;
         this.bfMany = bfMany;
         this.lunch = lunch;
         this.lMany = lMany;
         this.dinner = dinner;
         this.dMany = dMany;
+        this.oCrtTime = oCrtTime;
         this.uid = uid;
     }
 
@@ -97,6 +99,14 @@ public class cOrder {
 
     public void setoTime(Date oTime) {
         this.oTime = oTime;
+    }
+
+    public Date getoCrtTime() {
+        return oCrtTime;
+    }
+
+    public void setoCrtTime(Date oCrtTime) {
+        this.oCrtTime = oCrtTime;
     }
 
     public Integer getUid() {
