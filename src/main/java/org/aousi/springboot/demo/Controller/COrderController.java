@@ -34,6 +34,14 @@ public class COrderController {
         return new ModelAndView("canteenOrder",back);
     }
 
+    @RequestMapping("/userOrders")
+    @ResponseBody
+    public ModelAndView userOrders(@RequestParam("uid") Integer uid){
+        Map<String,Object> back = userService.selectBasicInfo(uid);
+
+        return new ModelAndView("COrderList",back);
+    }
+
     @RequestMapping(value = "/takeOrder.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> takeOrder(@RequestBody Map<String,String> oParams){
@@ -66,18 +74,22 @@ public class COrderController {
         Date StartDate = null;
         Date EndDate = null;
 
-        COrder co = new COrder(bf,bf_many,l,l_many,d,d_many,new Date(),uid);
+        Date inputTime = new Date();
 
         StartDate =toolssss.Str2Date("yyyy-MM-dd",start);
         int len = toolssss.between2day(start,end);
         List<COrder> cOrders = new ArrayList<>();
         List<String> dateList = new ArrayList<>();
+        Calendar c = toolssss.ClearCalendarWithTime(StartDate);
 
         if (!start.equals(end)){
-            Calendar c = toolssss.ClearCalendarWithTime(StartDate);
-
             for (int i = 0;i<=len;i++){
-                c.set(Calendar.DATE,+i);
+                COrder co = new COrder(bf,bf_many,l,l_many,d,d_many,inputTime,uid);
+                if (i == 0){
+                    c.add(Calendar.DATE,+0);
+                }else {
+                    c.add(Calendar.DATE,+1);
+                }
                 co.setoTime(c.getTime());
                 if (COrderService.orderIsExistByDate(c.getTime()) == 0){
                     cOrders.add(co);
@@ -89,6 +101,7 @@ public class COrderController {
             back.put("failDate",dateList);
             return back;
         }else {
+            COrder co = new COrder(bf,bf_many,l,l_many,d,d_many,inputTime,uid);
             co.setoTime(StartDate);
             if (COrderService.orderIsExistByDate(StartDate) == 0){
                 cOrders.add(co);
@@ -99,5 +112,14 @@ public class COrderController {
             back.put("failDate",dateList);
             return back;
         }
+    }
+
+    @RequestMapping("/getUserOrders.do")
+    @ResponseBody
+    public Map<String,Object> ordersData(@RequestParam("page") Integer page,@RequestParam("rows")Integer rows,@RequestParam(value = "sort",required = false)String sort,
+                                   @RequestParam("sortOrder")String sortOrder,@RequestParam("uid")Integer uid){
+
+
+        return COrderService.userOrders(page,rows,sort,sortOrder,uid);
     }
 }

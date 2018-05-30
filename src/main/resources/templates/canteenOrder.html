@@ -200,9 +200,9 @@
             contentType: "application/json;charset=utf-8",
             data:jsons,
             success:function (data) {
+                var failDate = data.failDate;
                 if (data.statusCode == 200){
                     $('#confirm').modal('hide');
-                    var failDate = data.failDate;
                     var info = '';
                     if (failDate.length === 0){
                         info = '<div class="alert alert-success " role="alert">' +
@@ -211,7 +211,7 @@
                     }else {
                         info = '<div class="alert alert-success " role="alert">' +
                             ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                            ''+data.msg+'以下日期的订餐信息已存在，如需修改请到订餐记录中修改。'+failDate+'</div>';
+                            ''+data.msg+'以下日期的订餐信息已存在，如需修改请到订餐记录中修改。失败日期：'+failDate+'</div>';
                     }
 
                     $('#msgDiv').append(info);
@@ -219,7 +219,7 @@
                     $('#confirm').modal('hide');
                     var info = '<div class="alert alert-danger " role="alert">' +
                         ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                        ''+data.msg+'</div>';
+                        ''+data.msg+'失败日期：'+failDate+'</div>';
                     $('#msgDiv').append(info);
                 }
             }

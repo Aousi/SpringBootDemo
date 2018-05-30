@@ -23,6 +23,13 @@
     where COID = #{coid,jdbcType=INTEGER}
   </select>
 
+  <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from canteen_order
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+
   <select id="orderIsExistByDate" parameterType="java.util.Date" resultType="java.lang.Integer">
     select count(*)
     from canteen_order
@@ -44,78 +51,93 @@
       #{uid,jdbcType=INTEGER})
   </insert>
 
-
   <insert id="ListInsert" parameterType="java.util.List" useGeneratedKeys="true">
-    insert into canteen_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="coid != null">
-        COID,
-      </if>
-      <if test="breakfast != null">
-        BREAKFAST,
-      </if>
-      <if test="bfMany != null">
-        BF_MANY,
-      </if>
-      <if test="lunch != null">
-        LUNCH,
-      </if>
-      <if test="lMany != null">
-        L_MANY,
-      </if>
-      <if test="dinner != null">
-        DINNER,
-      </if>
-      <if test="dMany != null">
-        D_MANY,
-      </if>
-      <if test="oTime != null">
-        O_TIME,
-      </if>
-      <if test="oCrtTime != null">
-        O_CRT_TIME,
-      </if>
-      <if test="uid != null">
-        UID,
-      </if>
-    </trim>
+    insert into canteen_order (BREAKFAST, BF_MANY,
+    LUNCH, L_MANY, DINNER,
+    D_MANY, O_TIME, O_CRT_TIME,
+    UID)
     values
-    <foreach collection="list" item="COrder" index="index" separator="," >
-      <trim prefix="(" suffix=")" suffixOverrides=",">
-        <if test="coid != null">
-          #{COrder.coid,jdbcType=INTEGER},
-        </if>
-        <if test="breakfast != null">
-          #{COrder.breakfast,jdbcType=INTEGER},
-        </if>
-        <if test="bfMany != null">
-          #{COrder.bfMany,jdbcType=INTEGER},
-        </if>
-        <if test="lunch != null">
-          #{COrder.lunch,jdbcType=INTEGER},
-        </if>
-        <if test="lMany != null">
-          #{COrder.lMany,jdbcType=INTEGER},
-        </if>
-        <if test="dinner != null">
-          #{COrder.dinner,jdbcType=INTEGER},
-        </if>
-        <if test="dMany != null">
-          #{COrder.dMany,jdbcType=INTEGER},
-        </if>
-        <if test="oTime != null">
-          #{COrder.oTime,jdbcType=DATE},
-        </if>
-        <if test="oCrtTime != null">
-          #{COrder.oCrtTime,jdbcType=TIMESTAMP},
-        </if>
-        <if test="uid != null">
-          #{COrder.uid,jdbcType=INTEGER},
-        </if>
-      </trim>
+    <foreach collection="list" item="COrder" index="index"  separator="," >
+      (#{COrder.breakfast,jdbcType=INTEGER}, #{COrder.bfMany,jdbcType=INTEGER},
+      #{COrder.lunch,jdbcType=INTEGER}, #{COrder.lMany,jdbcType=INTEGER}, #{COrder.dinner,jdbcType=INTEGER},
+      #{COrder.dMany,jdbcType=INTEGER}, #{COrder.oTime,jdbcType=DATE}, #{COrder.oCrtTime,jdbcType=TIMESTAMP},
+      #{COrder.uid,jdbcType=INTEGER})
     </foreach>
 
   </insert>
+
+
+  <!--<insert id="ListInsert" parameterType="java.util.List" useGeneratedKeys="true">-->
+    <!--insert into canteen_order-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+      <!--<if test="coid != null">-->
+        <!--COID,-->
+      <!--</if>-->
+      <!--<if test="breakfast != null">-->
+        <!--BREAKFAST,-->
+      <!--</if>-->
+      <!--<if test="bfMany != null">-->
+        <!--BF_MANY,-->
+      <!--</if>-->
+      <!--<if test="lunch != null">-->
+        <!--LUNCH,-->
+      <!--</if>-->
+      <!--<if test="lMany != null">-->
+        <!--L_MANY,-->
+      <!--</if>-->
+      <!--<if test="dinner != null">-->
+        <!--DINNER,-->
+      <!--</if>-->
+      <!--<if test="dMany != null">-->
+        <!--D_MANY,-->
+      <!--</if>-->
+      <!--<if test="oTime != null">-->
+        <!--O_TIME,-->
+      <!--</if>-->
+      <!--<if test="oCrtTime != null">-->
+        <!--O_CRT_TIME,-->
+      <!--</if>-->
+      <!--<if test="uid != null">-->
+        <!--UID,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--values-->
+    <!--<foreach collection="list" item="COrder" index="index" separator="," >-->
+      <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+        <!--<if test="coid != null">-->
+          <!--#{COrder.coid,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="breakfast != null">-->
+          <!--#{COrder.breakfast,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="bfMany != null">-->
+          <!--#{COrder.bfMany,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="lunch != null">-->
+          <!--#{COrder.lunch,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="lMany != null">-->
+          <!--#{COrder.lMany,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="dinner != null">-->
+          <!--#{COrder.dinner,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="dMany != null">-->
+          <!--#{COrder.dMany,jdbcType=INTEGER},-->
+        <!--</if>-->
+        <!--<if test="oTime != null">-->
+          <!--#{COrder.oTime,jdbcType=DATE},-->
+        <!--</if>-->
+        <!--<if test="oCrtTime != null">-->
+          <!--#{COrder.oCrtTime,jdbcType=TIMESTAMP},-->
+        <!--</if>-->
+        <!--<if test="uid != null">-->
+          <!--#{COrder.uid,jdbcType=INTEGER},-->
+        <!--</if>-->
+      <!--</trim>-->
+    <!--</foreach>-->
+
+  <!--</insert>-->
 
   <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.COrder" useGeneratedKeys="true">
     insert into canteen_order
