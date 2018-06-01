@@ -122,4 +122,11 @@ public class COrderController {
 
         return COrderService.userOrders(page,rows,sort,sortOrder,uid);
     }
+    @RequestMapping("/deleteOrder.do")
+    @ResponseBody
+    public Map<String,Object> deleteOrder(@RequestBody List<COrder> list){
+
+
+        return COrderService.deleteOrder(list);
+    }
 }

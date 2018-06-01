@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class COrderService {
@@ -57,6 +54,31 @@ public class COrderService {
         back.put("total",orders.size());
         back.put("rows",orders);
 
+        return back;
+    }
+
+    public Map<String,Object> deleteOrder(List<COrder> list){
+        Map<String,Object> back= new HashMap<>();
+        int result = 0;
+        List<Integer> fail = new ArrayList<>();
+        if (list.size()>0){
+            for (COrder c:list){
+                int coid=c.getCoid();
+                int i =COrderMapper.deleteByPrimaryKey(coid);
+                if (i == 0){
+                    fail.add(coid);
+                }else {
+                    result +=i;
+                }
+            }
+            back.put("statusCode",200);
+            back.put("msg","成功删除了"+result+"条订餐信息。");
+            back.put("fail",fail);
+
+        }else {
+            back.put("statusCode",400);
+            back.put("msg","请先勾选需要删除的记录");
+        }
         return back;
     }
 
