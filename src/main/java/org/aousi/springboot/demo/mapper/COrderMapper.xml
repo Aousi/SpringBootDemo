@@ -11,10 +11,11 @@
     <result column="D_MANY" jdbcType="INTEGER" property="dMany" />
     <result column="O_TIME" jdbcType="DATE" property="oTime" />
     <result column="O_CRT_TIME" jdbcType="TIMESTAMP" property="oCrtTime" />
+    <result column="O_EDIT_TIME" jdbcType="TIMESTAMP" property="oEditTime" />
     <result column="UID" jdbcType="INTEGER" property="uid" />
   </resultMap>
   <sql id="Base_Column_List">
-    COID, BREAKFAST, BF_MANY, LUNCH, L_MANY, DINNER, D_MANY, O_TIME, O_CRT_TIME, UID
+    COID, BREAKFAST, BF_MANY, LUNCH, L_MANY, DINNER, D_MANY, O_TIME, O_CRT_TIME,O_EDIT_TIME, UID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

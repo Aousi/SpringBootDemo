@@ -21,6 +21,8 @@ public class COrder {
 
     private Date oCrtTime;
 
+    private Date oEditTime;
+
     private Integer uid;
 
     public COrder() {
@@ -35,6 +37,35 @@ public class COrder {
         this.dMany = dMany;
         this.oCrtTime = oCrtTime;
         this.uid = uid;
+    }
+
+    public COrder(Integer coid, Integer breakfast, Integer bfMany, Integer lunch, Integer lMany, Integer dinner, Integer dMany) {
+        this.coid = coid;
+        this.breakfast = breakfast;
+        this.bfMany = bfMany;
+        this.lunch = lunch;
+        this.lMany = lMany;
+        this.dinner = dinner;
+        this.dMany = dMany;
+    }
+
+    public COrder(Integer coid, Integer breakfast, Integer bfMany, Integer lunch, Integer lMany, Integer dinner, Integer dMany, Integer uid) {
+        this.coid = coid;
+        this.breakfast = breakfast;
+        this.bfMany = bfMany;
+        this.lunch = lunch;
+        this.lMany = lMany;
+        this.dinner = dinner;
+        this.dMany = dMany;
+        this.uid = uid;
+    }
+
+    public Date getoEditTime() {
+        return oEditTime;
+    }
+
+    public void setoEditTime(Date oEditTime) {
+        this.oEditTime = oEditTime;
     }
 
     public Integer getCoid() {

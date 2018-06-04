@@ -82,5 +82,25 @@ public class COrderService {
         return back;
     }
 
+    public Map<String,Object> editOrder(COrder order){
+        Map<String,Object> back= new HashMap<>();
+        int result = 0;
+        if (order != null){
+            result = COrderMapper.updateByPrimaryKeySelective(order);
+            if (result>0){
+                back.put("statusCode",200);
+                back.put("msg","成功修改了订单编号为"+order.getCoid()+"的订餐信息。");
+            }else {
+                back.put("statusCode",400);
+                back.put("msg","订餐信息修改失败。");
+            }
+        }else {
+            back.put("statusCode",404);
+            back.put("msg","传入的数据为空，修改失败。");
+        }
+
+        return back;
+    }
+
 
 }

@@ -51,4 +51,27 @@ public class toolssss {
         }
         return date;
     }
+
+    public Date setLimitTime(Date time,Integer hour){
+        Calendar c = Calendar.getInstance();
+        c.setTime(time);
+        c.set(Calendar.HOUR_OF_DAY,hour);
+        c.set(Calendar.MINUTE,0);
+        c.set(Calendar.SECOND,0);
+        c.set(Calendar.MILLISECOND,0);
+
+        return c.getTime();
+    }
+
+    public Date setLimitTime(Date time,Integer hour,Integer min){
+        Calendar c = Calendar.getInstance();
+        c.setTime(time);
+        c.set(Calendar.HOUR_OF_DAY,hour);
+        c.set(Calendar.MINUTE,min);
+        c.set(Calendar.SECOND,0);
+        c.set(Calendar.MILLISECOND,0);
+
+        return c.getTime();
+    }
+
 }
