@@ -27,6 +27,7 @@
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/publicJS.js}"></script>
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -100,30 +101,6 @@
 
 </body>
 <script>
-    $(function () {
-        var data = window.sessionStorage.getItem('name');
-        if (data !=""){
-            $('#userNav').html('<li class="dropdown">\n' +
-                ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
-                ' aria-expanded="false" >'+data+'<span class="caret"></span></a>\n' +
-                ' <ul class="dropdown-menu">\n' +
-                ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
-                ' <li><a href="/user/editPerson.do?name='+data+'">修改个人信息</a></li>\n' +
-                ' <li><a href="/user/editPassword.do?name='+data+'">修改密码</a></li>\n' +
-                ' </ul>\n' +
-                ' </li>' +
-                '<li><a href="#" onclick="logout()">log out</a></li>')
-        }
 
-        $('#order').on('click',function () {
-
-            window.location.href = "/canteen/orderPage?uid=" + window.sessionStorage.getItem('uid') + "";
-        })
-    })
-
-    function logout() {
-        window.sessionStorage.removeItem('name');
-        window.location.href='/'
-    }
 </script>
 </html>

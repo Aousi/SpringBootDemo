@@ -70,7 +70,7 @@
                 <li><a href="#">PART 3</a></li>
                 <li class="dropdown">
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">SELECT<span class="caret"></span></a>
+                       aria-expanded="false">食堂应用<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a id="order" href="#">用餐预定</a></li>
                         <li><a href="#">订餐详情</a></li>
@@ -137,51 +137,51 @@
                 <div class="row">
                     <form class="form-horizontal" id="editForm">
                         <div class="form-group disabled col-md-12">
-                            <label class="col-md-2">UID</label>
+                            <label for="editUid" class="col-md-2">UID</label>
                             <div class="col-md-10">
-                                <input id="editUid" name="uid" class="form-control" th:value="${user.uid}" disabled></input>
-                                <input id="editOtime" type="hidden" name="oTime" class="form-control"></input>
+                                <input id="editUid" name="uid" class="form-control" th:value="${user.uid}" disabled>
+                                <!--<input id="editOtime" type="hidden" name="oTime" class="form-control"></input>-->
                             </div>
                         </div>
                         <div class="form-group disabled col-md-12">
-                            <label class="col-md-2">用户</label>
+                            <label for="username" class="col-md-2">用户</label>
                             <div class="col-md-10">
-                                <input id="username" name="username" class="form-control" th:value="${user.username}" disabled></input>
+                                <input id="username" name="username" class="form-control" th:value="${user.username}" disabled>
                             </div>
                         </div>
 
                         <div class="form-group disabled col-md-12">
-                            <label class="col-md-2">早餐</label>
+                            <label for="breakfast" class="col-md-2">早餐</label>
                             <div class="col-md-4">
-                                <div id="bfDiv" class="orderSwitch switch-small">
-                                    <input id="breakfast" name="breakfast"  type="checkbox"  value="1" />
+                                <div id="bfDiv">
+                                    <input id="breakfast" name="breakfast"  class="orderSwitch switch-small" type="checkbox"  value="1" />
                                 </div>
                             </div>
-                            <label class="col-md-1">份数</label>
+                            <label for="bfMany" class="col-md-1">份数</label>
                             <div class="col-md-5">
                                 <input name="bfMany" id="bfMany" type="text" class="form-control"  th:value="${1}">
                             </div>
                         </div>
                         <div class="form-group disabled col-md-12">
-                            <label class="col-md-2 ">午餐</label>
+                            <label for="lunch" class="col-md-2 ">午餐</label>
                             <div class="col-md-4">
-                                <div id="lDiv" class="orderSwitch switch-small">
-                                    <input id="lunch" name="lunch" type="checkbox" value="1"/>
+                                <div id="lDiv">
+                                    <input id="lunch" name="lunch" class="orderSwitch switch-small" type="checkbox" value="1"/>
                                 </div>
                             </div>
-                            <label class="col-md-1">份数</label>
+                            <label for="lMany" class="col-md-1">份数</label>
                             <div class="col-md-5">
                                 <input name="lMany" id="lMany" type="text" class="form-control"  th:value="${1}">
                             </div>
                         </div>
                         <div class="form-group disabled col-md-12">
-                            <label class="col-md-2">晚餐</label>
+                            <label for="dinner" class="col-md-2">晚餐</label>
                             <div class="col-md-4">
-                                <div id="dDiv" class="orderSwitch switch-small">
-                                    <input id="dinner" name="dinner" type="checkbox" value="1"/>
+                                <div id="dDiv">
+                                    <input id="dinner" name="dinner" class="orderSwitch switch-small" type="checkbox" value="1"/>
                                 </div>
                             </div>
-                            <label class="col-md-1">份数</label>
+                            <label for="dMany" class="col-md-1">份数</label>
                             <div class="col-md-5">
                                 <input name="dMany" id="dMany" type="text" class="form-control" th:value="${1}">
                             </div>
@@ -225,7 +225,7 @@
         cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,                   //是否显示分页（*）
         sortable: true,                     //是否启用排序
-        sortName:"O_TIME",
+        sortName:"CR_EDT_TIME",
         sortOrder: "desc",                   //排序方式
         sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
         pageNumber:1,                       //初始化加载第一页，默认第一页
@@ -333,7 +333,9 @@
         ]
     });
 
-
+    var BF_SWITCH;
+    var L_SWITCH;
+    var D_SWITCH;
     $(function () {
         var data = window.sessionStorage.getItem('name');
         if (data !=""){
@@ -354,7 +356,19 @@
             window.location.href = "/canteen/orderPage?uid=" + window.sessionStorage.getItem('uid') + "";
         })
 
-        $('.orderSwitch').bootstrapSwitch({
+        BF_SWITCH = $('#breakfast').bootstrapSwitch({
+            size:'small',
+            onText: '订餐',
+            offText: '不订'
+        });
+
+        L_SWITCH = $('#lunch').bootstrapSwitch({
+            size:'small',
+            onText: '订餐',
+            offText: '不订'
+        });
+
+        D_SWITCH = $('#dinner').bootstrapSwitch({
             size:'small',
             onText: '订餐',
             offText: '不订'
@@ -369,22 +383,28 @@
         });
 
         $('.orderSwitch').on('click',function (event) {
-            $('.orderSwitch').bootstrapSwitch('toggleState');
+            // $('.orderSwitch').bootstrapSwitch('toggleState');
         })
 
         $('#table').on('click-row.bs.table',function (field ,row) {
-            EDIT_OTIME = row.oTime;
-            $('#bfDiv').bootstrapSwitch('toggleState');
-            $('#lDiv').bootstrapSwitch('toggleState');
-            $('#dDiv').bootstrapSwitch('toggleState');
+            EDIT_OTIME =new Date(row.oTime);
+
+            console.log(" EDIT_OTIME =>" + EDIT_OTIME);
+
             if (row.breakfast > 0){
-                $('#bfDiv').bootstrapSwitch('setState',true);
+                BF_SWITCH.bootstrapSwitch('state',true);
+            }else {
+                BF_SWITCH.bootstrapSwitch('state',false);
             }
             if (row.lunch > 0){
-                $('#lDiv').bootstrapSwitch('setState',true);
+                L_SWITCH.bootstrapSwitch('state',true);
+            }else {
+                L_SWITCH.bootstrapSwitch('state',false);
             }
             if (row.dinner > 0){
-                $('#dDiv').bootstrapSwitch('setState',true);
+                D_SWITCH.bootstrapSwitch('state',true);
+            }else {
+                D_SWITCH.bootstrapSwitch('state',false);
             }
         })
     });
@@ -411,7 +431,6 @@
 
                     $('#msgDiv').append(info);
                     $('#table').bootstrapTable('refresh');
-                    $('.orderSwitch').bootstrapSwitch('setState',false);
                 } else {
                     $('#edit').modal('hide');
                     var info = '<div class="alert alert-danger " role="alert">' +

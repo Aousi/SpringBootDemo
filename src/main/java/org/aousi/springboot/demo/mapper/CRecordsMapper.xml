@@ -9,9 +9,46 @@
     <result column="CR_EDT_TIME" jdbcType="TIMESTAMP" property="crEdtTime" />
     <result column="CR_CRT_TIME" jdbcType="TIMESTAMP" property="crCrtTime" />
   </resultMap>
+
+  <resultMap id="webCRList" type="org.aousi.springboot.demo.Entities.CRecords">
+    <id column="CRID" jdbcType="INTEGER" property="crid" />
+    <result column="COID" jdbcType="INTEGER" property="coid" />
+    <result column="CCID" jdbcType="INTEGER" property="ccid" />
+    <result column="UID" jdbcType="INTEGER" property="uid" />
+    <result column="CR_EDT_TIME" jdbcType="TIMESTAMP" property="crEdtTime" />
+    <result column="CR_CRT_TIME" jdbcType="TIMESTAMP" property="crCrtTime" />
+      <association property="co" javaType="org.aousi.springboot.demo.Entities.COrder">
+          <id property="coid" column="COID"/>
+          <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
+          <result column="BF_MANY" jdbcType="INTEGER" property="bfMany" />
+          <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
+          <result column="L_MANY" jdbcType="INTEGER" property="lMany" />
+          <result column="DINNER" jdbcType="INTEGER" property="dinner" />
+          <result column="D_MANY" jdbcType="INTEGER" property="dMany" />
+          <result column="O_TIME" jdbcType="TIMESTAMP" property="oTime" />
+      </association>
+      <association property="cc" javaType="org.aousi.springboot.demo.Entities.CCompleted">
+          <id property="ccid" column="CCID"/>
+          <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
+          <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
+          <result column="DINNER" jdbcType="INTEGER" property="dinner" />
+      </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
     CRID, COID, CCID, UID, CR_EDT_TIME, CR_CRT_TIME
   </sql>
+
+    <select id="userCRList" parameterType="java.lang.Integer" resultMap="webCRlist">
+        SELECT cr.CRID,co.COID,co.BREAKFAST,co.BF_MANY,co.LUNCH,co.L_MANY,co.DINNER,co.D_MANY,cc.CCID,cc.BREAKFAST AS BF_COMPLET,
+        cc.LUNCH AS L_COMPLETE,cc.DINNER AS D_COMPLETE,cr.CR_EDT_TIME
+        FROM canteen_records cr ,canteen_order co ,canteen_completed cc
+        WHERE cr.COID=co.COID AND cr.CCID = cc.CCID AND co.UID = #{uid,jdbcType=INTEGER}
+    </select>
+
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

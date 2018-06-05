@@ -1,6 +1,7 @@
 package org.aousi.springboot.demo.Entities;
 
 import java.util.Date;
+import java.util.Set;
 
 public class CRecords {
     private Integer crid;
@@ -14,6 +15,29 @@ public class CRecords {
     private Date crEdtTime;
 
     private Date crCrtTime;
+
+    private COrder co;
+
+    private CCompleted cc;
+
+    public CRecords() {
+    }
+
+    public COrder getCo() {
+        return co;
+    }
+
+    public void setCo(COrder co) {
+        this.co = co;
+    }
+
+    public CCompleted getCc() {
+        return cc;
+    }
+
+    public void setCc(CCompleted cc) {
+        this.cc = cc;
+    }
 
     public Integer getCrid() {
         return crid;

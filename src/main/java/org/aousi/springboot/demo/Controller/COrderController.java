@@ -60,37 +60,48 @@ public class COrderController {
         List<String> dateList = new ArrayList<>();
         Calendar c = toolssss.ClearCalendarWithTime(StartDate);
 
-        if (!start.equals(end)){
-            for (int i = 0;i<=len;i++){
-                COrder co = receiveOrder(oParams);
-                if (i == 0){
-                    c.add(Calendar.DATE,+0);
-                }else {
-                    c.add(Calendar.DATE,+1);
+        Date limit = toolssss.setLimitTime(inputTime,17);
+
+        if (inputTime.compareTo(limit) <= 0){
+            if (!start.equals(end)){
+                for (int i = 0;i<=len;i++){
+                    COrder co = receiveOrder(oParams);
+                    if (i == 0){
+                        c.add(Calendar.DATE,+0);
+                    }else {
+                        c.add(Calendar.DATE,+1);
+                    }
+                    co.setoTime(c.getTime());
+                    if (COrderService.orderIsExistByDate(c.getTime()) == 0){
+                        cOrders.add(co);
+                    }else {
+                        dateList.add(toolssss.Date2Str("yyyy-MM-dd",c.getTime()));
+                    }
                 }
-                co.setoTime(c.getTime());
-                if (COrderService.orderIsExistByDate(c.getTime()) == 0){
+                Map<String,Object> back =COrderService.insetOrder(cOrders);
+                back.put("failDate",dateList);
+                return back;
+            }else {
+                COrder co = receiveOrder(oParams);
+                co.setoCrtTime(inputTime);
+                co.setoTime(StartDate);
+                if (COrderService.orderIsExistByDate(StartDate) == 0){
                     cOrders.add(co);
                 }else {
-                    dateList.add(toolssss.Date2Str("yyyy-MM-dd",c.getTime()));
+                    dateList.add(toolssss.Date2Str("yyyy-MM-dd",StartDate));
                 }
+                Map<String,Object> back =COrderService.insetOrder(cOrders);
+                back.put("failDate",dateList);
+                return back;
             }
-            Map<String,Object> back =COrderService.insetOrder(cOrders);
-            back.put("failDate",dateList);
-            return back;
         }else {
-            COrder co = receiveOrder(oParams);
-            co.setoCrtTime(inputTime);
-            co.setoTime(StartDate);
-            if (COrderService.orderIsExistByDate(StartDate) == 0){
-                cOrders.add(co);
-            }else {
-                dateList.add(toolssss.Date2Str("yyyy-MM-dd",StartDate));
-            }
-            Map<String,Object> back =COrderService.insetOrder(cOrders);
-            back.put("failDate",dateList);
+            Map<String,Object> back = new HashMap<>();
+            back.put("statusCode",400);
+            back.put("msg","17点以后无法订餐。");
             return back;
         }
+
+
     }
 
     @RequestMapping("/getUserOrders.do")
@@ -114,18 +125,18 @@ public class COrderController {
 
         Map<String,Object> back= new HashMap<>();
         COrder order = receiveOrder(oParams);
-
+        String str = oParams.get("otime");
+        str = str.replaceAll("Z","UTC");
+        Date otime = toolssss.Str2Date("yyyy-MM-dd'T'HH:mm:ss.SSSZ",str) ;
         Date now = new Date();
-        Date limit = toolssss.setLimitTime(now,18);
 
-        if (now.compareTo(limit) <= 0){
+        if (otime.compareTo(now)> 0){
             return COrderService.editOrder(order);
         }else {
             back.put("statusCode",400);
-            back.put("msg","17点之后禁止修改订餐信息。");
+            back.put("msg","今天以及之前的订餐信息无法修改。");
             return back;
         }
-
     }
 
 

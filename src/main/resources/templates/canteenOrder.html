@@ -109,9 +109,9 @@
                 <label class="col-md-2">日期范围</label>
                 <div class="col-md-10">
                     <div class="input-daterange input-group" id="sandbox-container">
-                        <input type="text" class="input-sm form-control" name="start" />
+                        <input id="start" type="text" class="input-sm form-control" name="start" />
                         <span class="input-group-addon">到</span>
-                        <input type="text" class="input-sm form-control" name="end" />
+                        <input id="end" type="text" class="input-sm form-control" name="end" />
                     </div>
                 </div>
             </div>
@@ -226,6 +226,9 @@
         })
     }
 
+    var today = new Date();
+    var nextDay =new Date(today.setDate(today.getDate()+1));
+
 
 
     $(function () {
@@ -243,9 +246,13 @@
                 '<li><a href="#" onclick="logout()">log out</a></li>')
         }
 
+        console.log("nextDay ==>" + nextDay)
+
         $('.input-daterange').datepicker({
             format: "yyyy-mm-dd",
-            daysOfWeekHighlighted: "0,6"
+            daysOfWeekHighlighted: "0,6",
+            startDate:nextDay,
+            autoclose:true
         });
 
         $('.orderSwitch').bootstrapSwitch({
