@@ -2,10 +2,13 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>食堂 ==> 用户订餐记录</title>
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-switch.css}">
+
     <style>
         .myfooter {
             background-color: #5f5f5f;
@@ -30,6 +33,7 @@
 <script th:src="@{/js/publicJS.js}"></script>
 <script th:src="@{/js/bootstrap-table.min.js}"></script>
 <script  th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
+<script  th:src="@{/js/bootstrap-switch.min.js}"></script>
 
 <script src="/static/js/bootstrap-table.min.js"></script>
 <script src="/static/js/bootstrap-table-zh-CN.min.js"></script>
@@ -41,7 +45,7 @@
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand"><span style="font-size: 39px">Index</span></div>
+            <div class="navbar-brand"><span id="home" style="font-size: 39px"><span class="glyphicon glyphicon-home"></span>综合应用</span></div>
 
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#LinkPart"
                     aria-controls="bs-navbar" aria-expanded="false">
@@ -64,14 +68,23 @@
                         <li><a href="/recycledArticle">回收站</a></li>
                     </ul>
                 </li>
-                <li><a href="#">PART 3</a></li>
                 <li class="dropdown">
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">SELECT<span class="caret"></span></a>
+                       aria-expanded="false">物品<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="myItem" href="#">我的物品</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a id="applyItem" href="#">领用申请</a></li>
+                        <li><a id="applyRecord" href="#">申请记录</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                       aria-expanded="false">食堂应用<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a id="order" href="#">用餐预定</a></li>
-                        <li><a href="#">订餐详情</a></li>
-                        <li><a href="#">订餐记录</a></li>
+                        <li><a id="userOrders" href="#">订餐详情</a></li>
+                        <li><a id="userCR" href="#">订餐记录</a></li>
                     </ul>
                 </li>
             </ul>
@@ -86,7 +99,11 @@
 
 <main style="width: 960px;margin: 0 auto">
     <div class="container" style="width: inherit">
+        <div class="page-header col-md-12 col-sm-12 col-xs-12">
+            <h1>订餐记录 <small>order records</small></h1>
+        </div>
         <table id="CRTable"></table>
+        <input id="uid" type="hidden" th:value="${user.uid}">
     </div>
 </main>
 
@@ -106,6 +123,9 @@
 
 </body>
 <script>
+
+    var uid = $('#uid').val();
+
     $('#CRTable').bootstrapTable({
         url: '/CR/getUserCR.do',         //请求后台的URL（*）
         method: 'get',                      //请求方式（*）
@@ -153,72 +173,169 @@
             detailClose: 'glyphicon-minus icon-minus',
         },
         columns:[
-            {
-                checkbox: true
-            }, {
-                field: 'coid',
-                title: 'COID'
-            }, {
-                field: 'breakfast',
-                title: '早餐',
-                formatter:function (value,row,index) {
-                    if (row.breakfast === 0){
-                        return value = '<span style="color: red"> 未订 </span>'
-                    }else {
-                        return value = '<span> 已定 </span>'
-                    }
+
+            [
+                {
+                    rowspan:2,
+                    colspan:1,
+                    field: 'crid',
+                    title: 'CRID',
+                    align:'center'
+                },{
+                    colspan:7,
+                    rowspan:1,
+                    field: '',
+                    title: '订餐情况',
+                    align:'center'
+                }, {
+                    colspan:4,
+                    rowspan:1,
+                    field: '',
+                    title: '用餐情况',
+                    align:'center'
+                },{
+                    rowspan:2,
+                    colspan:1,
+                    field: 'co.oTime',
+                    title: '记录日期',
+                    formatter:function (value,row,index) {
+                        return dateFmt_yyMMdd(row.co.oTime);
+                    },
+                    align:'center'
                 }
-            }, {
-                field: 'bfMany',
-                title: '早餐份数'
-            },  {
-                field: 'lunch',
-                title: '午餐',
-                formatter:function (value,row,index) {
-                    if (row.lunch === 0){
-                        return value = '<span style="color: red"> 未订 </span>'
-                    }else {
-                        return value = '<span> 已定 </span>'
-                    }
+            ],[
+                {
+                    rowspan:1,
+                    colspan:1,
+                    field: 'coid',
+                    title: 'C0ID',
+                    align:'center'
+                },  {
+                    colspan:1,
+                    rowspan:1,
+                    field: 'co.breakfast',
+                    title: '早餐',
+                    formatter:function (value,row,index) {
+                        if (row.co.breakfast === 0){
+                            return '<span class="glyphicon glyphicon-remove"></span>';
+                        }else {
+                            return '<span class="glyphicon glyphicon-ok"></span>';
+                        }
+                    },
+                    align:'center'
+                }, {
+                    colspan:1,
+                    rowspan:1,
+                    field: 'co.bfMany',
+                    title: '早餐份数',
+                    formatter:function (value,row,index) {
+                        return row.co.bfMany;
+                    },
+                    align:'center'
+                },  {
+                    colspan:1,
+                    rowspan:1,
+                    field: 'co.lunch',
+                    title: '午餐',
+                    formatter:function (value,row,index) {
+                        if (row.lunch === 0){
+                            return '<span class="glyphicon glyphicon-remove"></span>';
+                        }else {
+                            return '<span class="glyphicon glyphicon-ok"></span>';
+                        }
+                    },
+                    align:'center'
+                }, {
+                    colspan:1,
+                    rowspan:1,
+                    field: 'co.lMany',
+                    title: '午餐份数',
+                    formatter:function (value,row,index) {
+                        return row.co.lMany;
+                    },
+                    align:'center'
+                }, {
+                    colspan:1,
+                    rowspan:1,
+                    field: 'co.dinner',
+                    title: '晚餐',
+                    formatter:function (value,row,index) {
+                        if (row.co.dinner === 0){
+                            return '<span class="glyphicon glyphicon-remove"></span>';
+                        }else {
+                            return '<span class="glyphicon glyphicon-ok"></span>';
+                        }
+                    },
+                    align:'center'
+                }, {
+                    colspan:1,
+                    rowspan:1,
+                    field: 'co.dMany',
+                    title: '晚餐份数',
+                    formatter:function (value,row,index) {
+                        return row.co.dMany;
+                    },
+                    align:'center'
+                },{
+                    rowspan:1,
+                    colspan:1,
+                    field: 'ccid',
+                    title: 'CCID',
+                    align:'center'
+                },{
+                    colspan:1,
+                    rowspan:1,
+                    field: 'cc.breakfast',
+                    title: '早餐',
+                    formatter:function (value,row,index) {
+                        if (row.cc.breakfast === null){
+                            return '<span style="color: red"> 无信息 </span>';
+                        }else {
+                            if (row.cc.breakfast === 0){
+                                return '<span class="glyphicon glyphicon-remove"></span>';
+                            }else {
+                                return '<span class="glyphicon glyphicon-ok"></span>';
+                            }
+                        }
+                    },
+                    align:'center'
+
+                },{
+                    colspan:1,
+                    rowspan:1,
+                    field: 'cc.lunch',
+                    title: '午餐',
+                    formatter:function (value,row,index) {
+                        if (row.cc.lunch === null){
+                            return '<span style="color: red"> 无信息 </span>';
+                        }else {
+                            if (row.cc.lunch === 0){
+                                return '<span class="glyphicon glyphicon-remove"></span>';
+                            }else {
+                                return '<span class="glyphicon glyphicon-ok"></span>';
+                            }
+                        }
+                    },
+                    align:'center'
+                },{
+                    colspan:1,
+                    rowspan:1,
+                    field: 'cc.dinner',
+                    title: '晚餐',
+                    formatter:function (value,row,index) {
+                        if (row.cc.dinner === null){
+                            return  '<span style="color: red"> 无信息 </span>';
+                        }else {
+                            if (row.cc.dinner === 0){
+                                return '<span class="glyphicon glyphicon-remove"></span>';
+                            }else {
+                                return '<span class="glyphicon glyphicon-ok"></span>';
+                            }
+                        }
+                    },
+                    align:'center'
                 }
-            }, {
-                field: 'lMany',
-                title: '午餐份数'
-            }, {
-                field: 'dinner',
-                title: '晚餐',
-                formatter:function (value,row,index) {
-                    if (row.dinner === 0){
-                        return value = '<span style="color: red"> 未订 </span>'
-                    }else {
-                        $('#dinner').prop('checked','checked');
-                        return value = '<span> 已定 </span>'
-                    }
-                }
-            }, {
-                field: 'dMany',
-                title: '晚餐份数'
-            }, {
-                field: 'oTime',
-                title: '预定日期',
-                formatter:function (value,row,index) {
-                    return dateFmt_yyMMdd(value);
-                }
-            }, {
-                field: 'oCrtTime',
-                title: '订单创建时间',
-                formatter:function (value,row,index) {
-                    return dateFmt_yyMMdd_hhmmss(value);
-                }
-            }, {
-                field: '',
-                title: '操作',
-                formatter:function (value,row,index) {
-                    return '        <button id="btn_edit" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#edit" data-whatever="'+row.coid+'">\n' +
-                        '           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改\n' +
-                        '        </button>';
-                }
-            }
+            ]
         ]
     });
 </script>

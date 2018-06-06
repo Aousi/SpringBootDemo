@@ -29,9 +29,9 @@
       </association>
       <association property="cc" javaType="org.aousi.springboot.demo.Entities.CCompleted">
           <id property="ccid" column="CCID"/>
-          <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
-          <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
-          <result column="DINNER" jdbcType="INTEGER" property="dinner" />
+          <result column="BF_COMPLETE" jdbcType="INTEGER" property="breakfast" />
+          <result column="L_COMPLETE" jdbcType="INTEGER" property="lunch" />
+          <result column="D_COMPLETE" jdbcType="INTEGER" property="dinner" />
       </association>
   </resultMap>
 
@@ -39,14 +39,24 @@
     CRID, COID, CCID, UID, CR_EDT_TIME, CR_CRT_TIME
   </sql>
 
-    <select id="userCRList" parameterType="java.lang.Integer" resultMap="webCRlist">
-        SELECT cr.CRID,co.COID,co.BREAKFAST,co.BF_MANY,co.LUNCH,co.L_MANY,co.DINNER,co.D_MANY,cc.CCID,cc.BREAKFAST AS BF_COMPLET,
-        cc.LUNCH AS L_COMPLETE,cc.DINNER AS D_COMPLETE,cr.CR_EDT_TIME
-        FROM canteen_records cr ,canteen_order co ,canteen_completed cc
-        WHERE cr.COID=co.COID AND cr.CCID = cc.CCID AND co.UID = #{uid,jdbcType=INTEGER}
+    <select id="userCRList" parameterType="java.lang.Integer" resultMap="webCRList">
+      SELECT cr.CRID
+      ,co.COID
+      ,co.BREAKFAST
+      ,co.BF_MANY
+      ,co.LUNCH
+      ,co.L_MANY
+      ,co.DINNER
+      ,co.D_MANY
+      ,co.O_TIME
+      ,cc.CCID
+      ,cc.BREAKFAST AS BF_COMPLETE
+      ,cc.LUNCH AS L_COMPLETE
+      ,cc.DINNER AS D_COMPLETE
+      , cr.CR_EDT_TIME
+      FROM canteen_records cr ,canteen_order co ,canteen_completed cc
+      WHERE cr.COID=co.COID AND cr.CCID = cc.CCID AND co.UID = #{uid,jdbcType=INTEGER}
     </select>
-
-
 
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

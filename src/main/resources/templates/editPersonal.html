@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>个人信息 ==> 修改信息</title>
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-select.css}">
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.css">
+    <!--<link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.css">-->
     <style>
         .myfooter {
             background-color: #5f5f5f;
@@ -33,10 +33,12 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script th:src="@{/js/bootstrap-select.min.js}"></script>
 <script th:src="@{/js/defaults-zh_CN.min.js}"></script>
-<script type="text/javascript" src="/static/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="/static/js/defaults-zh_CN.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script th:src="@{/js/publicJS.js}"></script>
+
+<!--<script type="text/javascript" src="/static/js/bootstrap-select.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/js/defaults-zh_CN.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/js/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
 <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -45,7 +47,7 @@
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand"><span style="font-size: 39px">Index</span></div>
+            <div class="navbar-brand"><span id="home" style="font-size: 39px"><span class="glyphicon glyphicon-home"></span>综合应用</span></div>
 
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#LinkPart"
                     aria-controls="bs-navbar" aria-expanded="false">
@@ -58,7 +60,7 @@
         <div id="LinkPart" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
                        aria-expanded="false">文章<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/articleList">文章列表</a></li>
@@ -68,18 +70,27 @@
                         <li><a href="/recycledArticle">回收站</a></li>
                     </ul>
                 </li>
-                <li><a href="#">PART 3</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">SELECT<span class="caret"></span></a>
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                       aria-expanded="false">物品<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">PART 1</a></li>
-                        <li><a href="#">PART 2</a></li>
-                        <li><a href="#">PART 3</a></li>
+                        <li><a id="myItem" href="#">我的物品</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a id="applyItem" href="#">领用申请</a></li>
+                        <li><a id="applyRecord" href="#">申请记录</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                       aria-expanded="false">食堂应用<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="order" href="#">用餐预定</a></li>
+                        <li><a id="userOrders" href="#">订餐详情</a></li>
+                        <li><a id="userCR" href="#">订餐记录</a></li>
                     </ul>
                 </li>
             </ul>
-            <input id="nameNav" type="hidden" th:value="${name}">
+            <input id="nameNav" type="hidden" th:value="${name}" >
             <ul class="nav navbar-nav navbar-right" id="userNav">
                 <li><a href="#">LOGIN or SIGN UP</a></li>
             </ul>

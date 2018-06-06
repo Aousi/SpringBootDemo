@@ -25,7 +25,7 @@ public class CRService {
         List<CRecords> cc = recordsMapper.userCRList(uid);
         if (cc != null){
             Map<String,Object> back = new HashMap<>();
-            back.put("totals",cc.size());
+            back.put("total",cc.size());
             back.put("rows",cc);
             return back;
         }else {

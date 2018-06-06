@@ -29,8 +29,10 @@
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/publicJS.js}"></script>
 <script  th:src="@{/js/bootstrap-switch.min.js}"></script>
 <script  th:src="@{/js/bootstrap-datepicker.js}"></script>
+
 
 <!--<script src="/static/js/bootstrap-switch.min.js"></script>-->
 <!--<script src="/static/js/bootstrap-datepicker.js"></script>-->
@@ -42,7 +44,7 @@
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand"><span style="font-size: 39px">Index</span></div>
+            <div class="navbar-brand"><span id="home" style="font-size: 39px"><span class="glyphicon glyphicon-home"></span>综合应用</span></div>
 
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#LinkPart"
                     aria-controls="bs-navbar" aria-expanded="false">
@@ -65,14 +67,23 @@
                         <li><a href="/recycledArticle">回收站</a></li>
                     </ul>
                 </li>
-                <li><a href="#">PART 3</a></li>
                 <li class="dropdown">
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">SELECT<span class="caret"></span></a>
+                       aria-expanded="false">物品<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">PART 1</a></li>
-                        <li><a href="#">PART 2</a></li>
-                        <li><a href="#">PART 3</a></li>
+                        <li><a id="myItem" href="#">我的物品</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a id="applyItem" href="#">领用申请</a></li>
+                        <li><a id="applyRecord" href="#">申请记录</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                       aria-expanded="false">食堂应用<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="order" href="#">用餐预定</a></li>
+                        <li><a id="userOrders" href="#">订餐详情</a></li>
+                        <li><a id="userCR" href="#">订餐记录</a></li>
                     </ul>
                 </li>
             </ul>
@@ -232,35 +243,19 @@
 
 
     $(function () {
-        var data = window.sessionStorage.getItem('name');
-        if (data != null){
-            $('#userNav').html('<li class="dropdown">\n' +
-                ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
-                ' aria-expanded="false" >'+data+'<span class="caret"></span></a>\n' +
-                ' <ul class="dropdown-menu">\n' +
-                ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
-                ' <li><a href="/user/editPerson.do?name='+data+'">修改个人信息</a></li>\n' +
-                ' <li><a href="/user/editPassword.do?name='+data+'">修改密码</a></li>\n' +
-                ' </ul>\n' +
-                ' </li>' +
-                '<li><a href="#" onclick="logout()">log out</a></li>')
-        }
+            $('.input-daterange').datepicker({
+                format: "yyyy-mm-dd",
+                daysOfWeekHighlighted: "0,6",
+                startDate:nextDay,
+                autoclose:true
+            })
 
-        console.log("nextDay ==>" + nextDay)
-
-        $('.input-daterange').datepicker({
-            format: "yyyy-mm-dd",
-            daysOfWeekHighlighted: "0,6",
-            startDate:nextDay,
-            autoclose:true
-        });
-
-        $('.orderSwitch').bootstrapSwitch({
-            size:'small',
-            onText: '订餐',
-            offText: '不订'
-        });
-    });
+            $('.orderSwitch').bootstrapSwitch({
+                size:'small',
+                onText: '订餐',
+                offText: '不订'
+            })
+    })
 
     function convertToJson(str) {
         var obj ={"uid":$('#uid').val(),"name":$('#username').val()};
@@ -270,9 +265,5 @@
         return obj;
     }
 
-    function logout() {
-        window.sessionStorage.removeItem('name');
-        window.location.href='/'
-    }
 </script>
 </html>

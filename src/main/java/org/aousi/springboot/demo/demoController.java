@@ -8,12 +8,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class demoController {
 
-    @RequestMapping("/")
+    @RequestMapping("/login")
     public String login(){
         return "login";
     }
 
-    @RequestMapping("/home")
+    @RequestMapping("/")
     public ModelAndView home(){
         return new ModelAndView("home");
     }

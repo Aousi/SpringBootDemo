@@ -66,7 +66,7 @@ public class userController {
         }else {
             getBack = userService.loginConfrim(user);
             if ((Integer) getBack.get("stateCode") == 200){
-                getBack.put("toUrl","/home");
+                getBack.put("toUrl","/");
                 getBack.put("name",username);
             }
         }

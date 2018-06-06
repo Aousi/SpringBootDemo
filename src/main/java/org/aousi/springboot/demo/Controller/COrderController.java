@@ -66,6 +66,7 @@ public class COrderController {
             if (!start.equals(end)){
                 for (int i = 0;i<=len;i++){
                     COrder co = receiveOrder(oParams);
+                    co.setoCrtTime(inputTime);
                     if (i == 0){
                         c.add(Calendar.DATE,+0);
                     }else {

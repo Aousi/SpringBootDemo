@@ -60,6 +60,17 @@ public class COrder {
         this.uid = uid;
     }
 
+    public COrder(Integer coid, Integer breakfast, Integer bfMany, Integer lunch, Integer lMany, Integer dinner, Integer dMany, Date oTime) {
+        this.coid = coid;
+        this.breakfast = breakfast;
+        this.bfMany = bfMany;
+        this.lunch = lunch;
+        this.lMany = lMany;
+        this.dinner = dinner;
+        this.dMany = dMany;
+        this.oTime = oTime;
+    }
+
     public Date getoEditTime() {
         return oEditTime;
     }

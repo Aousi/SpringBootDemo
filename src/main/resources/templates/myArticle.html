@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>文章 ==> 我的文章</title>
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
@@ -29,6 +29,8 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
 <!--<script  src="/static/js/bootstrap.min.js"></script>-->
+<script th:src="@{/js/publicJS.js}"></script>
+
 
 <script th:src="@{/js/bootstrap-table.min.js}"></script>
 <script  th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
@@ -48,7 +50,7 @@
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand"><span style="font-size: 39px">Index</span></div>
+            <div class="navbar-brand"><span id="home" style="font-size: 39px"><span class="glyphicon glyphicon-home"></span>综合应用</span></div>
 
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#LinkPart"
                     aria-controls="bs-navbar" aria-expanded="false">
@@ -71,14 +73,23 @@
                         <li><a href="/recycledArticle">回收站</a></li>
                     </ul>
                 </li>
-                <li><a href="#">PART 3</a></li>
                 <li class="dropdown">
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">SELECT<span class="caret"></span></a>
+                       aria-expanded="false">物品<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">PART 1</a></li>
-                        <li><a href="#">PART 2</a></li>
-                        <li><a href="#">PART 3</a></li>
+                        <li><a id="myItem" href="#">我的物品</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a id="applyItem" href="#">领用申请</a></li>
+                        <li><a id="applyRecord" href="#">申请记录</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                       aria-expanded="false">食堂应用<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="order" href="#">用餐预定</a></li>
+                        <li><a id="userOrders" href="#">订餐详情</a></li>
+                        <li><a id="userCR" href="#">订餐记录</a></li>
                     </ul>
                 </li>
             </ul>
