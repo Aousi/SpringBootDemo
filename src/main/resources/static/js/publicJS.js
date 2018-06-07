@@ -3,14 +3,14 @@ $(function () {
     if (data != null){
         $('#userNav').html('<li class="dropdown">\n' +
             ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
-            ' aria-expanded="false"><span class="glyphicon glyphicon-user"></span>'+data+'<span class="caret"></span></a>\n' +
+            ' aria-expanded="false"><span class="glyphicon glyphicon-user"></span>    '+data+'<span class="caret"></span></a>\n' +
             ' <ul class="dropdown-menu">\n' +
             ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
             ' <li><a href="/user/editPerson.do?name='+data+'">修改个人信息</a></li>\n' +
             ' <li><a href="/user/editPassword.do?name='+data+'">修改密码</a></li>\n' +
             ' </ul>\n' +
             ' </li>' +
-            '<li><a href="#" onclick="logout()"><span class="glyphicon glyphicon-off"/>log out</a></li>')
+            '<li><a href="#" onclick="logout()"><span class="glyphicon glyphicon-off"/>   log out</a></li>')
     }
 
     $('#order').on('click',function () {
@@ -27,7 +27,7 @@ $(function () {
 
 function logout() {
     window.sessionStorage.removeItem('name');
-    window.location.href='/'
+    window.location.href='/user/logout.do'
 }
 
 function dateFmt_yyMMdd(str) {

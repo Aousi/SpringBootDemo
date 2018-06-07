@@ -7,9 +7,19 @@ public class Role {
 
     private String rolename;
 
+    private Set<User> users;
+
     private Set<Module> Modules;
 
     public Role() {
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Role(Set<Module> Modules) {

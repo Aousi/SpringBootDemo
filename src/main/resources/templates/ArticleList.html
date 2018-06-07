@@ -46,7 +46,7 @@
 <div class="nav navbar-default mynav">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand"><span id="home" style="font-size: 39px"><span class="glyphicon glyphicon-home"></span>综合应用</span></div>
+            <div class="navbar-brand"><span id="home" style="font-size: 20px"><span class="glyphicon glyphicon-home"></span>  综合应用</span></div>
 
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#LinkPart"
                     aria-controls="bs-navbar" aria-expanded="false">
@@ -91,7 +91,7 @@
             </ul>
             <input id="nameNav" type="hidden" th:value="${name}" >
             <ul class="nav navbar-nav navbar-right" id="userNav">
-                <li><a href="#">LOGIN or SIGN UP</a></li>
+                <li><a href="/login">LOGIN or SIGN UP</a></li>
             </ul>
         </div>
     </div>
@@ -253,30 +253,7 @@
     $(function () {
         getListData(StartPage);
 
-        var data = window.sessionStorage.getItem('name');
-        if (data !=""){
-            $('#userNav').html('<li class="dropdown">\n' +
-                ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
-                ' aria-expanded="false" >'+data+'<span class="caret"></span></a>\n' +
-                ' <ul class="dropdown-menu">\n' +
-                ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
-                ' <li><a href="/user/editPerson.do?name='+data+'">修改个人信息</a></li>\n' +
-                ' <li><a href="/user/editPassword.do?name='+data+'">修改密码</a></li>\n' +
-                ' </ul>\n' +
-                ' </li>' +
-                '<li><a href="#" onclick="logout()">log out</a></li>')
-        }
-
-        // temp = getListData();
-        // console.log(1);
-        // console.log(temp);
-        // $('#listBody').innerHTML=temp;
     })
-
-    function logout() {
-        window.sessionStorage.removeItem('name');
-        window.location.href='/'
-    }
 
     function getTaskTime(strDate) {
         if(null==strDate || ""==strDate){

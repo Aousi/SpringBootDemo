@@ -4,6 +4,9 @@ import org.aousi.springboot.demo.Entities.User;
 import org.aousi.springboot.demo.Entities.Role;
 import org.aousi.springboot.demo.Service.userService;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.util.Factory;
+import org.apache.shiro.web.servlet.ShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +58,6 @@ public class userController {
     @ResponseBody
     public Map<String,Object> login(@RequestParam Map<String,String> user, HttpSession httpSession){
         Map<String,Object> getBack = new HashMap<>();
-
 
         String username = user.get("username");
         String password = user.get("password");
@@ -125,6 +127,16 @@ public class userController {
         User u = new User(uid,name);
 
         return userService.updataPassword(u,oldPw,neoPw);
+    }
+    @RequestMapping("/logout.do")
+    @ResponseBody
+    public ModelAndView logout(){
+        Map<String,Object> getBack = new HashMap<>();
+
+        getBack.put("msg","成功退出......");
+        getBack.put("toUrl","/");
+
+        return new ModelAndView("transition",getBack);
     }
 
 }
