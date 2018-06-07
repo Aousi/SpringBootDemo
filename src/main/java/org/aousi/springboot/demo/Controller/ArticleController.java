@@ -91,7 +91,7 @@ public class ArticleController {
     @ResponseBody
     public ModelAndView editArticle(@RequestParam("aid") Integer aid){
         Map<String,Object> back = articleService.queryArticleById(aid);
-        return new ModelAndView("editArticle",back);
+        return new ModelAndView("ArticleEdit",back);
     }
     @RequestMapping("/edit.do")
     @ResponseBody
