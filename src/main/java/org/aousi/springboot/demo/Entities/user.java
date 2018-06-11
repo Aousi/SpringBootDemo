@@ -28,6 +28,8 @@ public class User {
 
     private Set<Role> roles;
 
+    private Set<Module> modules;
+
     public User() {
     }
 
@@ -53,6 +55,14 @@ public class User {
         this.tel = tel;
         this.phone = phone;
         this.email = email;
+    }
+
+    public Set<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
     }
 
     public Set<Role> getRoles() {
@@ -149,5 +159,24 @@ public class User {
 
     public void setRegisterTime(Date registerTime) {
         this.registerTime = registerTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", position='" + position + '\'' +
+                ", area='" + area + '\'' +
+                ", department='" + department + '\'' +
+                ", tel='" + tel + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", registerTime=" + registerTime +
+                ", roles=" + roles +
+                ", modules=" + modules +
+                '}';
     }
 }

@@ -25,4 +25,6 @@ public interface UserMapper {
     int userIsExist(@Param("name") String name);
 
     User selectUid_Name(Integer uid);
+
+    User identifyUser(@Param("name")String name);
 }

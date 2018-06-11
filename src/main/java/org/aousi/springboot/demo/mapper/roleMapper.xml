@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.aousi.springboot.demo.mapper.roleMapper">
+<mapper namespace="org.aousi.springboot.demo.mapper.RoleMapper">
   <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.Role">
     <id column="RID" jdbcType="INTEGER" property="rid" />
+    <result column="AVAILABLE" jdbcType="BIT" property="available" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
     <result column="ROLENAME" jdbcType="VARCHAR" property="rolename" />
   </resultMap>
   <sql id="Base_Column_List">
-    RID, ROLENAME
+    RID, AVAILABLE, DESCRIPTION, ROLENAME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from Role
+    from role
     where RID = #{rid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from Role
+    delete from role
     where RID = #{rid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.Role">
-    insert into Role (RID, ROLENAME)
-    values (#{rid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR})
+    insert into role (RID, AVAILABLE, DESCRIPTION, 
+      ROLENAME)
+    values (#{rid,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, 
+      #{rolename,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.Role">
-    insert into Role
+    insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="rid != null">
         RID,
+      </if>
+      <if test="available != null">
+        AVAILABLE,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
       </if>
       <if test="rolename != null">
         ROLENAME,
@@ -36,14 +46,26 @@
       <if test="rid != null">
         #{rid,jdbcType=INTEGER},
       </if>
+      <if test="available != null">
+        #{available,jdbcType=BIT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
       <if test="rolename != null">
         #{rolename,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.Role">
-    update Role
+    update role
     <set>
+      <if test="available != null">
+        AVAILABLE = #{available,jdbcType=BIT},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
       <if test="rolename != null">
         ROLENAME = #{rolename,jdbcType=VARCHAR},
       </if>
@@ -51,8 +73,10 @@
     where RID = #{rid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.Role">
-    update Role
-    set ROLENAME = #{rolename,jdbcType=VARCHAR}
+    update role
+    set AVAILABLE = #{available,jdbcType=BIT},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      ROLENAME = #{rolename,jdbcType=VARCHAR}
     where RID = #{rid,jdbcType=INTEGER}
   </update>
 </mapper>

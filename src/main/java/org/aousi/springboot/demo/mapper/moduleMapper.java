@@ -2,7 +2,7 @@ package org.aousi.springboot.demo.mapper;
 
 import org.aousi.springboot.demo.Entities.Module;
 
-public interface moduleMapper {
+public interface ModuleMapper {
     int deleteByPrimaryKey(Integer mid);
 
     int insert(Module record);

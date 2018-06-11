@@ -1,58 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.aousi.springboot.demo.mapper.moduleMapper">
+<mapper namespace="org.aousi.springboot.demo.mapper.ModuleMapper">
   <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.Module">
     <id column="MID" jdbcType="INTEGER" property="mid" />
+    <result column="AVAILABLE" jdbcType="BIT" property="available" />
     <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
+    <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+    <result column="PARENT_IDS" jdbcType="VARCHAR" property="parentIds" />
+    <result column="PERMISSION" jdbcType="VARCHAR" property="permission" />
+    <result column="RESOURCE_TYPE" jdbcType="VARCHAR" property="resourceType" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
-    MID, MODULENAME
+    MID, AVAILABLE, MODULENAME, PARENT_ID, PARENT_IDS, PERMISSION, RESOURCE_TYPE, URL
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from Module
+    from module
     where MID = #{mid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from Module
+    delete from module
     where MID = #{mid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.Module">
-    insert into Module (MID, MODULENAME)
-    values (#{mid,jdbcType=INTEGER}, #{modulename,jdbcType=VARCHAR})
+    insert into module (MID, AVAILABLE, MODULENAME, 
+      PARENT_ID, PARENT_IDS, PERMISSION, 
+      RESOURCE_TYPE, URL)
+    values (#{mid,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{modulename,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{parentIds,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, 
+      #{resourceType,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.Module">
-    insert into Module
+    insert into module
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="mid != null">
         MID,
       </if>
+      <if test="available != null">
+        AVAILABLE,
+      </if>
       <if test="modulename != null">
         MODULENAME,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="parentIds != null">
+        PARENT_IDS,
+      </if>
+      <if test="permission != null">
+        PERMISSION,
+      </if>
+      <if test="resourceType != null">
+        RESOURCE_TYPE,
+      </if>
+      <if test="url != null">
+        URL,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="mid != null">
         #{mid,jdbcType=INTEGER},
       </if>
+      <if test="available != null">
+        #{available,jdbcType=BIT},
+      </if>
       <if test="modulename != null">
         #{modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIds != null">
+        #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.Module">
-    update Module
+    update module
     <set>
+      <if test="available != null">
+        AVAILABLE = #{available,jdbcType=BIT},
+      </if>
       <if test="modulename != null">
         MODULENAME = #{modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIds != null">
+        PARENT_IDS = #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        PERMISSION = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        RESOURCE_TYPE = #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
       </if>
     </set>
     where MID = #{mid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.aousi.springboot.demo.Entities.Module">
-    update Module
-    set MODULENAME = #{modulename,jdbcType=VARCHAR}
+    update module
+    set AVAILABLE = #{available,jdbcType=BIT},
+      MODULENAME = #{modulename,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      PARENT_IDS = #{parentIds,jdbcType=VARCHAR},
+      PERMISSION = #{permission,jdbcType=VARCHAR},
+      RESOURCE_TYPE = #{resourceType,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR}
     where MID = #{mid,jdbcType=INTEGER}
   </update>
 </mapper>

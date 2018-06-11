@@ -68,6 +68,9 @@ public class userService {
 
         String pw_md5 = new SimpleHash("MD5",password,username,2).toHex();
         User u = userMapper.loginSelect(username);
+        User u2 = userMapper.identifyUser(username);
+        u2.setModules(u2.getRoles().iterator().next().getModules());
+        System.out.print(u2.toString());
         if (u == null){
             getBack.put("stateCode",404);
             getBack.put("msg","用户不存在");
@@ -76,6 +79,7 @@ public class userService {
                 getBack.put("stateCode",200);
                 getBack.put("msg","登陆成功");
                 getBack.put("uid",u.getUid());
+
             }else {
                 getBack.put("stateCode",400);
                 getBack.put("msg","密码错误");

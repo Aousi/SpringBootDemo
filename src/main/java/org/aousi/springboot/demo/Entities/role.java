@@ -5,14 +5,15 @@ import java.util.Set;
 public class Role {
     private Integer rid;
 
+    private Boolean available;
+
+    private String description;
+
     private String rolename;
 
     private Set<User> users;
 
-    private Set<Module> Modules;
-
-    public Role() {
-    }
+    private Set<Module> modules;
 
     public Set<User> getUsers() {
         return users;
@@ -22,16 +23,12 @@ public class Role {
         this.users = users;
     }
 
-    public Role(Set<Module> Modules) {
-        this.Modules = Modules;
-    }
-
     public Set<Module> getModules() {
-        return Modules;
+        return modules;
     }
 
-    public void setModules(Set<Module> Modules) {
-        this.Modules = Modules;
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
     }
 
     public Integer getRid() {
@@ -40,6 +37,22 @@ public class Role {
 
     public void setRid(Integer rid) {
         this.rid = rid;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public String getRolename() {

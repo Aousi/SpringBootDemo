@@ -40,16 +40,16 @@
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
 
-        <!--<table tableName="Role" domainObjectName="Role"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-        <!--</table>-->
-        <!--<table tableName="Module" domainObjectName="Module"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-        <!--</table>-->
+        <table tableName="Role" domainObjectName="Role"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="Module" domainObjectName="Module"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
 
         <!--<table tableName="User-Role" domainObjectName="UserRole"-->
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
@@ -94,21 +94,21 @@
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false" >-->
         <!--</table>-->
-        <table tableName="canteen_order" domainObjectName="COrder"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="canteen_completed" domainObjectName="CCompleted"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="canteen_records" domainObjectName="CRecords"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
+        <!--<table tableName="canteen_order" domainObjectName="COrder"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <!--<table tableName="canteen_completed" domainObjectName="CCompleted"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <!--<table tableName="canteen_records" domainObjectName="CRecords"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
 
 
     </context>
