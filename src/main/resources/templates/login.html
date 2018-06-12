@@ -5,6 +5,7 @@
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
               <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-switch.min.css}">
     <style>
         .login_btn {
             margin: 0px;
@@ -15,6 +16,7 @@
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-switch.min.js}"></script>
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
         <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -53,11 +55,18 @@
             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
             <input ID="account" class="form-control" type="text" placeholder="your account">
         </div>
+        <br>
         <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
             <input id="password" class="form-control" type="password" placeholder="password is neccesary">
         </div>
-        <div id="btnGroup" style="margin: 10px 11%">
+        <br>
+        <span>是否记住我的登陆状态</span>
+        <br>
+        <input id="rememberMe" class="switch-small" type="checkbox" value="1">
+        <br>
+        <br>
+        <div id="btnGroup" style="text-align: center">
             <button type="button" class="btn btn-primary login_btn" id="loginBtn" onclick="login()" >login</button>
             <button type="button" class="btn btn-default login_btn" data-toggle="modal" data-target="#myModal" id="signUp" >sign up</button>
         </div>
@@ -99,13 +108,27 @@
 </body>
 <script>
 
+    $(function () {
+        $('#rememberMe').bootstrapSwitch({
+            size:'small',
+            onText: '是',
+            offText: '否'
+        })
+    })
+
     function login() {
         var username = $('#account').val();
         var password = $('#password').val();
+        var rememberMe =$('#rememberMe').bootstrapSwitch('state');
+        var flag = 0;
+        if (rememberMe){
+            flag = 1;
+        }
 
         var data={
             "username":username,
-            "password":password
+            "password":password,
+            "rememberMe":flag
         };
 
         $.ajax({
@@ -155,6 +178,7 @@
                 }
             }
         })
+
     }
 
 

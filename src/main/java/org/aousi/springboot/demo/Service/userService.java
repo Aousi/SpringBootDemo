@@ -68,9 +68,6 @@ public class userService {
 
         String pw_md5 = new SimpleHash("MD5",password,username,2).toHex();
         User u = userMapper.loginSelect(username);
-        User u2 = userMapper.identifyUser(username);
-        u2.setModules(u2.getRoles().iterator().next().getModules());
-        System.out.print(u2.toString());
         if (u == null){
             getBack.put("stateCode",404);
             getBack.put("msg","用户不存在");
@@ -86,6 +83,12 @@ public class userService {
             }
         }
         return getBack;
+    }
+
+    public User identifyUser(String username){
+        Map<String,Object> getBack = new HashMap<>();
+        User u = userMapper.identifyUser(username);
+        return u;
     }
 
     public User queryUserByName(String name){

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.aousi.springboot.demo.mapper.SessionsMapper">
+  <resultMap id="BaseResultMap" type="org.aousi.springboot.demo.Entities.Sessions">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.aousi.springboot.demo.Entities.Sessions">
+    <result column="SESSION_ID" jdbcType="LONGVARBINARY" property="sessionId" />
+    <result column="SESSION_BODY" jdbcType="LONGVARBINARY" property="sessionBody" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID
+  </sql>
+  <sql id="Blob_Column_List">
+    SESSION_ID, SESSION_BODY
+  </sql>
+
+  <select id="selectBySessionId" parameterType="java.lang.Byte" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sessions
+    where SESSION_ID = #{sessionId,jdbcType=LONGVARBINARY}
+  </select>
+
+  <delete id="deleteBySessionId" parameterType="java.lang.Byte">
+    delete from sessions
+    where SESSION_ID = #{sessionId,jdbcType=LONGVARBINARY}
+  </delete>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sessions
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sessions
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.aousi.springboot.demo.Entities.Sessions">
+    insert into sessions (ID, SESSION_ID, SESSION_BODY
+      )
+    values (#{id,jdbcType=INTEGER}, #{sessionId,jdbcType=LONGVARBINARY}, #{sessionBody,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.Sessions">
+    insert into sessions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="sessionId != null">
+        SESSION_ID,
+      </if>
+      <if test="sessionBody != null">
+        SESSION_BODY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sessionId != null">
+        #{sessionId,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="sessionBody != null">
+        #{sessionBody,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.aousi.springboot.demo.Entities.Sessions">
+    update sessions
+    <set>
+      <if test="sessionId != null">
+        SESSION_ID = #{sessionId,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="sessionBody != null">
+        SESSION_BODY = #{sessionBody,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.aousi.springboot.demo.Entities.Sessions">
+    update sessions
+    set SESSION_ID = #{sessionId,jdbcType=LONGVARBINARY},
+      SESSION_BODY = #{sessionBody,jdbcType=LONGVARBINARY}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -22,12 +22,20 @@ $(function () {
 
     $('#userCR').on('click',function () {
         window.location.href = "/CR/userCRPage?uid=" + window.sessionStorage.getItem('uid') + "";
+    });
+
+    $('#home').on('click',function () {
+        gotoHome();
     })
 })
 
 function logout() {
-    window.sessionStorage.removeItem('name');
-    window.location.href='/user/logout.do'
+    window.sessionStorage.clear();
+    window.location.href='/user/logout.do';
+}
+
+function gotoHome() {
+    window.location.href='/';
 }
 
 function dateFmt_yyMMdd(str) {

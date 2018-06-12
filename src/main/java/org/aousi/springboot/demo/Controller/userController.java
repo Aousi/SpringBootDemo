@@ -3,8 +3,14 @@ package org.aousi.springboot.demo.Controller;
 import org.aousi.springboot.demo.Entities.User;
 import org.aousi.springboot.demo.Entities.Role;
 import org.aousi.springboot.demo.Service.userService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.web.servlet.ShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +32,8 @@ public class userController {
 
     @Autowired
     private userService userService;
+    @Autowired
+    private SecurityManager securityManager;
 
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
     @ResponseBody
@@ -61,15 +69,36 @@ public class userController {
 
         String username = user.get("username");
         String password = user.get("password");
+        Boolean rememberMe = false;
+        if(Integer.parseInt(user.get("rememberMe")) == 1){
+            rememberMe = true;
+        }else {
+            rememberMe = false;
+        }
 
         if (username.equals("") || password.equals("")){
             getBack.put("stateCode",400);
             getBack.put("msg","用户名和密码不能为空");
         }else {
-            getBack = userService.loginConfrim(user);
-            if ((Integer) getBack.get("stateCode") == 200){
-                getBack.put("toUrl","/");
+//            getBack = userService.loginConfrim(user);
+            UsernamePasswordToken token = new UsernamePasswordToken(username,password,rememberMe);
+            Subject subject = SecurityUtils.getSubject();
+            try {
+                subject.login(token);
+                Integer uid = userService.queryUserByName(username).getUid();
+                getBack.put("stateCode",200);
+                getBack.put("msg","登陆成功");
+                getBack.put("uid",uid);
                 getBack.put("name",username);
+                getBack.put("toUrl","/");
+            }catch (UnknownAccountException e){
+                getBack.put("stateCode",404);
+                getBack.put("msg","用户不存在");
+                return getBack;
+            }catch (IncorrectCredentialsException e){
+                getBack.put("stateCode",400);
+                getBack.put("msg","密码错误");
+                return getBack;
             }
         }
         return getBack;
@@ -132,7 +161,8 @@ public class userController {
     @ResponseBody
     public ModelAndView logout(){
         Map<String,Object> getBack = new HashMap<>();
-
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
         getBack.put("msg","成功退出......");
         getBack.put("toUrl","/");
 

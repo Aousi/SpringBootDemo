@@ -46,7 +46,10 @@ public class AuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken utoken=(UsernamePasswordToken) token;//获取用户输入的token
         String username = utoken.getUsername();
-        User User = userService.queryUserByName(username);
+        User User = userService.identifyUser(username);
+        if (User == null){
+            throw new UnknownAccountException();
+        }
         return new SimpleAuthenticationInfo(User, User.getPassword(),this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
 
     }

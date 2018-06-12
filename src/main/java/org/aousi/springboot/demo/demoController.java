@@ -18,6 +18,11 @@ public class demoController {
         return new ModelAndView("home");
     }
 
+    @RequestMapping("/home")
+    public ModelAndView home2(){
+        return new ModelAndView("home");
+    }
+
     @RequestMapping("/articleList")
     public ModelAndView ArticleList(){
         return new ModelAndView("ArticleList");
