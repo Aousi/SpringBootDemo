@@ -2,8 +2,12 @@ package org.aousi.springboot.demo;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class demoController {
@@ -46,5 +50,13 @@ public class demoController {
     @RequestMapping("/recycledArticle")
     public String recycleArticle(){
         return "recycleArticle";
+    }
+
+    @RequestMapping("/kicked")
+    public ModelAndView kickout(){
+        Map<String,Object> back = new HashMap<>();
+        back.put("msg","此账号已在另一个地方登陆！");
+        back.put("toUrl","/");
+        return new ModelAndView("transition",back);
     }
 }

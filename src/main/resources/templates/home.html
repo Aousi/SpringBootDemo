@@ -100,7 +100,9 @@
     </div>
 </div>
 <div class="container">
-    <input type="hidden" id="username" >
+    <!--<input type="hidden" id="username" th:value="${sessionScope.name}">-->
+    <!--<input type="hidden" id="uid" th:value="${sessionScope.uid}">-->
+    <!-- 测试两个属性是否放到session中 -->
     <div class="context">
         <h1>正文标题</h1>
         <p>正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容</p>
@@ -131,6 +133,13 @@
 </footer>
 </body>
 <script>
+
+    $(function () {
+        var username = $('#username');
+        var uid = $('#uid');
+
+        console.log("username,uid ==> "+username+","+uid);
+    })
 
 
 </script>

@@ -1,9 +1,13 @@
 package org.aousi.springboot.demo.Entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable{
+
+
+
     private Integer uid;
 
     private String username;

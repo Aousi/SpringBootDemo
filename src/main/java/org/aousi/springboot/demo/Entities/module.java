@@ -1,6 +1,8 @@
 package org.aousi.springboot.demo.Entities;
 
-public class Module {
+import java.io.Serializable;
+
+public class Module implements Serializable {
     private Integer mid;
 
     private Boolean available;

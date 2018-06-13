@@ -1,8 +1,9 @@
 package org.aousi.springboot.demo.Entities;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class Role {
+public class Role implements Serializable {
     private Integer rid;
 
     private Boolean available;

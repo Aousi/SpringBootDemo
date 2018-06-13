@@ -50,20 +50,21 @@
         <h4 class="panel-title">login</h4>
     </div>
     <div class="panel-body">
-        <label for="account"></label>
+        <label for="account">帐号：</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
             <input ID="account" class="form-control" type="text" placeholder="your account">
         </div>
-        <br>
+        <label for="password">密码：</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
             <input id="password" class="form-control" type="password" placeholder="password is neccesary">
         </div>
         <br>
-        <span>是否记住我的登陆状态</span>
-        <br>
-        <input id="rememberMe" class="switch-small" type="checkbox" value="1">
+        <span>是否记住我的登陆状态</span><br>
+        <div style="text-align: right">
+            <input id="rememberMe" class="switch-small" type="checkbox" value="1">
+        </div>
         <br>
         <br>
         <div id="btnGroup" style="text-align: center">
@@ -138,8 +139,8 @@
             data:data,
             success:function (data) {
                 if(data.stateCode == 200){
-                    window.sessionStorage.setItem('name',data.name);
-                    window.sessionStorage.setItem('uid',data.uid);
+                    window.localStorage.setItem('name',data.name);
+                    window.localStorage.setItem('uid',data.uid);
                     window.location.href=data.toUrl;
                 }else {
                     alert(data.msg);

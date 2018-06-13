@@ -1,5 +1,5 @@
 $(function () {
-    var data = window.sessionStorage.getItem('name');
+    var data = window.localStorage.getItem('name');
     if (data != null){
         $('#userNav').html('<li class="dropdown">\n' +
             ' <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"\n' +
@@ -14,14 +14,14 @@ $(function () {
     }
 
     $('#order').on('click',function () {
-        window.location.href = "/canteen/orderPage?uid=" + window.sessionStorage.getItem('uid') + "";
+        window.location.href = "/canteen/orderPage?uid=" + window.localStorage.getItem('uid') + "";
     });
     $('#userOrders').on('click',function () {
-        window.location.href = "/canteen/userOrders?uid=" + window.sessionStorage.getItem('uid') + "";
+        window.location.href = "/canteen/userOrders?uid=" + window.localStorage.getItem('uid') + "";
     });
 
     $('#userCR').on('click',function () {
-        window.location.href = "/CR/userCRPage?uid=" + window.sessionStorage.getItem('uid') + "";
+        window.location.href = "/CR/userCRPage?uid=" + window.localStorage.getItem('uid') + "";
     });
 
     $('#home').on('click',function () {
@@ -30,7 +30,7 @@ $(function () {
 })
 
 function logout() {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
     window.location.href='/user/logout.do';
 }
 

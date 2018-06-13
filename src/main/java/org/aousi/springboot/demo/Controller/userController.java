@@ -9,6 +9,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
@@ -32,8 +34,6 @@ public class userController {
 
     @Autowired
     private userService userService;
-    @Autowired
-    private SecurityManager securityManager;
 
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
     @ResponseBody
@@ -83,6 +83,8 @@ public class userController {
 //            getBack = userService.loginConfrim(user);
             UsernamePasswordToken token = new UsernamePasswordToken(username,password,rememberMe);
             Subject subject = SecurityUtils.getSubject();
+            Session session =subject.getSession();
+
             try {
                 subject.login(token);
                 Integer uid = userService.queryUserByName(username).getUid();
@@ -90,6 +92,10 @@ public class userController {
                 getBack.put("msg","登陆成功");
                 getBack.put("uid",uid);
                 getBack.put("name",username);
+                session.setAttribute("uid",uid);
+                session.setAttribute("name",username);
+                String lastIp = session.getHost();
+                System.out.println(lastIp);
                 getBack.put("toUrl","/");
             }catch (UnknownAccountException e){
                 getBack.put("stateCode",404);
