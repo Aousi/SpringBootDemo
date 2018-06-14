@@ -8,6 +8,8 @@ $(function () {
             ' <li><a href="/user/getPerson.do?name='+data+'">个人信息</a></li>\n' +
             ' <li><a href="/user/editPerson.do?name='+data+'">修改个人信息</a></li>\n' +
             ' <li><a href="/user/editPassword.do?name='+data+'">修改密码</a></li>\n' +
+            ' <li role="separator" class="divider"></li>'+
+            ' <li><a id="consoleKey" href="/intoConsole?name='+data+'">进入后台</a></li>\n' +
             ' </ul>\n' +
             ' </li>' +
             '<li><a href="#" onclick="logout()"><span class="glyphicon glyphicon-off"/>   log out</a></li>')

@@ -1,8 +1,13 @@
 package org.aousi.springboot.demo;
 
+import org.aousi.springboot.demo.Entities.User;
+import org.aousi.springboot.demo.Service.userService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,6 +16,9 @@ import java.util.Map;
 
 @Controller
 public class demoController {
+
+    @Autowired
+    private userService userService;
 
     @RequestMapping("/login")
     public String login(){
@@ -59,4 +67,23 @@ public class demoController {
         back.put("toUrl","/");
         return new ModelAndView("transition",back);
     }
+    @RequestMapping("/intoConsole")
+    @ResponseBody
+    @RequiresRoles("admin")
+    public ModelAndView enterConsole(@RequestParam(name = "name",required = false) String name){
+        Map<String,Object> back = new HashMap<>();
+        back.put("toUrl","/Console?name="+name);
+        return new ModelAndView("transition",back);
+    }
+
+    @RequestMapping("/Console")
+    @ResponseBody
+    @RequiresRoles("admin")
+    public ModelAndView Console(@RequestParam(name = "name",required = false) String name){
+        Map<String,Object> back = new HashMap<>();
+        User u = userService.queryUserByName(name);
+        back.put("user",u);
+        return new ModelAndView("sysBackend",back);
+    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,8 +28,10 @@ public class AuthRealm extends AuthorizingRealm {
         User User =(User) principal.fromRealm(this.getClass().getName()).iterator().next();//获取session中的用户
         List<String> permissions=new ArrayList<>();
         Set<Role> Roles = User.getRoles();
+        Set<String> roles = new HashSet<>();
         if(Roles.size()>0) {
             for(Role Role : Roles) {
+                roles.add(Role.getRolename());
                 Set<Module> Modules = Role.getModules();
                 if(Modules.size()>0) {
                     for(Module Module : Modules) {
@@ -39,6 +42,7 @@ public class AuthRealm extends AuthorizingRealm {
         }
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addStringPermissions(permissions);//将权限放入shiro中.
+        info.addRoles(roles);
         return info;
     }
 
