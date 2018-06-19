@@ -47,7 +47,7 @@ public class userController {
 
         String pw_md5 = new SimpleHash("MD5",password,username,2).toHex();
         Role Role =new Role();
-        Role.setRid(2);
+        Role.setRid(3);
         Set<Role> Roles = new HashSet<>();
         Roles.add(Role);
         User saveUser = new User(username,pw_md5,email, Roles);
@@ -117,6 +117,8 @@ public class userController {
         return new ModelAndView("personalPage",userService.queryUserByUName(name));
     }
 
+
+
     @RequestMapping("/editPerson.do")
     @ResponseBody
     public ModelAndView editPerson(@RequestParam("name") String name){
@@ -173,6 +175,12 @@ public class userController {
         getBack.put("toUrl","/");
 
         return new ModelAndView("transition",getBack);
+    }
+    @RequestMapping("/getAllUser.do")
+    @ResponseBody
+    public Map<String,Object> allUserData(Integer page,Integer rows,String sort,String sortOrder){
+
+        return userService.findAllUsers(page, rows, sort, sortOrder);
     }
 
 }

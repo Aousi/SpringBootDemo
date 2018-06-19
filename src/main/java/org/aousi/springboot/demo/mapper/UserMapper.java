@@ -4,6 +4,8 @@ import org.aousi.springboot.demo.Entities.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer uid);
@@ -27,4 +29,6 @@ public interface UserMapper {
     User selectUid_Name(Integer uid);
 
     User identifyUser(@Param("name")String name);
+
+    List<User> identifyUsers();
 }

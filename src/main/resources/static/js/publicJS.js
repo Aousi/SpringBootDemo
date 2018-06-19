@@ -31,6 +31,16 @@ $(function () {
     })
 })
 
+function goToPersonCtrl() {
+    var name = $('#name').text();
+    window.location.href ='/sysBackend-persons?name='+name+ '';
+}
+
+function goToCtrlHome() {
+    var name = $('#name').text();
+    window.location.href ='/Console?name='+name+ '';
+}
+
 function logout() {
     window.localStorage.clear();
     window.location.href='/user/logout.do';

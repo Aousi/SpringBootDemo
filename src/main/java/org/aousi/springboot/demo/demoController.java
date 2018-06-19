@@ -86,4 +86,14 @@ public class demoController {
         return new ModelAndView("sysBackend",back);
     }
 
+    @RequestMapping("/sysBackend-persons")
+    @ResponseBody
+    @RequiresRoles("admin")
+    public ModelAndView personCtrl(@RequestParam(name = "name",required = false) String name){
+        Map<String,Object> back = new HashMap<>();
+        User u = userService.queryUserByName(name);
+        back.put("user",u);
+        return new ModelAndView("sysBackend-persons",back);
+    }
+
 }

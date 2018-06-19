@@ -1,5 +1,7 @@
 package org.aousi.springboot.demo.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.aousi.springboot.demo.Entities.Role;
 import org.aousi.springboot.demo.Entities.User;
 import org.aousi.springboot.demo.Entities.UserRole;
@@ -89,6 +91,18 @@ public class userService {
         Map<String,Object> getBack = new HashMap<>();
         User u = userMapper.identifyUser(username);
         return u;
+    }
+
+    public Map<String,Object> findAllUsers(Integer page,Integer rows,String sort,String sortOrder){
+        Map<String,Object> getBack = new HashMap<>();
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        List<User> u = userMapper.identifyUsers();
+        getBack.put("total",u.size());
+        getBack.put("rows",u);
+
+        return getBack;
+
+
     }
 
     public User queryUserByName(String name){

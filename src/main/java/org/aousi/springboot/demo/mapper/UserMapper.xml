@@ -35,6 +35,35 @@
     </collection>
   </resultMap>
 
+  <resultMap id="loginInfoMap2" type="org.aousi.springboot.demo.Entities.User">
+    <id column="UID" jdbcType="INTEGER" property="uid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="POSITION" jdbcType="VARCHAR" property="position" />
+    <result column="AREA" jdbcType="VARCHAR" property="area" />
+    <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
+    <result column="TEL" jdbcType="VARCHAR" property="tel" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="REGISTER_TIME" jdbcType="TIMESTAMP" property="registerTime" />
+    <collection property="roles" ofType="org.aousi.springboot.demo.Entities.Role">
+      <id column="RID" javaType="INTEGER" property="rid" />
+      <result column="ROLENAME" jdbcType="VARCHAR" property="rolename" />
+      <collection property="modules" ofType="org.aousi.springboot.demo.Entities.Module">
+        <id column="MID" jdbcType="INTEGER" property="mid" />
+        <result column="AVAILABLE" jdbcType="BIT" property="available" />
+        <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
+        <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+        <result column="PARENT_IDS" jdbcType="VARCHAR" property="parentIds" />
+        <result column="PERMISSION" jdbcType="VARCHAR" property="permission" />
+        <result column="RESOURCE_TYPE" jdbcType="VARCHAR" property="resourceType" />
+        <result column="URL" jdbcType="VARCHAR" property="url" />
+      </collection>
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List">
     UID, USERNAME, PASSWORD, NICKNAME, POSITION, AREA, DEPARTMENT, TEL, PHONE, EMAIL, 
     REGISTER_TIME
@@ -50,6 +79,14 @@
     inner join role_module rm on rm.rid = r.rid
     inner join module m on rm.mid=m.mid
     where username = #{name}
+  </select>
+
+  <select id="identifyUsers" resultType="java.lang.String" resultMap="loginInfoMap2">
+    select u.*,r.*,m.*
+    from user u inner join user_role ur on ur.uid = u.uid
+    inner join role r on r.rid =ur.rid
+    inner join role_module rm on rm.rid = r.rid
+    inner join module m on rm.mid=m.mid
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
