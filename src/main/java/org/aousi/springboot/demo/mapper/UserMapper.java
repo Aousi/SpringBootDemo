@@ -31,4 +31,6 @@ public interface UserMapper {
     User identifyUser(@Param("name")String name);
 
     List<User> identifyUsers();
+
+    List<User> selectRegisterUser();
 }

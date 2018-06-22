@@ -9,6 +9,14 @@
     insert into user_role (UID, RID)
     values (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
   </insert>
+
+  <update id="changeRole" >
+    updata user_role
+    set RID = #{rid}
+    where UID = #{uid}
+  </update>
+
+
   <insert id="insertSelective" parameterType="org.aousi.springboot.demo.Entities.UserRole">
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">

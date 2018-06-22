@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import org.aousi.springboot.demo.Entities.Role;
 import org.aousi.springboot.demo.Entities.User;
 import org.aousi.springboot.demo.Entities.UserRole;
+import org.aousi.springboot.demo.mapper.RoleMapper;
 import org.aousi.springboot.demo.mapper.UserMapper;
 import org.aousi.springboot.demo.mapper.UserRoleMapper;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -20,6 +21,8 @@ public class userService {
     private UserMapper userMapper;
     @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private RoleMapper roleMapper;
 
     public Map<String,Object> signUp(User User, Set<Role> Roles){
         Map<String,Object> getBack = new HashMap<>();
@@ -105,6 +108,18 @@ public class userService {
 
     }
 
+    public Map<String,Object> findRegisterUsers(Integer page,Integer rows,String sort,String sortOrder){
+        Map<String,Object> getBack = new HashMap<>();
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        List<User> u = userMapper.selectRegisterUser();
+        getBack.put("total",u.size());
+        getBack.put("rows",u);
+
+        return getBack;
+
+
+    }
+
     public User queryUserByName(String name){
         User u = userMapper.selectByUserName(name);
         return u;
@@ -174,6 +189,22 @@ public class userService {
         }else {
             getBack.put("statusCode",400);
             getBack.put("user",null);
+        }
+        return getBack;
+    }
+
+    public Map<String,Object> changeRole(Map<String,String> prams){
+        Map<String,Object> getBack = new HashMap<>();
+
+        Integer uid = Integer.parseInt(prams.get("uid"));
+        String rolename = prams.get("rolename");
+        Integer rid = roleMapper.selectByRolename(rolename).getRid();
+        if (userRoleMapper.updata(uid,rid)>0){
+            getBack.put("statusCode",200);
+            getBack.put("msg","用户组修改成功");
+        }else {
+            getBack.put("statusCode",400);
+            getBack.put("msg","用户组修改失败");
         }
         return getBack;
     }

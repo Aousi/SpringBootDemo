@@ -89,6 +89,17 @@
     inner join module m on rm.mid=m.mid
   </select>
 
+  <select id="selectRegisterUser" resultType="java.lang.String" resultMap="loginInfoMap2">
+    select u.*,r.*,m.*
+    from user u
+    inner join user_role ur on ur.uid = u.uid
+    inner join role r on r.rid =ur.rid
+    inner join role_module rm on rm.rid = r.rid
+    inner join module m on rm.mid=m.mid
+    where r.rid = 3
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

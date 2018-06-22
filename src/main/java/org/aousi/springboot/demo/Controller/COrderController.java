@@ -4,6 +4,10 @@ import org.aousi.springboot.demo.Entities.COrder;
 import org.aousi.springboot.demo.Entities.toolssss;
 import org.aousi.springboot.demo.Service.COrderService;
 import org.aousi.springboot.demo.Service.userService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -62,46 +66,54 @@ public class COrderController {
 
         Date limit = toolssss.setLimitTime(inputTime,17);
 
-        if (inputTime.compareTo(limit) <= 0){
-            if (!start.equals(end)){
-                for (int i = 0;i<=len;i++){
+        Subject subject = SecurityUtils.getSubject();
+
+        if (subject.hasRole("user") || subject.hasRole("admin")){
+            if (inputTime.compareTo(limit) <= 0){
+                if (!start.equals(end)){
+                    for (int i = 0;i<=len;i++){
+                        COrder co = receiveOrder(oParams);
+                        co.setoCrtTime(inputTime);
+                        if (i == 0){
+                            c.add(Calendar.DATE,+0);
+                        }else {
+                            c.add(Calendar.DATE,+1);
+                        }
+                        co.setoTime(c.getTime());
+                        if (COrderService.orderIsExistByDate(c.getTime()) == 0){
+                            cOrders.add(co);
+                        }else {
+                            dateList.add(toolssss.Date2Str("yyyy-MM-dd",c.getTime()));
+                        }
+                    }
+                    Map<String,Object> back =COrderService.insetOrder(cOrders);
+                    back.put("failDate",dateList);
+                    return back;
+                }else {
                     COrder co = receiveOrder(oParams);
                     co.setoCrtTime(inputTime);
-                    if (i == 0){
-                        c.add(Calendar.DATE,+0);
-                    }else {
-                        c.add(Calendar.DATE,+1);
-                    }
-                    co.setoTime(c.getTime());
-                    if (COrderService.orderIsExistByDate(c.getTime()) == 0){
+                    co.setoTime(StartDate);
+                    if (COrderService.orderIsExistByDate(StartDate) == 0){
                         cOrders.add(co);
                     }else {
-                        dateList.add(toolssss.Date2Str("yyyy-MM-dd",c.getTime()));
+                        dateList.add(toolssss.Date2Str("yyyy-MM-dd",StartDate));
                     }
+                    Map<String,Object> back =COrderService.insetOrder(cOrders);
+                    back.put("failDate",dateList);
+                    return back;
                 }
-                Map<String,Object> back =COrderService.insetOrder(cOrders);
-                back.put("failDate",dateList);
-                return back;
             }else {
-                COrder co = receiveOrder(oParams);
-                co.setoCrtTime(inputTime);
-                co.setoTime(StartDate);
-                if (COrderService.orderIsExistByDate(StartDate) == 0){
-                    cOrders.add(co);
-                }else {
-                    dateList.add(toolssss.Date2Str("yyyy-MM-dd",StartDate));
-                }
-                Map<String,Object> back =COrderService.insetOrder(cOrders);
-                back.put("failDate",dateList);
+                Map<String,Object> back = new HashMap<>();
+                back.put("statusCode",400);
+                back.put("msg","17点以后无法订餐。");
                 return back;
             }
         }else {
             Map<String,Object> back = new HashMap<>();
             back.put("statusCode",400);
-            back.put("msg","17点以后无法订餐。");
+            back.put("msg","当前角色的用户组无法提交订单，请联系管理员审核帐号。");
             return back;
         }
-
 
     }
 

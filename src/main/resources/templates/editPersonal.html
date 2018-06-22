@@ -213,25 +213,6 @@
 <script>
 
     var changeFlag = false;
-    var flag = '';
-
-    function confirmChange(flag) {
-        var i = flag;
-        $('.updateData').change(function () {
-            i = $(this).val();
-            console.log('i=>   '+i);
-
-            if (i == ''){
-                changeFlag = false;
-                i = '';
-            }else {
-                changeFlag =  true;
-                i = '';
-            }
-        })
-
-        return changeFlag;
-    }
     
     function saveChange() {
         var user = $('#userForm').serializeArray();
@@ -272,17 +253,8 @@
         }
     }
 
-    function convertToJson(str) {
-        var obj ={"uid":$('#uid').val(),"name":$('#username').val()};
-        for (var i in str){
-            obj[str[i].name]=str[i]['value'];
-        }
-        return obj;
-    }
-
-
-
     $(function () {
+        changeFlag = false;
 
         getSelectData();
 
@@ -296,8 +268,6 @@
         changeFlag = confirmChange(flag);
     })
 
-
-    
     function getSelectData() {
 
         var Areas = {"null":null};
@@ -347,10 +317,9 @@
                 }
             }
         })
-
-
-
     }
+    
+
 
 </script>
 </html>

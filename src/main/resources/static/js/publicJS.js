@@ -1,3 +1,6 @@
+var changeFlag = false;
+
+
 $(function () {
     var data = window.localStorage.getItem('name');
     if (data != null){
@@ -73,4 +76,30 @@ function dateFmt_yyMMdd_hhmmss(str) {
     ss = ss < 10 ? ('0' + ss) : ss;
 
     return yy+'-'+MM+'-'+dd+' '+hh+':'+mm+':'+ss;
+}
+
+function confirmChange(flag) {
+    var i = flag;
+    $('.updateData').change(function () {
+        i = $(this).val();
+        console.log('i=>   '+i);
+
+        if (i == ''){
+            changeFlag = false;
+            i = '';
+        }else {
+            changeFlag =  true;
+            i = '';
+        }
+    })
+
+    return changeFlag;
+}
+
+function convertToJson(str) {
+    var obj ={"uid":$('#uid').val(),"name":$('#username').val()};
+    for (var i in str){
+        obj[str[i].name]=str[i]['value'];
+    }
+    return obj;
 }

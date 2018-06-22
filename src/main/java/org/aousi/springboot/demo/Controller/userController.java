@@ -183,4 +183,18 @@ public class userController {
         return userService.findAllUsers(page, rows, sort, sortOrder);
     }
 
+    @RequestMapping("/getRegisterUser.do")
+    @ResponseBody
+    public Map<String,Object> registerUserData(Integer page,Integer rows,String sort,String sortOrder){
+
+        return userService.findRegisterUsers(page, rows, sort, sortOrder);
+    }
+
+    @RequestMapping("/changeRole.do")
+    @ResponseBody
+    public Map<String,Object> changeUserGroup(@RequestParam Map<String,String> prams){
+
+        return userService.changeRole(prams);
+    }
+
 }

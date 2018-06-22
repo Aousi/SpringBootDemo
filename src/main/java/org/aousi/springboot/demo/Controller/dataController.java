@@ -32,5 +32,11 @@ public class dataController {
 
         return dataService.getDepartment();
     }
+    @RequestMapping("/getRoles.do")
+    @ResponseBody
+    public Map<String,Object> getRoles(){
+
+        return dataService.getRoles();
+    }
 
 }
