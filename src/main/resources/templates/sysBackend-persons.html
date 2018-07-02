@@ -244,6 +244,7 @@
 </body>
 <script>
     var changeFlag = false;
+    var uuid = 0;
 
 
     $(function () {
@@ -494,8 +495,9 @@
                 field: '',
                 title: '操作',
                 formatter:function (value,row,index) {
-                    return '        <button id="btn_edit" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#edit" data-whatever="'+row.coid+'">\n' +
-                        '           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改\n' +
+
+                    return '        <button id="btn_edit" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#edit" onclick="passRegister('+row.uid+')">\n' +
+                        '           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>通过\n' +
                         '        </button>';
                 }
             }
@@ -605,7 +607,7 @@
                 }
             })
         }else {
-            $('#confirm').modal('hide');
+            $('#editUser').modal('hide');
             var info = '<div class="alert alert-warning " role="alert">' +
                 ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                 '当前数据无更改！请修改至少一项</div>';
@@ -652,6 +654,32 @@
             $('#msgDiv').append(info);
             changeFlag = false;
         }
+    }
+    
+    function passRegister(uid) {
+        jsons ={"uid":uid};
+
+        $.ajax({
+            url: '/user/passRegister.do?uid='+uid,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: "application/json;charset=utf-8",
+            success:function (data) {
+                if (data.statusCode == 200){
+                    $('#confirm').modal('hide');
+                    var info = '<div class="alert alert-success " role="alert">' +
+                        ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        ''+data.msg+'</div>';
+                    $('#msgDiv').append(info);
+                }else {
+                    $('#confirm').modal('hide');
+                    var info = '<div class="alert alert-danger " role="alert">' +
+                        ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                        ''+data.msg+'</div>';
+                    $('#msgDiv').append(info);
+                }
+            }
+        })
     }
 
 

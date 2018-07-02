@@ -11,6 +11,7 @@ import org.aousi.springboot.demo.mapper.UserRoleMapper;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
@@ -199,13 +200,27 @@ public class userService {
         Integer uid = Integer.parseInt(prams.get("uid"));
         String rolename = prams.get("rolename");
         Integer rid = roleMapper.selectByRolename(rolename).getRid();
-        if (userRoleMapper.updata(uid,rid)>0){
+        if (userRoleMapper.changeRole(uid,rid)>0){
             getBack.put("statusCode",200);
             getBack.put("msg","用户组修改成功");
         }else {
             getBack.put("statusCode",400);
             getBack.put("msg","用户组修改失败");
         }
+        return getBack;
+    }
+
+    public  Map<String,Object> passRegister(Integer uid){
+        Map<String,Object> getBack = new HashMap<>();
+
+        if (userRoleMapper.changeRole(uid,2)>0){
+            getBack.put("statusCode",200);
+            getBack.put("msg","用户组修改成功");
+        }else {
+            getBack.put("statusCode",400);
+            getBack.put("msg","用户组修改失败");
+        }
+
         return getBack;
     }
 }

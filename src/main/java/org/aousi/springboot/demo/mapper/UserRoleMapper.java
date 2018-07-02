@@ -10,5 +10,5 @@ public interface UserRoleMapper {
 
     int insertSelective(UserRole record);
 
-    int updata(@Param("uid") Integer uid,@Param("rid") Integer rid);
+    int changeRole(@Param("uid") Integer uid,@Param("rid") Integer rid);
 }

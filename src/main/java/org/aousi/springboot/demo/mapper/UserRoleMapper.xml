@@ -11,7 +11,7 @@
   </insert>
 
   <update id="changeRole" >
-    updata user_role
+    update user_role
     set RID = #{rid}
     where UID = #{uid}
   </update>

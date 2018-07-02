@@ -196,5 +196,11 @@ public class userController {
 
         return userService.changeRole(prams);
     }
+    @RequestMapping("/passRegister.do")
+    @ResponseBody
+    public  Map<String,Object> passRegister(@RequestParam Integer uid){
+
+        return userService.passRegister(uid);
+    }
 
 }

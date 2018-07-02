@@ -16,6 +16,19 @@
     from role
     where RID = #{rid,jdbcType=INTEGER}
   </select>
+
+  <select id="selectRoles" resultMap="BaseResultMap">
+    select rolename
+    from role
+  </select>
+
+  <select id="selectByRolename" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from role
+    where ROLENAME = #{rolename,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from role
     where RID = #{rid,jdbcType=INTEGER}
