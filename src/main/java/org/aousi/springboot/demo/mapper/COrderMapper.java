@@ -26,4 +26,11 @@ public interface COrderMapper {
     int orderIsExistByDate(Date oTime);
 
     List<COrder> selectByUid(@Param("uid")Integer uid);
+
+    List<COrder> B_selectAll();
+
+    List<COrder> B_selectByUid();
+
+    List<COrder> B_selectByDate();
+
 }

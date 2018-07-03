@@ -198,7 +198,7 @@ public class userService {
         Map<String,Object> getBack = new HashMap<>();
 
         Integer uid = Integer.parseInt(prams.get("uid"));
-        String rolename = prams.get("rolename");
+        String rolename = prams.get("role");
         Integer rid = roleMapper.selectByRolename(rolename).getRid();
         if (userRoleMapper.changeRole(uid,rid)>0){
             getBack.put("statusCode",200);

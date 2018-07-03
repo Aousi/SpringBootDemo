@@ -25,6 +25,8 @@ public class COrder {
 
     private Integer uid;
 
+    private User user;
+
     public COrder() {
     }
 
@@ -69,6 +71,14 @@ public class COrder {
         this.dinner = dinner;
         this.dMany = dMany;
         this.oTime = oTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getoEditTime() {

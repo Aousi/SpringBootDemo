@@ -14,6 +14,24 @@
     <result column="O_EDIT_TIME" jdbcType="TIMESTAMP" property="oEditTime" />
     <result column="UID" jdbcType="INTEGER" property="uid" />
   </resultMap>
+  <resultMap id="backendResultMap" type="org.aousi.springboot.demo.Entities.COrder">
+    <id column="COID" jdbcType="INTEGER" property="coid" />
+    <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
+    <result column="BF_MANY" jdbcType="INTEGER" property="bfMany" />
+    <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
+    <result column="L_MANY" jdbcType="INTEGER" property="lMany" />
+    <result column="DINNER" jdbcType="INTEGER" property="dinner" />
+    <result column="D_MANY" jdbcType="INTEGER" property="dMany" />
+    <result column="O_TIME" jdbcType="DATE" property="oTime" />
+    <result column="O_CRT_TIME" jdbcType="TIMESTAMP" property="oCrtTime" />
+    <result column="O_EDIT_TIME" jdbcType="TIMESTAMP" property="oEditTime" />
+    <result column="UID" jdbcType="INTEGER" property="uid" />
+    <association property="org.aousi.springboot.demo.Entities.User">
+      <id column="UID" jdbcType="INTEGER" property="uid" />
+      <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+      <result column="DEPARTMENT" jdbcType="VARCHAR" property="department"/>
+    </association>
+  </resultMap>
   <sql id="Base_Column_List">
     COID, BREAKFAST, BF_MANY, LUNCH, L_MANY, DINNER, D_MANY, O_TIME, O_CRT_TIME,O_EDIT_TIME, UID
   </sql>
@@ -30,6 +48,27 @@
     from canteen_order
     where UID = #{uid,jdbcType=INTEGER}
   </select>
+
+  <select id="B_selectAll" resultMap="backendResultMap">
+    select co.*,u.UID,u.USERNAME,u.DEPARTMENT
+    from canteen_order co
+    left join user u on u.uid = co.uid
+  </select>
+
+  <select id="B_selectByUid" parameterType="java.lang.Integer" resultMap="backendResultMap">
+    select co.*,u.UID,u.USERNAME
+    from canteen_order co
+    left join user u on u.uid = co.uid
+    where co.uid = #{uid}
+  </select>
+
+  <select id="B_selectByDate" parameterType="java.lang.Integer" resultMap="backendResultMap">
+    select co.*,u.UID,u.USERNAME
+    from canteen_order co
+    left join user u on u.uid = co.uid
+    where co.oTime = #{oTime}
+  </select>
+
 
   <select id="orderIsExistByDate" parameterType="java.util.Date" resultType="java.lang.Integer">
     select count(*)

@@ -192,7 +192,7 @@ public class userController {
 
     @RequestMapping("/changeRole.do")
     @ResponseBody
-    public Map<String,Object> changeUserGroup(@RequestParam Map<String,String> prams){
+    public Map<String,Object> changeUserGroup(@RequestBody Map<String,String> prams){
 
         return userService.changeRole(prams);
     }

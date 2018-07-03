@@ -88,8 +88,6 @@
     </div>
 </nav>
 
-
-</div>
 <div class="container" style="min-height: 768px;width: 100%;padding-left: 10px">
     <div class="row" style="height: auto">
         <div class="col-md-2 col-sm-2 col-xs-2 visible-md-block visible-lg-block" style="background-color: silver">
@@ -111,13 +109,14 @@
                 <div  class="page-header col-md-12 col-sm-12 col-xs-12">
                     <h1>人员列表 <small>User List</small></h1>
                 </div>
-                <div id="msgDiv"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                <div id="msgDiv1"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
                 <table id="personTable"></table>
             </div>
             <div  id="checkRegisters" class="row ctrlCompent">
                 <div class="page-header col-md-12 col-sm-12 col-xs-12">
                     <h1>审核注册 <small>Check Registers</small></h1>
                 </div>
+                <div id="msgDiv2"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
                 <table id="registerTable"></table>
             </div>
             <!--<div id="addUser"  class="row ctrlCompent">-->
@@ -591,17 +590,17 @@
                 data:jsons,
                 success:function (data) {
                     if (data.statusCode == 200){
-                        $('#confirm').modal('hide');
+                        $('#editUser').modal('hide');
                         var info = '<div class="alert alert-success " role="alert">' +
                             ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                             ''+data.msg+'</div>';
-                        $('#msgDiv').append(info);
+                        $('#msgDiv1').append(info);
                     }else {
-                        $('#confirm').modal('hide');
+                        $('#editUser').modal('hide');
                         var info = '<div class="alert alert-danger " role="alert">' +
                             ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                             ''+data.msg+'</div>';
-                        $('#msgDiv').append(info);
+                        $('#msgDiv1').append(info);
                     }
                     changeFlag = false;
                 }
@@ -612,7 +611,7 @@
                 ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                 '当前数据无更改！请修改至少一项</div>';
 
-            $('#msgDiv').append(info);
+            $('#msgDiv1').append(info);
             changeFlag = false;
         }
     }
@@ -630,17 +629,17 @@
                 data:jsons,
                 success:function (data) {
                     if (data.statusCode == 200){
-                        $('#confirm').modal('hide');
+                        $('#editRole').modal('hide');
                         var info = '<div class="alert alert-success " role="alert">' +
                             ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                             ''+data.msg+'</div>';
-                        $('#msgDiv').append(info);
+                        $('#msgDiv1').append(info);
                     }else {
-                        $('#confirm').modal('hide');
+                        $('#editRole').modal('hide');
                         var info = '<div class="alert alert-danger " role="alert">' +
                             ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                             ''+data.msg+'</div>';
-                        $('#msgDiv').append(info);
+                        $('#msgDiv1').append(info);
                     }
                     changeFlag = false;
                 }
@@ -651,7 +650,7 @@
                 ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                 '当前数据无更改！请修改至少一项</div>';
 
-            $('#msgDiv').append(info);
+            $('#msgDiv1').append(info);
             changeFlag = false;
         }
     }
@@ -670,13 +669,13 @@
                     var info = '<div class="alert alert-success " role="alert">' +
                         ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                         ''+data.msg+'</div>';
-                    $('#msgDiv').append(info);
+                    $('#msgDiv2').append(info);
                 }else {
                     $('#confirm').modal('hide');
                     var info = '<div class="alert alert-danger " role="alert">' +
                         ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
                         ''+data.msg+'</div>';
-                    $('#msgDiv').append(info);
+                    $('#msgDiv2').append(info);
                 }
             }
         })

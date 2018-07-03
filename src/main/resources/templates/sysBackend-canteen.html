@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+          <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-table.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-select.min.css}">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-table.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.min.css">
+    <style>
+        .sidebar{
+            position: fixed;
+            display: block;
+            width: inherit;
+            top: 51px;
+            left: 0px;
+            z-index: 1000;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .navbar-sidebar{
+            margin-right: -21px;
+            margin-bottom: 20px;
+            margin-left: -20px;
+        }
+
+        .navbar-nav li:hover{
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script  th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/publicJS.js}"></script>
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
+<script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/BackendCanteen}"></script>
+<script src="/static/js/bootstrap-select.min.js"></script>
+<script src="/static/js/bootstrap-table.min.js"></script>
+<script src="/static/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/js/BackendCanteen.js"></script>
+<!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
+<!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
+        <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+<body>
+<nav class="nav navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-brand" style="width: 200px;"><span style="font-size: 20px" onclick="goToCtrlHome()">系统后台</span></div>
+
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#LinkPart"
+                    aria-controls="bs-navbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="LinkPart" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="#" onclick="goToPersonCtrl()">人员管理</a></li>
+                <li><a href="#">食堂管理</a></li>
+                <li><a href="#">文章管理</a></li>
+                <li><a href="#">物品管理</a></li>
+                <li class="dropdown">
+                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
+                       aria-expanded="false">系统设置<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">权限设置</a></li>
+                        <li><a href="#">单位、部门设置</a></li>
+                        <!--<li><a href="#">预留选项</a></li>-->
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="name" th:text="${user.username}"></a></li>
+                <li><a href="/">返回前台</a></li>
+                <li><a onclick="logout()" href="#">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+</div>
+<div class="container" style="height: 768px;width: 100%;padding-left: 10px">
+    <div class="row" style="height: inherit">
+        <div class="col-md-2 col-sm-2 col-xs-2 visible-md-block visible-lg-block">
+            <div class="nav sidebar">
+                <div class="container-fluid">
+                    <div id="ToolPart" class="collapse navbar-collapse">
+                        <ul class="nav navbar-sidebar">
+                            <li><a href="#orderList">查看订餐情况</a></li>
+                            <li><a href="#generateNamelist">用餐名单生成</a></li>
+                            <li><a href="#orderRecode">查看订餐记录</a></li>
+                            <li><a href="#canteenStatistics">每月统计</a></li>
+                            <li><a href="#menu">菜单设置</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 col-sm-10 col-xs-10 " style="border-left: gainsboro solid 1px ;">
+            <div id="orderList" class="row ctrlCompent">
+                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                    <h1>查看订餐情况 <small>Namelist</small></h1>
+                </div>
+                <div id="msgDiv1"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">搜索选项</div>
+                    <div class="panel-body">
+                        <form id="querySelection" class="form-inline">
+                            <div class="queryComponent form-group">
+                                <label for="date">日期：</label>
+                                <input type="text" id="date" name="date">
+                            </div>
+                            <div class="queryComponent form-group">
+                                <label for="date">姓名：</label>
+                                <input type="text" id="personName" name="personName">
+                            </div>
+                            <div class="queryComponent form-group">
+                                <label for="date">部室：</label>
+                                <select class="selectpicker" id="dept" name="dept"></select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <table id="orderTable"></table>
+            </div>
+            <div id="generateNamelist" class="row ctrlCompent">
+                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                    <h1>生成用餐名单 <small>Generate Namelist</small></h1>
+                </div>
+                <div id="msgDiv5"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                <table id="namelistTable"></table>
+            </div>
+            <div id="orderRecode" class="row ctrlCompent">
+                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                    <h1>查看订餐记录 <small>All Record</small></h1>
+                </div>
+                <div id="msgDiv2"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                <table id="recordTable"></table>
+            </div>
+            <div id="canteenStatistics" class="row ctrlCompent">
+                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                    <h1>每月统计 <small>Statistics</small></h1>
+                </div>
+                <div id="msgDiv3"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                <table id="statisticsTable"></table>
+            </div>
+            <div id="menu" class="row ctrlCompent">
+                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                    <h1>菜单设置 <small>Menu</small></h1>
+                </div>
+                <div id="msgDiv4"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                <table id="menuTable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
