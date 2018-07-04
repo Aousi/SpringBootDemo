@@ -29,8 +29,8 @@ public interface COrderMapper {
 
     List<COrder> B_selectAll();
 
-    List<COrder> B_selectByUid();
+    List<COrder> B_selectByUid(@Param("uid")Integer uid);
 
-    List<COrder> B_selectByDate();
+    List<COrder> B_selectByDate(@Param("oTime")Date date);
 
 }

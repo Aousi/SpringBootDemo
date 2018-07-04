@@ -1,5 +1,5 @@
 $('#orderTable').bootstrapTable({
-    url: '',         //请求后台的URL（*）
+    url: '/canteen/getBackendOrders.do',         //请求后台的URL（*）
     method: 'get',                      //请求方式（*）
     toolbar: '#toolbar',                //工具按钮用哪个容器
     striped: true,                      //是否显示行间隔色
@@ -66,7 +66,12 @@ $('#orderTable').bootstrapTable({
         },{
             field: 'user',
             title: '订餐人',
-            rowspan:2
+            rowspan:2,
+            formatter:function (value,row,index) {
+
+
+                return row.user.username;
+            }
         }
     ],[
         {

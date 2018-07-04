@@ -3,6 +3,7 @@ package org.aousi.springboot.demo.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.aousi.springboot.demo.Entities.COrder;
+import org.aousi.springboot.demo.Entities.toolssss;
 import org.aousi.springboot.demo.mapper.COrderMapper;
 import org.aousi.springboot.demo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class COrderService {
     private UserMapper userMapper;
     @Autowired
     private COrderMapper COrderMapper;
+    @Autowired
+    private toolssss util;
 
     public Map<String,Object> insetOrder(List<COrder> cOrder){
         Map<String,Object> back = new HashMap<>();
@@ -49,6 +52,44 @@ public class COrderService {
                                    String sortOrder, Integer uid){
         Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
         List<COrder> orders = COrderMapper.selectByUid(uid);
+
+        Map<String,Object> back= new HashMap<>();
+        back.put("total",orders.size());
+        back.put("rows",orders);
+
+        return back;
+    }
+
+    public Map<String,Object> B_Orders(Integer page,Integer rows,String sort,
+                                         String sortOrder){
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        List<COrder> orders = COrderMapper.B_selectAll();
+
+        Map<String,Object> back= new HashMap<>();
+        back.put("total",orders.size());
+        back.put("rows",orders);
+
+        return back;
+    }
+
+    public Map<String,Object> B_userOrders(Integer page,Integer rows,String sort,
+                                       String sortOrder,  String username){
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        Integer uid = userMapper.selectByUserName(username).getUid();
+        List<COrder> orders = COrderMapper.B_selectByUid(uid);
+
+        Map<String,Object> back= new HashMap<>();
+        back.put("total",orders.size());
+        back.put("rows",orders);
+
+        return back;
+    }
+
+    public Map<String,Object> B_dateOrders(Integer page,Integer rows,String sort,
+                                       String sortOrder, String date){
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        Date d = util.Str2Date("yyyy-MM-dd",date);
+        List<COrder> orders = COrderMapper.B_selectByDate(d);
 
         Map<String,Object> back= new HashMap<>();
         back.put("total",orders.size());

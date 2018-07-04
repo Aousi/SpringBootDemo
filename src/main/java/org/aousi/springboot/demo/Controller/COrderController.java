@@ -125,6 +125,17 @@ public class COrderController {
 
         return COrderService.userOrders(page,rows,sort,sortOrder,uid);
     }
+
+    @RequestMapping("/getBackendOrders.do")
+    @ResponseBody
+    public Map<String,Object> backendOrdersData(@RequestParam("page") Integer page,@RequestParam("rows")Integer rows,@RequestParam(value = "sort",required = false)String sort,
+                                         @RequestParam("sortOrder")String sortOrder){
+
+
+        return COrderService.B_Orders(page,rows,sort,sortOrder);
+    }
+
+
     @RequestMapping("/deleteOrder.do")
     @ResponseBody
     public Map<String,Object> deleteOrder(@RequestBody List<COrder> list){

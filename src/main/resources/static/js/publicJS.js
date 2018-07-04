@@ -35,8 +35,27 @@ $(function () {
 })
 
 function goToPersonCtrl() {
-    var name = $('#name').text();
-    window.location.href ='/sysBackend-persons?name='+name+ '';
+    var name = window.localStorage.getItem('name');
+    // window.location.href ='/sysBackend-persons?name='+name+ '';
+    var f = document.createElement('form');
+    f.style.display = 'none';
+    f.action = '/sysBackend-persons';
+    f.method = 'post';
+    f.innerHTML ='<input type="hidden" name="name" value="'+name+'"/>';
+    document.body.appendChild(f);
+    f.submit();
+}
+
+function goToCanteenCtrl() {
+    var name = window.localStorage.getItem('name');
+    // window.location.href ='/sysBackend-persons?name='+name+ '';
+    var f = document.createElement('form');
+    f.style.display = 'none';
+    f.action = '/sysBackend-canteen';
+    f.method = 'post';
+    f.innerHTML ='<input type="hidden" name="name" value="'+name+'"/>';
+    document.body.appendChild(f);
+    f.submit();
 }
 
 function goToCtrlHome() {

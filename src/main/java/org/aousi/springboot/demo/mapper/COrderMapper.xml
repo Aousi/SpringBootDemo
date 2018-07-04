@@ -26,7 +26,7 @@
     <result column="O_CRT_TIME" jdbcType="TIMESTAMP" property="oCrtTime" />
     <result column="O_EDIT_TIME" jdbcType="TIMESTAMP" property="oEditTime" />
     <result column="UID" jdbcType="INTEGER" property="uid" />
-    <association property="org.aousi.springboot.demo.Entities.User">
+    <association property="user" javaType="org.aousi.springboot.demo.Entities.User">
       <id column="UID" jdbcType="INTEGER" property="uid" />
       <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
       <result column="DEPARTMENT" jdbcType="VARCHAR" property="department"/>

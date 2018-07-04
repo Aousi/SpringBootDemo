@@ -96,4 +96,14 @@ public class demoController {
         return new ModelAndView("sysBackend-persons",back);
     }
 
+    @RequestMapping("/sysBackend-canteen")
+    @ResponseBody
+    @RequiresRoles("admin")
+    public ModelAndView canteenCtrl(@RequestParam(name = "name",required = false) String name){
+        Map<String,Object> back = new HashMap<>();
+        User u = userService.queryUserByName(name);
+        back.put("user",u);
+        return new ModelAndView("sysBackend-canteen",back);
+    }
+
 }
