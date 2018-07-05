@@ -39,5 +39,14 @@ public class CRController {
         return crs.getUserList(page, rows, sort, sortOrder, uid);
     }
 
+    @ResponseBody
+    @RequestMapping("/B_CanteenRecord.do")
+    public Map<String,Object> B_CanteenRecord(@RequestParam("page") Integer page, @RequestParam("rows")Integer rows, @RequestParam(value = "sort",required = false)String sort,
+                                        @RequestParam("sortOrder")String sortOrder){
+
+
+        return crs.B_CanteenRecord(page, rows, sort, sortOrder);
+    }
+
 
 }

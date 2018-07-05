@@ -8,8 +8,10 @@
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-table.min.css}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-select.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker.min.css}">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-table.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-datepicker.min.css">
     <style>
         .sidebar{
             position: fixed;
@@ -31,6 +33,10 @@
         .navbar-nav li:hover{
             background-color: #e0e0e0;
         }
+
+        .tableDiv {
+            margin: 0px 30px;
+        }
     </style>
 </head>
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -40,6 +46,8 @@
 <script th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
 <script th:src="@{/js/bootstrap-select.min.js}"></script>
 <script th:src="@{/js/BackendCanteen.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+<script src="/static/js/bootstrap-datepicker.min.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
 <script src="/static/js/bootstrap-table.min.js"></script>
 <script src="/static/js/bootstrap-table-zh-CN.min.js"></script>
@@ -47,7 +55,7 @@
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
         <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
-<body>
+<body style="position: relative">
 <nav class="nav navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -64,7 +72,7 @@
         <div id="LinkPart" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#" onclick="goToPersonCtrl();">人员管理</a></li>
-                <li><a href="#" onclick="goToCanteenCtrl();">食堂管理</a></li>
+                <li class="active"><a href="#" onclick="goToCanteenCtrl();">食堂管理</a></li>
                 <li><a href="#">文章管理</a></li>
                 <li><a href="#">物品管理</a></li>
                 <li class="dropdown">
@@ -90,13 +98,13 @@
 
 </div>
 <div class="container" style="height: 768px;width: 100%;padding-left: 10px">
-    <div class="row" style="height: inherit">
+    <div class="row" style="height: inherit" >
         <div class="col-md-2 col-sm-2 col-xs-2 visible-md-block visible-lg-block">
             <div class="nav sidebar">
                 <div class="container-fluid">
-                    <div id="ToolPart" class="collapse navbar-collapse">
+                    <div id="ToolPart" class="collapse navbar-collapse navbar-spy">
                         <ul class="nav navbar-sidebar">
-                            <li><a href="#orderList">查看订餐情况</a></li>
+                            <li class="active"><a href="#orderList">查看订餐情况</a></li>
                             <li><a href="#generateNamelist">用餐名单生成</a></li>
                             <li><a href="#orderRecode">查看订餐记录</a></li>
                             <li><a href="#canteenStatistics">每月统计</a></li>
@@ -106,60 +114,99 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10 col-sm-10 col-xs-10 " style="border-left: gainsboro solid 1px ;">
-            <div id="orderList" class="row ctrlCompent">
-                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
-                    <h1>查看订餐情况 <small>Namelist</small></h1>
-                </div>
-                <div id="msgDiv1"class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 1px"></div>
-                <div>
-                    <div class="panel panel-default" style="margin: 150px 30px 10px 30px">
-                        <div class="panel-heading">搜索选项</div>
-                        <div class="panel-body">
-                            <form id="querySelection" class="form-inline">
-                                <div class="queryComponent form-group">
-                                    <label for="date">日期：</label>
-                                    <input type="text" class="text" id="date" name="date">
-                                </div>
-                                <div class="queryComponent form-group">
-                                    <label for="date">姓名：</label>
-                                    <input type="text" class="text" id="personName" name="personName">
-                                </div>
-                            </form>
+        <div  class="col-md-10 col-sm-10 col-xs-10 " style="border-left: gainsboro solid 1px ;">
+            <div data-spy="scroll" data-target=".navbar-spy" style="position: relative;height: auto">
+                <div id="orderList" class="row ctrlCompent">
+                    <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                        <h1>查看订餐情况 <small>Orders</small></h1>
+                    </div>
+                    <div id="msgDiv1"class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 1px"></div>
+                    <div>
+                        <div class="panel panel-default" style="margin: 150px 30px 10px 30px">
+                            <div class="panel-heading">搜索选项</div>
+                            <div class="panel-body">
+                                <form id="querySelection1" class="form-inline">
+                                    <div class="queryComponent form-group">
+                                        <label for="date1">日期：</label>
+                                        <input type="text" class="datepicker input-sm form-control" id="date1" name="date">
+                                    </div>
+                                    <div class="queryComponent form-group">
+                                        <label for="personName1">姓名：</label>
+                                        <input type="text" class="input-sm form-control" id="personName1" name="personName">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    <div class="tableDiv" >
+                        <table id="orderTable" ></table>
+                    </div>
                 </div>
-                <div style="margin: 0px 30px">
-                    <table id="orderTable" ></table>
+                <div id="generateNamelist" class="row ctrlCompent">
+                    <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                        <h1>订餐名单 <small>Orders Information</small></h1>
+                    </div>
+                    <div id="msgDiv5"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                    <div class="tableDiv">
+                        <form class="form-inline">
+                            <div class="col-lg-6">
+                                <div id="generateSelection" class="input-group" style="width: 350px;text-align: left">
+                                    <input id="namelistDate" class="form-control datepicker" name="generateDate">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default">早餐</button>
+                                    <button class="btn btn-default">午餐</button>
+                                    <button class="btn btn-default">晚餐</button>
+                                </span>
+                                </div>
+                            </div>
+                        </form>
+                        <table id="namelistTable"></table>
+                    </div>
                 </div>
-            </div>
-            <div id="generateNamelist" class="row ctrlCompent">
-                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
-                    <h1>生成用餐名单 <small>Generate Namelist</small></h1>
+                <div id="orderRecode" class="row ctrlCompent">
+                    <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                        <h1>查看订餐记录 <small>All Record</small></h1>
+                    </div>
+                    <div id="msgDiv2"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                    <div class="tableDiv">
+                        <div>
+                            <div class="panel panel-default" style="margin: 150px 30px 10px 30px">
+                                <div class="panel-heading">搜索选项</div>
+                                <div class="panel-body">
+                                    <form id="querySelection2" class="form-inline">
+                                        <div class="queryComponent form-group">
+                                            <label for="date2">日期：</label>
+                                            <input type="text" class="datepicker input-sm form-control" id="date2" name="date">
+                                        </div>
+                                        <div class="queryComponent form-group">
+                                            <label for="personName2">姓名：</label>
+                                            <input type="text" class="input-sm form-control" id="personName2" name="personName">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="recordTable"></table>
+                    </div>
                 </div>
-                <div id="msgDiv5"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
-                <table id="namelistTable"></table>
-            </div>
-            <div id="orderRecode" class="row ctrlCompent">
-                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
-                    <h1>查看订餐记录 <small>All Record</small></h1>
+                <div id="canteenStatistics" class="row ctrlCompent">
+                    <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                        <h1>每月统计 <small>Statistics</small></h1>
+                    </div>
+                    <div id="msgDiv3"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                    <div class="tableDiv">
+                        <table id="statisticsTable"></table>
+                    </div>
                 </div>
-                <div id="msgDiv2"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
-                <table id="recordTable"></table>
-            </div>
-            <div id="canteenStatistics" class="row ctrlCompent">
-                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
-                    <h1>每月统计 <small>Statistics</small></h1>
+                <div id="menu" class="row ctrlCompent">
+                    <div  class="page-header col-md-12 col-sm-12 col-xs-12">
+                        <h1>菜单设置 <small>Menu</small></h1>
+                    </div>
+                    <div id="msgDiv4"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                    <div class="tableDiv">
+                        <table id="menuTable"></table>
+                    </div>
                 </div>
-                <div id="msgDiv3"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
-                <table id="statisticsTable"></table>
-            </div>
-            <div id="menu" class="row ctrlCompent">
-                <div  class="page-header col-md-12 col-sm-12 col-xs-12">
-                    <h1>菜单设置 <small>Menu</small></h1>
-                </div>
-                <div id="msgDiv4"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
-                <table id="menuTable"></table>
             </div>
         </div>
     </div>
@@ -167,17 +214,148 @@
 </body>
 
 <script>
-    $(
+    $(function () {
         $('#orderTable').bootstrapTable({
-            url: '/canteen/getBackendOrders.do',         //请求后台的URL（*）
+                url: '/canteen/getBackendOrders.do',         //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                     //是否启用排序
+                sortName:"co.O_TIME",
+                sortOrder: "asc",                   //排序方式
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 20,                       //每页的记录行数（*）
+                pageList: [20, 35, 50, 100],        //可供选择的每页的行数（*）
+                queryParams:  function (params) {
+                    //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+                    var temp = {
+                        rows: params.limit,                         //页面大小
+                        page: (params.offset / params.limit) + 1,   //页码
+                        sort: params.sort,      //排序列名
+                        sortOrder: params.order //排位命令（desc，asc）
+                    };
+                    return temp;
+                },//传递参数（*）
+                // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                // strictSearch: true,
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height: 1000,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                icons:{
+                    paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
+                    paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
+                    refresh: 'glyphicon-refresh icon-refresh',
+                    toggle: 'glyphicon-list-alt icon-list-alt',
+                    columns: 'glyphicon-th icon-th',
+                    detailOpen: 'glyphicon-plus icon-plus',
+                    detailClose: 'glyphicon-minus icon-minus'
+                },
+                columns:[
+                    [
+                        {
+                            field: 'coid',
+                            title: '订餐编号',
+                            rowspan:2,
+                            align:'center'
+                        },{
+                        field: '',
+                        title: '早餐',
+                        colspan:2,
+                        align:'center'
+                    },{
+                        field: '',
+                        title: '午餐',
+                        colspan:2,
+                        align:'center'
+                    },{
+                        field: '',
+                        title: '晚餐',
+                        colspan:2,
+                        align:'center'
+                    },{
+                        field: 'oTime',
+                        title: '预定日期',
+                        rowspan:2,
+                        formatter:function (value,row,index) {
+                            return dateFmt_yyMMdd(row.oTime);
+                        },
+                        align:'center'},{
+                        field: 'user',
+                        title: '订餐人',
+                        rowspan:2,
+                        formatter:function (value,row,index) {
+                            return row.user.username;
+                        },
+                        align:'center'}
+                    ],[
+                        {
+                            field: 'breakfast',
+                            title: '订餐情况',
+                            formatter:function (value,row,index) {
+                                if (row.breakfast === 0){
+                                    return '<span class="glyphicon glyphicon-remove"></span>';
+                                }else {
+                                    return '<span class="glyphicon glyphicon-ok"></span>';
+                                }
+                            },
+                            align:'center'
+                        },{
+                            field: 'bfMany',
+                            title: '数量/份',
+                            align:'center'
+                        },{
+                            field: 'lunch',
+                            title: '订餐情况',
+                            formatter:function (value,row,index) {
+                                if (row.lunch === 0){
+                                    return '<span class="glyphicon glyphicon-remove"></span>';
+                                }else {
+                                    return '<span class="glyphicon glyphicon-ok"></span>';
+                                }
+                            },
+                            align:'center'
+                        },{
+                            field: 'lMany',
+                            title: '数量/份',
+                            align:'center'
+                        },{
+                            field: 'dinner',
+                            title: '晚餐',
+                            formatter:function (value,row,index) {
+                                if (row.dinner === 0){
+                                    return '<span class="glyphicon glyphicon-remove"></span>';
+                                }else {
+                                    return '<span class="glyphicon glyphicon-ok"></span>';
+                                }
+                            },
+                            align:'center'
+                        },{
+                            field: 'dMany',
+                            title: '数量/份',
+                            align:'center'
+                        }
+                    ]
+                ]
+            });
+        $('#recordTable').bootstrapTable({
+            url: '/CR/B_CanteenRecord.do',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
-            sortName:"co.oTime",
-            sortOrder: "asc",                   //排序方式
+            sortName:"O_TIME",
+            sortOrder: "desc",                   //排序方式
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
             pageSize: 20,                       //每页的记录行数（*）
@@ -188,7 +366,7 @@
                     rows: params.limit,                         //页面大小
                     page: (params.offset / params.limit) + 1,   //页码
                     sort: params.sort,      //排序列名
-                    sortOrder: params.order //排位命令（desc，asc）
+                    sortOrder: params.order ,//排位命令（desc，asc）
                 };
                 return temp;
             },//传递参数（*）
@@ -210,64 +388,81 @@
                 toggle: 'glyphicon-list-alt icon-list-alt',
                 columns: 'glyphicon-th icon-th',
                 detailOpen: 'glyphicon-plus icon-plus',
-                detailClose: 'glyphicon-minus icon-minus'
+                detailClose: 'glyphicon-minus icon-minus',
             },
             columns:[
                 [
                     {
-                        field: 'coid',
-                        title: '订餐编号',
                         rowspan:2,
+                        colspan:1,
+                        field: 'crid',
+                        title: 'CRID',
                         align:'center'
                     },{
+                    colspan:7,
+                    rowspan:1,
                     field: '',
-                    title: '早餐',
-                    colspan:2,
+                    title: '订餐情况',
                     align:'center'
-                    },{
+                }, {
+                    colspan:4,
+                    rowspan:1,
                     field: '',
-                    title: '午餐',
-                    colspan:2,
+                    title: '用餐情况',
                     align:'center'
-                    },{
-                    field: '',
-                    title: '晚餐',
-                    colspan:2,
-                    align:'center'
-                    },{
-                    field: 'oTime',
-                    title: '预定日期',
+                },{
                     rowspan:2,
+                    colspan:1,
+                    field: 'co.user.username',
+                    title: '订餐用户',
                     formatter:function (value,row,index) {
-                        return dateFmt_yyMMdd(row.oTime);
+                        return row.co.user.username;
                     },
-                    align:'center'},{
-                    field: 'user',
-                    title: '订餐人',
+                    align:'center'
+                },{
                     rowspan:2,
+                    colspan:1,
+                    field: 'co.oTime',
+                    title: '记录日期',
                     formatter:function (value,row,index) {
-                        return row.user.username;
+                        return dateFmt_yyMMdd(row.co.oTime);
                     },
-                    align:'center'}
+                    align:'center'
+                }
                 ],[
                     {
-                        field: 'breakfast',
-                        title: '订餐情况',
+                        rowspan:1,
+                        colspan:1,
+                        field: 'coid',
+                        title: 'C0ID',
+                        align:'center'
+                    },  {
+                        colspan:1,
+                        rowspan:1,
+                        field: 'co.breakfast',
+                        title: '早餐',
                         formatter:function (value,row,index) {
-                            if (row.breakfast === 0){
+                            if (row.co.breakfast === 0){
                                 return '<span class="glyphicon glyphicon-remove"></span>';
                             }else {
                                 return '<span class="glyphicon glyphicon-ok"></span>';
                             }
                         },
                         align:'center'
-                    },{
-                        field: 'bfMany',
-                        title: '数量/份',
+                    }, {
+                        colspan:1,
+                        rowspan:1,
+                        field: 'co.bfMany',
+                        title: '早餐份数',
+                        formatter:function (value,row,index) {
+                            return row.co.bfMany;
+                        },
                         align:'center'
-                    },{
-                        field: 'lunch',
-                        title: '订餐情况',
+                    },  {
+                        colspan:1,
+                        rowspan:1,
+                        field: 'co.lunch',
+                        title: '午餐',
                         formatter:function (value,row,index) {
                             if (row.lunch === 0){
                                 return '<span class="glyphicon glyphicon-remove"></span>';
@@ -276,30 +471,181 @@
                             }
                         },
                         align:'center'
-                    },{
-                        field: 'lMany',
-                        title: '数量/份',
+                    }, {
+                        colspan:1,
+                        rowspan:1,
+                        field: 'co.lMany',
+                        title: '午餐份数',
+                        formatter:function (value,row,index) {
+                            return row.co.lMany;
+                        },
                         align:'center'
-                    },{
-                        field: 'dinner',
+                    }, {
+                        colspan:1,
+                        rowspan:1,
+                        field: 'co.dinner',
                         title: '晚餐',
                         formatter:function (value,row,index) {
-                            if (row.dinner === 0){
+                            if (row.co.dinner === 0){
                                 return '<span class="glyphicon glyphicon-remove"></span>';
                             }else {
                                 return '<span class="glyphicon glyphicon-ok"></span>';
                             }
                         },
                         align:'center'
+                    }, {
+                        colspan:1,
+                        rowspan:1,
+                        field: 'co.dMany',
+                        title: '晚餐份数',
+                        formatter:function (value,row,index) {
+                            return row.co.dMany;
+                        },
+                        align:'center'
                     },{
-                        field: 'dMany',
-                        title: '数量/份',
+                        rowspan:1,
+                        colspan:1,
+                        field: 'ccid',
+                        title: 'CCID',
+                        align:'center'
+                    },{
+                        colspan:1,
+                        rowspan:1,
+                        field: 'cc.breakfast',
+                        title: '早餐',
+                        formatter:function (value,row,index) {
+                            if (row.cc.breakfast === null){
+                                return '<span style="color: red"> 无信息 </span>';
+                            }else {
+                                if (row.cc.breakfast === 0){
+                                    return '<span class="glyphicon glyphicon-remove"></span>';
+                                }else {
+                                    return '<span class="glyphicon glyphicon-ok"></span>';
+                                }
+                            }
+                        },
+                        align:'center'
+
+                    },{
+                        colspan:1,
+                        rowspan:1,
+                        field: 'cc.lunch',
+                        title: '午餐',
+                        formatter:function (value,row,index) {
+                            if (row.cc.lunch === null){
+                                return '<span style="color: red"> 无信息 </span>';
+                            }else {
+                                if (row.cc.lunch === 0){
+                                    return '<span class="glyphicon glyphicon-remove"></span>';
+                                }else {
+                                    return '<span class="glyphicon glyphicon-ok"></span>';
+                                }
+                            }
+                        },
+                        align:'center'
+                    },{
+                        colspan:1,
+                        rowspan:1,
+                        field: 'cc.dinner',
+                        title: '晚餐',
+                        formatter:function (value,row,index) {
+                            if (row.cc.dinner === null){
+                                return  '<span style="color: red"> 无信息 </span>';
+                            }else {
+                                if (row.cc.dinner === 0){
+                                    return '<span class="glyphicon glyphicon-remove"></span>';
+                                }else {
+                                    return '<span class="glyphicon glyphicon-ok"></span>';
+                                }
+                            }
+                        },
                         align:'center'
                     }
                 ]
             ]
+        });
+        $('#namelistTable').bootstrapTable({
+            url: '/canteen/getBackendOrders.do',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#generateSelection',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: false,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortName:"co.O_TIME",
+            sortOrder: "asc",                   //排序方式
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 20,                       //每页的记录行数（*）
+            pageList: [20, 35, 50, 100],        //可供选择的每页的行数（*）
+            queryParams:  function (params) {
+                //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+                var temp = {
+                    rows: params.limit,                         //页面大小
+                    page: (params.offset / params.limit) + 1,   //页码
+                    sort: params.sort,      //排序列名
+                    sortOrder: params.order //排位命令（desc，asc）
+                };
+                return temp;
+            },//传递参数（*）
+            // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            // strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            icons:{
+                paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
+                paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
+                refresh: 'glyphicon-refresh icon-refresh',
+                toggle: 'glyphicon-list-alt icon-list-alt',
+                columns: 'glyphicon-th icon-th',
+                detailOpen: 'glyphicon-plus icon-plus',
+                detailClose: 'glyphicon-minus icon-minus'
+            },
+            columns:[{
+                    field:'',
+                    title:'序号',
+                    formatter: function (value, row, index) {
+                        var pageSize = $('#namelistTable').bootstrapTable('getOptions').pageSize;     //通过table的#id 得到每页多少条
+                        var pageNumber = $('#namelistTable').bootstrapTable('getOptions').pageNumber; //通过table的#id 得到当前第几页
+                        return pageSize * (pageNumber - 1) + index + 1;    // 返回每条的序号： 每页条数 *（当前页 - 1 ）+ 序号
+                    }
+                },{
+                    field: 'user',
+                    title: '订餐人',
+                    formatter:function (value,row,index) {
+                        return row.user.username;
+                    },
+                    align:'center'
+                },{
+                    field: '',
+                    title: '数量/份',
+                    // formatter:function (value,row,index) {
+                    //     return '1';
+                    // },
+                    align:'center'
+                },{
+                    field: 'oTime',
+                    title: '预定日期',
+                    formatter:function (value,row,index) {
+                        return dateFmt_yyMMdd(row.oTime);
+                    },
+                    align:'center'
+                }]
+        });
+
+        $('.datepicker').datepicker({
+            format: "yyyy-mm-dd",
+            daysOfWeekHighlighted: "0,6",
+            autoclose:true
         })
-    )
+    })
 
 </script>
 </html>

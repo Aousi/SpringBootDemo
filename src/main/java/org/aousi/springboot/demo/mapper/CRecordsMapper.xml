@@ -18,14 +18,19 @@
     <result column="CR_EDT_TIME" jdbcType="TIMESTAMP" property="crEdtTime" />
     <result column="CR_CRT_TIME" jdbcType="TIMESTAMP" property="crCrtTime" />
       <association property="co" javaType="org.aousi.springboot.demo.Entities.COrder">
-          <id property="coid" column="COID"/>
-          <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
-          <result column="BF_MANY" jdbcType="INTEGER" property="bfMany" />
-          <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
-          <result column="L_MANY" jdbcType="INTEGER" property="lMany" />
-          <result column="DINNER" jdbcType="INTEGER" property="dinner" />
-          <result column="D_MANY" jdbcType="INTEGER" property="dMany" />
-          <result column="O_TIME" jdbcType="TIMESTAMP" property="oTime" />
+        <id property="coid" column="COID"/>
+        <result column="BREAKFAST" jdbcType="INTEGER" property="breakfast" />
+        <result column="BF_MANY" jdbcType="INTEGER" property="bfMany" />
+        <result column="LUNCH" jdbcType="INTEGER" property="lunch" />
+        <result column="L_MANY" jdbcType="INTEGER" property="lMany" />
+        <result column="DINNER" jdbcType="INTEGER" property="dinner" />
+        <result column="D_MANY" jdbcType="INTEGER" property="dMany" />
+        <result column="O_TIME" jdbcType="TIMESTAMP" property="oTime" />
+        <association property="user" javaType="org.aousi.springboot.demo.Entities.User">
+          <id column="UID" jdbcType="INTEGER" property="uid" />
+          <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+          <result column="DEPARTMENT" jdbcType="VARCHAR" property="department"/>
+        </association>
       </association>
       <association property="cc" javaType="org.aousi.springboot.demo.Entities.CCompleted">
           <id property="ccid" column="CCID"/>
@@ -57,6 +62,30 @@
       FROM canteen_records cr ,canteen_order co ,canteen_completed cc
       WHERE cr.COID=co.COID AND cr.CCID = cc.CCID AND co.UID = #{uid,jdbcType=INTEGER}
     </select>
+
+  <select id="B_CanteenRecord" resultMap="webCRList">
+    select cr.*,co.*,cc.*,u.UID,u.USERNAME,U.DEPARTMENT
+    from canteen_records cr
+    left join canteen_order co on cr.COID=co.COID
+    left join canteen_completed cc on cr.CCID = cc.CCID
+    left join user u on co.UID = u.UID
+  </select>
+
+  <select id="B_userCanteenRecord" parameterType="java.lang.Integer" resultMap="webCRList">
+    select cr.*,co.*,cc.*
+    from canteen_records cr
+    left join canteen_order co on cr.COID=co.COID
+    left join canteen_completed cc on cr.CCID = cc.CCID
+    where co.UID = #{uid,jdbcType=INTEGER}
+  </select>
+
+  <select id="B_dateCanteenRecord" parameterType="java.util.Date" resultMap="webCRList">
+    select cr.*,co.*,cc.*
+    from canteen_records cr
+    left join canteen_order co on cr.COID=co.COID
+    left join canteen_completed cc on cr.CCID = cc.CCID
+    where cr.CR_EDT_TIME = #{time}
+  </select>
 
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
