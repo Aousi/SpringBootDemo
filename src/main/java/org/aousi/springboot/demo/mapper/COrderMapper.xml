@@ -52,22 +52,52 @@
   <select id="B_selectAll" resultMap="backendResultMap">
     select co.*,u.UID,u.USERNAME,u.DEPARTMENT
     from canteen_order co
-    left join user u on u.uid = co.uid
+    left join user u on u.UID = co.UID
   </select>
 
   <select id="B_selectByUid" parameterType="java.lang.Integer" resultMap="backendResultMap">
-    select co.*,u.UID,u.USERNAME
+    select co.*,u.UID,u.USERNAME,u.DEPARTMENT
     from canteen_order co
     left join user u on u.uid = co.uid
-    where co.uid = #{uid}
+    where co.UID = #{uid}
   </select>
 
-  <select id="B_selectByDate" parameterType="java.lang.Integer" resultMap="backendResultMap">
-    select co.*,u.UID,u.USERNAME
+  <select id="B_selectByDate" parameterType="java.util.Date" resultMap="backendResultMap">
+    select co.*,u.UID,u.USERNAME,u.DEPARTMENT
     from canteen_order co
     left join user u on u.uid = co.uid
-    where co.oTime = #{oTime}
+    where co.O_TIME = #{oTime}
   </select>
+
+  <select id="B_selectByDateUid" resultMap="backendResultMap">
+    select co.*,u.UID,u.USERNAME,u.DEPARTMENT
+    from canteen_order co
+    left join user u on u.uid = co.uid
+    where co.O_TIME = #{oTime} and co.UID = #{uid}
+  </select>
+
+
+  <select id="B_selectByBreakfastDate" parameterType="java.util.Date" resultMap="backendResultMap">
+    select co.COID,co.BF_MANY,co.O_TIME,u.UID,u.USERNAME
+    from canteen_order co
+    left join user u on u.uid = co.uid
+    where co.O_TIME = #{oTime} and co.BREAKFAST = 1
+  </select>
+
+  <select id="B_selectByLunchDate" parameterType="java.util.Date" resultMap="backendResultMap">
+    select co.COID,co.L_MANY,co.O_TIME,u.UID,u.USERNAME
+    from canteen_order co
+    left join user u on u.uid = co.uid
+    where co.O_TIME = #{oTime} and co.LUNCH = 1
+  </select>
+
+  <select id="B_selectByDinnerDate" parameterType="java.util.Date" resultMap="backendResultMap">
+    select co.COID,co.D_MANY,co.O_TIME,u.UID,u.USERNAME
+    from canteen_order co
+    left join user u on u.uid = co.uid
+    where co.O_TIME = #{oTime} and co.DINNER = 1
+  </select>
+
 
 
   <select id="orderIsExistByDate" parameterType="java.util.Date" resultType="java.lang.Integer">

@@ -129,10 +129,40 @@ public class COrderController {
     @RequestMapping("/getBackendOrders.do")
     @ResponseBody
     public Map<String,Object> backendOrdersData(@RequestParam("page") Integer page,@RequestParam("rows")Integer rows,@RequestParam(value = "sort",required = false)String sort,
-                                         @RequestParam("sortOrder")String sortOrder){
+                                                @RequestParam("sortOrder")String sortOrder,@RequestParam(value = "date",required = false) String date,
+                                                @RequestParam(value = "personName",required = false) String personName){
 
+        if (date == "" && personName == ""){
+            return COrderService.B_Orders(page,rows,sort,sortOrder);
+        }else if (date != "" && personName == ""){
+            return COrderService.B_dateOrders(page, rows, sort, sortOrder, date);
+        }else if (date == "" && personName != ""){
+            return COrderService.B_userOrders(page,rows,sort,sortOrder,personName);
+        }else {
+            return COrderService.B_userDateOrders(page, rows, sort, sortOrder, personName,date);
+        }
 
-        return COrderService.B_Orders(page,rows,sort,sortOrder);
+    }
+
+    @RequestMapping("/getbackendOrdersNamelist.do")
+    @ResponseBody
+    public Map<String,Object> backendOrdersNamelist(@RequestParam(value = "page",required = false) Integer page,@RequestParam(value = "sort",required = false)String sort,
+                                                    @RequestParam(value = "sortOrder",required = false)String sortOrder,
+                                                    @RequestParam("generateDate")String generateDate,@RequestParam("typeFlag")String typeFlag){
+
+        Integer type = Integer.parseInt(typeFlag);
+
+        if (generateDate == ""){
+            Map<String,Object> back= new HashMap<>();
+
+            back.put("total",0);
+            back.put("rows",null);
+            return back;
+        }else {
+            Date d = toolssss.Str2Date("yyyy-MM-dd",generateDate);
+
+            return COrderService.B_namelist(type,d);
+        }
     }
 
 

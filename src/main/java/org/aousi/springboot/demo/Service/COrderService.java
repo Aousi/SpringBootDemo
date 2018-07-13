@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import sun.rmi.runtime.Log;
 
 import java.util.*;
 
@@ -60,10 +61,38 @@ public class COrderService {
         return back;
     }
 
+    public Map<String,Object> B_namelist(Integer type, Date generateDate){
+        List<COrder> orders = null;
+        switch (type){
+            case 1:orders = COrderMapper.B_selectByBreakfastDate(generateDate);break;
+
+            case 2:orders = COrderMapper.B_selectByLunchDate(generateDate);break;
+
+            case 3:orders = COrderMapper.B_selectByDinnerDate(generateDate);break;
+
+            default:break;
+        }
+        Map<String,Object> back= new HashMap<>();
+        if (orders == null){
+            back.put("statusCode",404);
+            return back;
+        }else {
+            back.put("total",orders.size());
+            back.put("rows",orders);
+        }
+        return back;
+    }
+
     public Map<String,Object> B_Orders(Integer page,Integer rows,String sort,
                                          String sortOrder){
-        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
-        List<COrder> orders = COrderMapper.B_selectAll();
+        List<COrder> orders =null;
+
+        if (page == null || rows == null){
+            orders = COrderMapper.B_selectAll();
+        }else {
+            Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+            orders = COrderMapper.B_selectAll();
+        }
 
         Map<String,Object> back= new HashMap<>();
         back.put("total",orders.size());
@@ -74,8 +103,10 @@ public class COrderService {
 
     public Map<String,Object> B_userOrders(Integer page,Integer rows,String sort,
                                        String sortOrder,  String username){
-        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+
         Integer uid = userMapper.selectByUserName(username).getUid();
+
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
         List<COrder> orders = COrderMapper.B_selectByUid(uid);
 
         Map<String,Object> back= new HashMap<>();
@@ -87,9 +118,27 @@ public class COrderService {
 
     public Map<String,Object> B_dateOrders(Integer page,Integer rows,String sort,
                                        String sortOrder, String date){
-        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+
         Date d = util.Str2Date("yyyy-MM-dd",date);
+
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
         List<COrder> orders = COrderMapper.B_selectByDate(d);
+
+        Map<String,Object> back= new HashMap<>();
+        back.put("total",orders.size());
+        back.put("rows",orders);
+
+        return back;
+    }
+
+    public Map<String,Object> B_userDateOrders(Integer page,Integer rows,String sort,
+                                           String sortOrder,  String username, String date){
+
+        Integer uid = userMapper.selectByUserName(username).getUid();
+        Date d = util.Str2Date("yyyy-MM-dd",date);
+
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        List<COrder> orders = COrderMapper.B_selectByDateUid(d,uid);
 
         Map<String,Object> back= new HashMap<>();
         back.put("total",orders.size());

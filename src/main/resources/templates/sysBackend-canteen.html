@@ -47,6 +47,10 @@
 <script th:src="@{/js/bootstrap-select.min.js}"></script>
 <script th:src="@{/js/BackendCanteen.js}"></script>
 <script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-table-export.js}"></script>
+<script th:src="@{/js/tableExport.js}"></script>
+<script src="/static/js/tableExport.js"></script>
+<script src="/static/js/bootstrap-table-export.js"></script>
 <script src="/static/js/bootstrap-datepicker.min.js"></script>
 <script src="/static/js/bootstrap-select.min.js"></script>
 <script src="/static/js/bootstrap-table.min.js"></script>
@@ -105,7 +109,7 @@
                     <div id="ToolPart" class="collapse navbar-collapse navbar-spy">
                         <ul class="nav navbar-sidebar">
                             <li class="active"><a href="#orderList">查看订餐情况</a></li>
-                            <li><a href="#generateNamelist">用餐名单生成</a></li>
+                            <li><a href="#generateNamelist">订餐名单</a></li>
                             <li><a href="#orderRecode">查看订餐记录</a></li>
                             <li><a href="#canteenStatistics">每月统计</a></li>
                             <li><a href="#menu">菜单设置</a></li>
@@ -125,16 +129,30 @@
                         <div class="panel panel-default" style="margin: 150px 30px 10px 30px">
                             <div class="panel-heading">搜索选项</div>
                             <div class="panel-body">
-                                <form id="querySelection1" class="form-inline">
-                                    <div class="queryComponent form-group">
-                                        <label for="date1">日期：</label>
-                                        <input type="text" class="datepicker input-sm form-control" id="date1" name="date">
-                                    </div>
-                                    <div class="queryComponent form-group">
-                                        <label for="personName1">姓名：</label>
-                                        <input type="text" class="input-sm form-control" id="personName1" name="personName">
-                                    </div>
-                                </form>
+                                <ul class="list-inline">
+                                    <li>
+                                        <div class="queryComponent">
+                                            <label for="date1">日期：</label>
+                                            <input type="text" class="datepicker input-sm form-control" id="date1" name="date">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="queryComponent">
+                                            <label for="personName1">姓名：</label>
+                                            <input type="text" class="input-sm form-control" id="personName1" name="personName">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="queryComponent">
+                                            <button class="btn btn-default" onclick="clearOrderSelection()">清空</button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="queryComponent">
+                                            <button class="btn btn-default" onclick="queryOrder()">查询</button>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -146,18 +164,17 @@
                     <div  class="page-header col-md-12 col-sm-12 col-xs-12">
                         <h1>订餐名单 <small>Orders Information</small></h1>
                     </div>
-                    <div id="msgDiv5"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
+                    <div id="msgDiv5"class="col-md-12 col-sm-12 col-xs-12" style="height: 80px"></div>
+                    <div id="tableTitle"class="col-md-12 col-sm-12 col-xs-12" style="height: 30px"></div>
                     <div class="tableDiv">
-                        <form class="form-inline">
-                            <div class="col-lg-6">
-                                <div id="generateSelection" class="input-group" style="width: 350px;text-align: left">
-                                    <input id="namelistDate" class="form-control datepicker" name="generateDate">
-                                    <span class="input-group-btn">
-                                    <button class="btn btn-default">早餐</button>
-                                    <button class="btn btn-default">午餐</button>
-                                    <button class="btn btn-default">晚餐</button>
+                        <form class="form-inline" id="querySelection3">
+                            <div id="generateSelection" class="input-group" style="width: 280px;text-align: left">
+                                <input id="namelistDate" class="form-control datepicker" name="generateDate">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" onclick="queryNamelist(1)">早餐</button>
+                                    <button class="btn btn-default" onclick="queryNamelist(2)">午餐</button>
+                                    <button class="btn btn-default" onclick="queryNamelist(3)">晚餐</button>
                                 </span>
-                                </div>
                             </div>
                         </form>
                         <table id="namelistTable"></table>
@@ -168,25 +185,42 @@
                         <h1>查看订餐记录 <small>All Record</small></h1>
                     </div>
                     <div id="msgDiv2"class="col-md-12 col-sm-12 col-xs-12" style="height: auto"></div>
-                    <div class="tableDiv">
+                    <div>
                         <div>
                             <div class="panel panel-default" style="margin: 150px 30px 10px 30px">
                                 <div class="panel-heading">搜索选项</div>
                                 <div class="panel-body">
-                                    <form id="querySelection2" class="form-inline">
-                                        <div class="queryComponent form-group">
-                                            <label for="date2">日期：</label>
-                                            <input type="text" class="datepicker input-sm form-control" id="date2" name="date">
-                                        </div>
-                                        <div class="queryComponent form-group">
-                                            <label for="personName2">姓名：</label>
-                                            <input type="text" class="input-sm form-control" id="personName2" name="personName">
-                                        </div>
-                                    </form>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <div class="queryComponent">
+                                                <label for="date2">日期：</label>
+                                                <input type="text" class="datepicker input-sm form-control" id="date2" name="date">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="queryComponent">
+                                                <label for="personName2">姓名：</label>
+                                                <input type="text" class="input-sm form-control" id="personName2" name="personName">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="queryComponent form-group">
+                                                <button class="btn btn-default" onclick="clearRecordSelection()">清空</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="queryComponent form-group">
+                                                <button class="btn btn-default" onclick="queryRecord()">查询</button>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="tableDiv" >
+                                <table id="recordTable"></table>
+                            </div>
                         </div>
-                        <table id="recordTable"></table>
+
                     </div>
                 </div>
                 <div id="canteenStatistics" class="row ctrlCompent">
@@ -214,6 +248,8 @@
 </body>
 
 <script>
+    var typeFlag =0;
+
     $(function () {
         $('#orderTable').bootstrapTable({
                 url: '/canteen/getBackendOrders.do',         //请求后台的URL（*）
@@ -235,7 +271,9 @@
                         rows: params.limit,                         //页面大小
                         page: (params.offset / params.limit) + 1,   //页码
                         sort: params.sort,      //排序列名
-                        sortOrder: params.order //排位命令（desc，asc）
+                        sortOrder: params.order, //排位命令（desc，asc）
+                        personName:$('#personName1').val(),
+                        date:$('#date1').val()
                     };
                     return temp;
                 },//传递参数（*）
@@ -367,6 +405,8 @@
                     page: (params.offset / params.limit) + 1,   //页码
                     sort: params.sort,      //排序列名
                     sortOrder: params.order ,//排位命令（desc，asc）
+                    personName:$('#personName2').val(),
+                    date:$('#date2').val()
                 };
                 return temp;
             },//传递参数（*）
@@ -565,28 +605,32 @@
             ]
         });
         $('#namelistTable').bootstrapTable({
-            url: '/canteen/getBackendOrders.do',         //请求后台的URL（*）
+            url: '/canteen/getbackendOrdersNamelist.do',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#generateSelection',                //工具按钮用哪个容器
+            toolbarAlign:'left',
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: false,                   //是否显示分页（*）
+            // pagination: false,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
             sortName:"co.O_TIME",
             sortOrder: "asc",                   //排序方式
-            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            // sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
-            pageSize: 20,                       //每页的记录行数（*）
-            pageList: [20, 35, 50, 100],        //可供选择的每页的行数（*）
+            // pageSize: 20,                       //每页的记录行数（*）
+            // pageList: [20, 35, 50, 100],        //可供选择的每页的行数（*）
             queryParams:  function (params) {
                 //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
                 var temp = {
-                    rows: params.limit,                         //页面大小
-                    page: (params.offset / params.limit) + 1,   //页码
+                    // rows: params.limit,                         //页面大小
+                    page: 1,   //页码
                     sort: params.sort,      //排序列名
-                    sortOrder: params.order //排位命令（desc，asc）
+                    sortOrder: params.order, //排位命令（desc，asc）
+                    typeFlag:typeFlag,
+                    generateDate:$('#namelistDate').val()
                 };
                 return temp;
+
             },//传递参数（*）
             // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             // strictSearch: true,
@@ -595,6 +639,9 @@
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
             height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            responseHandler:function (res) {
+                return res;
+            },
             uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
             showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
@@ -606,16 +653,15 @@
                 toggle: 'glyphicon-list-alt icon-list-alt',
                 columns: 'glyphicon-th icon-th',
                 detailOpen: 'glyphicon-plus icon-plus',
-                detailClose: 'glyphicon-minus icon-minus'
+                detailClose: 'glyphicon-minus icon-minus',
+                export: 'glyphicon-export icon-share'
             },
-            columns:[{
-                    field:'',
-                    title:'序号',
-                    formatter: function (value, row, index) {
-                        var pageSize = $('#namelistTable').bootstrapTable('getOptions').pageSize;     //通过table的#id 得到每页多少条
-                        var pageNumber = $('#namelistTable').bootstrapTable('getOptions').pageNumber; //通过table的#id 得到当前第几页
-                        return pageSize * (pageNumber - 1) + index + 1;    // 返回每条的序号： 每页条数 *（当前页 - 1 ）+ 序号
-                    }
+            columns:[
+                {
+                    field: 'coid',
+                    title: '订餐编号',
+
+                    align:'center'
                 },{
                     field: 'user',
                     title: '订餐人',
@@ -623,12 +669,17 @@
                         return row.user.username;
                     },
                     align:'center'
-                },{
-                    field: '',
+                }, {
+                    field: 'many',
                     title: '数量/份',
-                    // formatter:function (value,row,index) {
-                    //     return '1';
-                    // },
+                    align:'center',
+                    formatter:function (value,row,index) {
+                        var bf = row.bfMany;
+                        var l = row.lMany;
+                        var d = row.dMany;
+
+                        return bf===1?bf:(l===1?l:d);
+                    },
                     align:'center'
                 },{
                     field: 'oTime',
@@ -637,7 +688,103 @@
                         return dateFmt_yyMMdd(row.oTime);
                     },
                     align:'center'
-                }]
+                }
+            ],
+            showExport:true,
+            exportDataType:'all',
+            exportTypes:['json', 'xml', 'excel']
+
+        });
+        $('#menuTable').bootstrapTable({
+            url: '',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#generateSelection',                //工具按钮用哪个容器
+            toolbarAlign:'left',
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            // pagination: false,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortName:"",
+            sortOrder: "asc",                   //排序方式
+            // sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            // pageSize: 20,                       //每页的记录行数（*）
+            // pageList: [20, 35, 50, 100],        //可供选择的每页的行数（*）
+            queryParams:  function (params) {
+                //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+                var temp = {
+                    // rows: params.limit,                         //页面大小
+                    typeFlag:typeFlag,
+                    generateDate:$('#namelistDate').val()
+                };
+                return temp;
+
+            },//传递参数（*）
+            // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            // strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            responseHandler:function (res) {
+                return res;
+            },
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            icons:{
+                paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
+                paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
+                refresh: 'glyphicon-refresh icon-refresh',
+                toggle: 'glyphicon-list-alt icon-list-alt',
+                columns: 'glyphicon-th icon-th',
+                detailOpen: 'glyphicon-plus icon-plus',
+                detailClose: 'glyphicon-minus icon-minus',
+                export: 'glyphicon-export icon-share'
+            },
+            columns:[
+                {
+                    field: '',
+                    title: '时间',
+
+                    align:'center'
+                },{
+                    field: 'mon',
+                    title: '周一',
+                    align:'center'
+                }, {
+                    field: 'tues',
+                    title: '周二',
+                    align:'center'
+                },{
+                    field: 'web',
+                    title: '周三',
+                    align:'center'
+                },{
+                    field: 'thur',
+                    title: '周四',
+                    align:'center'
+                },{
+                    field: 'fri',
+                    title: '周五',
+
+                    align:'center'
+                },{
+                    field: 'sat',
+                    title: '周六',
+                    align:'center'
+                },{
+                    field: 'sun',
+                    title: '周日',
+                    align:'center'
+                }
+            ],
+            showExport:true,
+            exportDataType:'all',
+            exportTypes:['json', 'xml', 'excel']
+
         });
 
         $('.datepicker').datepicker({
@@ -646,6 +793,59 @@
             autoclose:true
         })
     })
+
+
+    function clearOrderSelection() {
+        $('#date1').val('');
+        $('#personName1').val('');
+    }
+    function clearRecordSelection() {
+        $('#date2').val('');
+        $('#personName2').val('');
+    }
+
+
+    function queryNamelist(type) {
+        var date = $('#namelistDate').val();
+        var $table = $('#namelistTable');
+        var json = {'generateDate':date,'typeFlag':type};
+        var tabData={};
+        typeFlag = type;
+        var title ='';
+
+        switch (type){
+            case 1:title = '早餐';break;
+            case 2:title = '中餐';break;
+            case 3:title = '晚餐';break;
+        }
+
+        $('#tableTitle').html('<h3>'+title+'</h3>')
+
+        $.ajax({
+            url:'/canteen/getbackendOrdersNamelist.do?generateDate='+date+'&typeFlag='+type+'',
+            dataType: 'JSON',
+            contentType: "application/json;charset=utf-8",
+            type:'post',
+            success:function (data) {
+                tabData=data.rows;
+
+                $table.bootstrapTable('load', tabData);
+
+            }
+        })
+    }
+
+    function queryOrder() {
+        var $table =$('#orderTable');
+
+        $table.bootstrapTable('refresh');
+    }
+    
+    function queryRecord() {
+        var $table =$('#recordTable');
+
+        $table.bootstrapTable('refresh');
+    }
 
 </script>
 </html>

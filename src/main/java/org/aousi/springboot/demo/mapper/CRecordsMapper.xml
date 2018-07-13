@@ -84,7 +84,15 @@
     from canteen_records cr
     left join canteen_order co on cr.COID=co.COID
     left join canteen_completed cc on cr.CCID = cc.CCID
-    where cr.CR_EDT_TIME = #{time}
+    where co.O_TIME = #{time}
+  </select>
+
+  <select id="B_userDateCanteenRecord" resultMap="webCRList">
+    select cr.*,co.*,cc.*
+    from canteen_records cr
+    left join canteen_order co on cr.COID=co.COID
+    left join canteen_completed cc on cr.CCID = cc.CCID
+    where co.UID = #{uid,jdbcType=INTEGER} and co.O_TIME = #{time}
   </select>
 
 

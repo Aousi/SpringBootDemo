@@ -33,4 +33,14 @@ public interface COrderMapper {
 
     List<COrder> B_selectByDate(@Param("oTime")Date date);
 
+    List<COrder> B_selectByDateUid(@Param("oTime")Date date,@Param("uid")Integer uid);
+
+    List<COrder> B_selectByBreakfastDate(@Param("oTime")Date date);
+
+    List<COrder> B_selectByLunchDate(@Param("oTime")Date date);
+
+    List<COrder> B_selectByDinnerDate(@Param("oTime")Date date);
+
+
+
 }

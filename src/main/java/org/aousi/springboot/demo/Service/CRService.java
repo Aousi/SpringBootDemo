@@ -35,8 +35,14 @@ public class CRService {
 
     public Map<String,Object> B_CanteenRecord(Integer page,Integer rows,String sort,
                                           String sortOrder){
-        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
-        List<CRecords> cc = recordsMapper.B_CanteenRecord();
+        List<CRecords> cc = null;
+        if (page == null || rows == null){
+            cc = recordsMapper.B_CanteenRecord();
+        }else {
+            Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+            cc = recordsMapper.B_CanteenRecord();
+        }
+
         return recordDataPackage(cc);
     }
 
@@ -55,6 +61,16 @@ public class CRService {
 
         Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
         List<CRecords> cc = recordsMapper.B_dateCanteenRecord(date);
+        return recordDataPackage(cc);
+    }
+
+    public Map<String,Object> B_userDateCanteenRecord(Integer page,Integer rows,String sort,
+                                                  String sortOrder,String username,String dateStr){
+        Integer uid = userMapper.selectByUserName(username).getUid();
+        Date date = util.Str2Date("yyyy-MM-dd",dateStr);
+
+        Page p = PageHelper.startPage(page,rows,""+sort+" "+sortOrder);
+        List<CRecords> cc = recordsMapper.B_userDateCanteenRecord(date,uid);
         return recordDataPackage(cc);
     }
 

@@ -1,6 +1,7 @@
 package org.aousi.springboot.demo.mapper;
 
 import org.aousi.springboot.demo.Entities.CRecords;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -27,4 +28,6 @@ public interface CRecordsMapper {
     List<CRecords> B_userCanteenRecord(Integer uid);
 
     List<CRecords> B_dateCanteenRecord(Date time);
+
+    List<CRecords> B_userDateCanteenRecord(@Param("time")Date date, @Param("uid")Integer uid);
 }

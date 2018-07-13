@@ -41,11 +41,20 @@ public class CRController {
 
     @ResponseBody
     @RequestMapping("/B_CanteenRecord.do")
-    public Map<String,Object> B_CanteenRecord(@RequestParam("page") Integer page, @RequestParam("rows")Integer rows, @RequestParam(value = "sort",required = false)String sort,
-                                        @RequestParam("sortOrder")String sortOrder){
+    public Map<String,Object> B_CanteenRecord(@RequestParam(value = "page",required = false) Integer page, @RequestParam(value = "rows",required = false)Integer rows,
+                                              @RequestParam(value = "sort",required = false)String sort, @RequestParam("sortOrder")String sortOrder,
+                                              @RequestParam(value = "date",required = false) String date, @RequestParam(value = "personName",required = false) String personName){
 
+        if (date == "" && personName == ""){
+            return crs.B_CanteenRecord(page, rows, sort, sortOrder);
+        }else if (date != "" && personName == ""){
+            return crs.B_dateCanteenRecord(page, rows, sort, sortOrder, date);
+        }else if (date == "" && personName != ""){
+            return crs.B_userCanteenRecord(page,rows,sort,sortOrder,personName);
+        }else {
+            return crs.B_userDateCanteenRecord(page, rows, sort, sortOrder, personName,date);
+        }
 
-        return crs.B_CanteenRecord(page, rows, sort, sortOrder);
     }
 
 
