@@ -104,10 +104,15 @@
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false" >-->
         <!--</table>-->
-        <table tableName="sessions" domainObjectName="Sessions"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" >
+        <!--<table tableName="sessions" domainObjectName="Sessions"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+        <!--</table>-->
+        <table tableName="canteen_menu" domainObjectName="CMenu"
+        enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false" >
         </table>
 
 

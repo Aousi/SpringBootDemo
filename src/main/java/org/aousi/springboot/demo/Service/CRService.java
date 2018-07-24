@@ -3,6 +3,7 @@ package org.aousi.springboot.demo.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.aousi.springboot.demo.Entities.CCompleted;
+import org.aousi.springboot.demo.Entities.COrder;
 import org.aousi.springboot.demo.Entities.CRecords;
 import org.aousi.springboot.demo.Entities.toolssss;
 import org.aousi.springboot.demo.mapper.CCompletedMapper;
@@ -25,6 +26,8 @@ public class CRService {
     private UserMapper userMapper;
     @Autowired
     private toolssss util;
+    @Autowired
+    private CCompletedMapper completedMapper;
 
     public Map<String,Object> getUserList(Integer page,Integer rows,String sort,
                                       String sortOrder,Integer uid){
@@ -76,13 +79,60 @@ public class CRService {
 
     private Map<String, Object> recordDataPackage(List<CRecords> cc) {
         if (cc != null){
-            Map<String,Object> back = new HashMap<>();
-            back.put("total",cc.size());
-            back.put("rows",cc);
-            return back;
+            Map<String,Object> data = new HashMap<>();
+
+            data.put("total",cc.size());
+            data.put("rows",cc);
+
+            return data;
         }else {
             return null;
         }
+    }
+
+    public Map<String,Object> defaultEdit(List<CRecords> list){
+        Map<String,Object> result = new HashMap<>();
+        Integer len = list.size();
+
+        for(int i = 0;i<len ;i++){
+            COrder co = list.get(i).getCo();
+            CCompleted c = setCC(co);
+            c.setCcid(list.get(i).getCcid());
+
+            Integer state = completedMapper.updateByPrimaryKeySelective(c);
+            if (state != 1){
+                result.put("msg","修改保存至CCID="+list.get(i).getCcid()+"时出错，请联系管理员！");
+                result.put("statusCode",500);
+            }
+        }
+        result.put("msg","修改成功");
+        result.put("statusCode",400);
+        return result;
+    }
+
+    public  Map<String,Object>  singalEdit(CCompleted cc){
+        Map<String,Object> result = new HashMap<>();
+
+        Integer state = completedMapper.updateByPrimaryKeySelective(cc);
+        if (state != 1){
+            result.put("msg","修改保存至CCID="+cc.getCcid()+"时出错，请联系管理员！");
+            result.put("statusCode",500);
+        }
+
+        result.put("msg","修改成功");
+        result.put("statusCode",400);
+        return result;
+    }
+
+    private CCompleted setCC(COrder co){
+        CCompleted c = new CCompleted();
+
+        c.setBreakfast(co.getBreakfast());
+        c.setLunch(co.getLunch());
+        c.setDinner(co.getDinner());
+        c.setFinishTime(new Date());
+
+        return c;
     }
 
 }

@@ -64,7 +64,15 @@
     </select>
 
   <select id="B_CanteenRecord" resultMap="webCRList">
-    select cr.*,co.*,cc.*,u.UID,u.USERNAME,U.DEPARTMENT
+    select cr.*
+    ,co.*
+    ,cc.CCID
+    ,cc.BREAKFAST AS BF_COMPLETE
+    ,cc.LUNCH AS L_COMPLETE
+    ,cc.DINNER AS D_COMPLETE
+    ,u.UID
+    ,u.USERNAME
+    ,u.DEPARTMENT
     from canteen_records cr
     left join canteen_order co on cr.COID=co.COID
     left join canteen_completed cc on cr.CCID = cc.CCID

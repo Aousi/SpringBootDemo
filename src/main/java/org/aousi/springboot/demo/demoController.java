@@ -106,4 +106,14 @@ public class demoController {
         return new ModelAndView("sysBackend-canteen",back);
     }
 
+    @RequestMapping("/sysBackend-setting")
+    @ResponseBody
+    @RequiresRoles("admin")
+    public ModelAndView settingCtrl(@RequestParam(name = "name",required = false) String name){
+        Map<String,Object> back = new HashMap<>();
+        User u = userService.queryUserByName(name);
+        back.put("user",u);
+        return new ModelAndView("sysBackend-setting",back);
+    }
+
 }
