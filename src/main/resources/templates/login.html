@@ -10,7 +10,15 @@
         .login_btn {
             margin: 0px;
             width: 70px;
+        }
 
+        .half-rule {
+            margin: 30px 40%;
+            color: #f3c17a;
+        }
+        .context {
+            margin-top: 30px;
+            text-align: center;
         }
     </style>
 </head>
@@ -21,31 +29,22 @@
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
         <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 <!--<body style="overflow: hidden">-->
-<div class="jumbotron" th:style="'background:url(' + @{/img/loginBackground.jpg} + ');'">
-    <div class="container">
-        <h1>XXXXXXXXX</h1>
-        <p>
-            login ---------
-        </p>
-    </div>
-</div>
-<style>
-    .jumbotron {
-        /*background:url("/static/img/loginBackground.jpg");*/
-        height: 1000px;
-        z-index: 50;
+<!--<div class="jumbotron" th:style="'background:url(' + @{/img/loginBackground.jpg} + ');'">-->
+    <!--<div class="container">-->
+        <!--<h1>XXXXXXXXX</h1>-->
+        <!--<p>-->
+            <!--login -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+        <!--</p>-->
+    <!--</div>-->
+<!--</div>-->
 
-    }
-    .jumbotron h1,p{
-        position: absolute;
-        transform: translateY(-200%);
-        top: 45%;
-        left: 200px;
-        color: white;
-    }
-</style>
-<body>
-<div class="panel  panel-primary" style="width: 300px;height: auto;margin: 18% 0;position: fixed;z-index: 100;right: 180px;top: 0px;opacity: 0.7">
+<body style=" background-color: #faebcc">
+<div class="context" style="margin-top: 5%">
+    <h1>登陆 & 注册</h1>
+</div>
+<hr class="half-rule">
+
+<div class="panel  panel-default" style="width: 300px;height: 350px;position: absolute;left: 50% ;top: 50%;margin-top: -175px;margin-left: -150px">
     <div class="panel-heading">
         <h4 class="panel-title">login</h4>
     </div>
@@ -73,6 +72,7 @@
         </div>
     </div>
 </div>
+
 <!-- 模态框（Modal） -->
 <!-- Modal -->
 <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" Role="dialog" aria-labelledby="myModalLabel">

@@ -6,6 +6,8 @@
     <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
           <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-table.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap-switch.css}">
     <style>
         .mynav {
             height: auto;
@@ -34,6 +36,9 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script  th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/publicJS.js}"></script>
+<script th:src="@{/js/bootstrap-switch.js}"></script>
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/bootstrap-table-zh-CN.min.js}"></script>
 <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
 <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
         <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
@@ -54,27 +59,27 @@
         </div>
         <div id="LinkPart" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">文章<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/articleList">文章列表</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/newArticle">发文</a></li>
-                        <li><a href="/myArticle">我的文章</a></li>
-                        <li><a href="/recycledArticle">回收站</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
-                       aria-expanded="false">物品<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a id="myItem" href="#">我的物品</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a id="applyItem" href="#">领用申请</a></li>
-                        <li><a id="applyRecord" href="#">申请记录</a></li>
-                    </ul>
-                </li>
+                <!--<li class="dropdown">-->
+                    <!--<a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"-->
+                       <!--aria-expanded="false">文章<span class="caret"></span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="/articleList">文章列表</a></li>-->
+                        <!--<li role="separator" class="divider"></li>-->
+                        <!--<li><a href="/newArticle">发文</a></li>-->
+                        <!--<li><a href="/myArticle">我的文章</a></li>-->
+                        <!--<li><a href="/recycledArticle">回收站</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li class="dropdown">-->
+                    <!--<a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"-->
+                       <!--aria-expanded="false">物品<span class="caret"></span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a id="myItem" href="#">我的物品</a></li>-->
+                        <!--<li role="separator" class="divider"></li>-->
+                        <!--<li><a id="applyItem" href="#">领用申请</a></li>-->
+                        <!--<li><a id="applyRecord" href="#">申请记录</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
                 <li class="dropdown">
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown" Role="button" aria-haspopup="true"
                        aria-expanded="false">食堂应用<span class="caret"></span></a>
@@ -87,37 +92,25 @@
             </ul>
             <input id="nameNav" type="hidden" th:value="${name}" >
             <ul class="nav navbar-nav navbar-right" id="userNav">
-                <li><a href="/login">LOGIN or SIGN UP</a></li>
+                <li><a href="/login" >LOGIN or SIGN UP</a></li>
             </ul>
         </div>
     </div>
 </div>
 
-
-<div class="container" style="width: inherit;height: inherit">
-    <div class="" style="background-color:#e0e0e0;height: 300px">
-        <h1></h1>
-    </div>
-</div>
 <div class="container">
     <!--<input type="hidden" id="username" th:value="${sessionScope.name}">-->
     <!--<input type="hidden" id="uid" th:value="${sessionScope.uid}">-->
     <!-- 测试两个属性是否放到session中 -->
     <div class="context">
-        <h1>正文标题</h1>
-        <p>正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容</p>
+        <h1>食堂菜谱</h1>
+        <hr class="half-rule">
+        <input type="checkbox" id="menuSwitch">
+        <table id="menuTable"></table>
     </div>
     <hr class="half-rule">
-    <div class="container">
-        <div class="col-sm-4" style="background-color: #e2e2e2;height: 200px"></div>
-        <div class="col-sm-4" style="background-color: #f5f5f5;height: 200px"></div>
-        <div class="col-sm-4" style="background-color: #e2e2e2;height: 200px"></div>
-    </div>
-    <hr class="half-rule">
-    <div class="context">
-        <h1>正文标题</h1>
-        <p>正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容-正文内容</p>
-    </div>
+
+
 </div>
 <footer class="myfooter" style="height: 150px">
     <div class="container" style="text-align: left">
@@ -134,13 +127,149 @@
 </body>
 <script>
 
+    var menuFlag = 1;
+
     $(function () {
         var username = $('#username');
         var uid = $('#uid');
 
-        console.log("username,uid ==> "+username+","+uid);
-    })
+        // console.log("username,uid ==> "+username+","+uid);
 
+        $('#menuTable').bootstrapTable({
+            url: '/menu/status',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#menuSwitch',                //工具按钮用哪个容器
+            toolbarAlign:'left',
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            // pagination: false,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortName:"",
+            sortOrder: "asc",                   //排序方式
+            // sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            // pageSize: 20,                       //每页的记录行数（*）
+            // pageList: [20, 35, 50, 100],        //可供选择的每页的行数（*）
+            queryParams:  function (params) {
+                //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+                var temp = {
+                    // rows: params.limit,                         //页面大小
+                    menuFlag:menuFlag,
+                };
+                return temp;
+
+            },//传递参数（*）
+            // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            // strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            responseHandler:function (res) {
+                return res.rows;
+            },
+            uniqueId: "CMID",                     //每一行的唯一标识，一般为主键列
+            showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            icons:{
+                paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
+                paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
+                refresh: 'glyphicon-refresh icon-refresh',
+                toggle: 'glyphicon-list-alt icon-list-alt',
+                columns: 'glyphicon-th icon-th',
+                detailOpen: 'glyphicon-plus icon-plus',
+                detailClose: 'glyphicon-minus icon-minus',
+                export: 'glyphicon-export icon-share'
+            },
+            columns:[
+                {
+                    field: 'timeZone',
+                    title: '时间',
+                    align:'center',
+                    valign:'middle',
+                    formatter:function (value,row,index) {
+                        switch (row.cmType){
+                            case 1:return '<span>早餐</span>';break;
+                            case 2:return '午餐';break;
+                            case 3:return '晚餐';break;
+                            default:return '';break;
+                        }
+                    }
+                },{
+                    field: 'mon',
+                    title: '周一',
+                    align:'center',
+                    width:'12.5%'
+                }, {
+                    field: 'tue',
+                    title: '周二',
+                    align:'center',
+                    width:'12.5%'
+                },{
+                    field: 'wed',
+                    title: '周三',
+                    align:'center',
+                    width:'12.5%'
+                },{
+                    field: 'thu',
+                    title: '周四',
+                    align:'center',
+                    width:'12.5%'
+                },{
+                    field: 'fri',
+                    title: '周五',
+                    align:'center',
+                    width:'12.5%'
+                },{
+                    field: 'sat',
+                    title: '周六',
+                    align:'center',
+                    width:'12.5%'
+                },{
+                    field: 'sun',
+                    title: '周日',
+                    align:'center',
+                    width:'12.5%'
+                }
+            ],
+            showExport:true,
+            exportDataType:'all',
+            exportTypes:['json', 'xml', 'excel'],
+            onLoadSuccess:function (data) {
+                $('#menuTable').bootstrapTable('mergeCells',{
+                    index: 0,
+                    field: 'timeZone',
+                    rowspan: 3
+                });
+                $('#menuTable').bootstrapTable('mergeCells',{
+                    index: 3,
+                    field: 'timeZone',
+                    rowspan: 4
+                });
+                $('#menuTable').bootstrapTable('mergeCells',{
+                    index: 7,
+                    field: 'timeZone',
+                    rowspan: 3
+                });
+            }
+
+        });
+        $('#menuSwitch').bootstrapSwitch({
+            onText:'本周',
+            offText:'下周',
+            onSwitchChange:function (event, state) {
+                if (state){
+                    menuFlag = 1;
+                }else {
+                    menuFlag = 0;
+                }
+                $('#menuTable').bootstrapTable('refresh');
+            },
+            state:true
+        });
+    })
 
 </script>
 </html>

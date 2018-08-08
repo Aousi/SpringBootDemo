@@ -75,4 +75,12 @@ public class toolssss {
         return c.getTime();
     }
 
+    public Date setLimitTime(Date time,Integer hour,Integer min,Integer changeDay){
+        Calendar c = Calendar.getInstance();
+        c.setTime(setLimitTime(time,hour,min));
+        c.add(Calendar.DATE,changeDay);
+
+        return c.getTime();
+    }
+
 }
