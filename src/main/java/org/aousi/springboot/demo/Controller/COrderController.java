@@ -68,7 +68,7 @@ public class COrderController {
 
         Subject subject = SecurityUtils.getSubject();
 
-        if (subject.hasRole("user") || subject.hasRole("admin")){
+        if (subject.hasRole("customer") || subject.hasRole("admin")){
             if (inputTime.compareTo(limit) <= 0){
                 if (!start.equals(end)){
                     for (int i = 0;i<=len;i++){
